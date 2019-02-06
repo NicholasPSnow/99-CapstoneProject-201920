@@ -231,14 +231,19 @@ class ArmAndClaw(object):
             self.motor.turn_on(-100)
         self.motor.turn_off()
         self.motor.reset_position()
-        calibrated = 1
+
 
     def move_arm_to_position(self, desired_arm_position):
         """
         Move its Arm to the given position, where 0 means all the way DOWN.
         The robot must have previously calibrated its Arm.
         """
-
+        while self.motor.get_position() < desired_arm_position:
+            self.motor.turn_on(100)
+        self.motor.turn_off()
+        while self.motor.get_position() > desired_arm_position:
+            self.motor.turn_on(100)
+        self.motor.turn_off()
     def lower_arm(self):
         """
         Lowers the Arm until it is all the way down, i.e., position 0.
