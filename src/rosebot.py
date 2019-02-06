@@ -30,9 +30,8 @@ import math
 class RoseBot(object):
     def __init__(self):
         # Use these instance variables
-
-        self.arm_and_claw = ArmAndClaw()
         self.sensor_system = SensorSystem()
+        self.arm_and_claw = ArmAndClaw(self.sensor_system.touch_sensor)
         self.drive_system = DriveSystem(self.sensor_system)
 
 
