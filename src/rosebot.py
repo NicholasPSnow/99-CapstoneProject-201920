@@ -100,6 +100,13 @@ class DriveSystem(object):
         for the given number of inches, using the approximate
         conversion factor of 10.0 inches per second at 100 (full) speed.
         """
+        start = time.time()
+        end = start + inches/speed
+        self.go(speed, speed)
+        while True:
+            if end - start <= 0:
+                self.stop()
+                break
 
     def go_straight_for_inches_using_encoder(self, inches, speed):
         """
