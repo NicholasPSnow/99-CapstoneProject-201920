@@ -6,7 +6,7 @@
     -- Lower-level code to interact with the EV3 robot library.
 
   Author:  Your professors (for the framework and lower-level code)
-    and PUT_YOUR_NAMES_HERE.
+    and Nicholas Snow, Katana College, and Zach Kelly.
   Winter term, 2018-2019.
 """
 
@@ -192,6 +192,11 @@ class ArmAndClaw(object):
 
     def raise_arm(self):
         """ Raises the Arm until its touch sensor is pressed. """
+        if self.touchsensor.is_pressed()==1:
+            pass
+        while self.touchsensor.is_pressed() != 1:
+            self.motor.turn_on(100)
+        self.motor.turn_off()
 
     def calibrate_arm(self):
         """
