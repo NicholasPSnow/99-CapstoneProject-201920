@@ -21,7 +21,8 @@ def main():
 
 def run_test_arm():
     robot = bot.RoseBot()
-    robot.arm_and_claw.raise_arm()
+    robot.arm_and_claw.calibrate_arm()
+    # robot.arm_and_claw.raise_arm()
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
