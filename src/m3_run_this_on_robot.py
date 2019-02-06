@@ -21,6 +21,7 @@ def main():
 
 def run_test_arm():
     robot = bot.RoseBot()
+    robot.arm_and_claw.calibrate_arm()
     pos = [14, 2, 10, 3]
     for i in pos:
         robot.arm_and_claw.move_arm_to_position(pos[i])
