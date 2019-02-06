@@ -5,7 +5,7 @@
   Winter term, 2018-2019.
 """
 
-import rosebot
+import rosebot as bot
 import mqtt_remote_method_calls as com
 import time
 
@@ -17,7 +17,11 @@ def main():
       2. Communicates via MQTT with the GUI code that runs on the LAPTOP.
     """
 
-
+    robot = bot.RoseBot()
+    robot.arm_and_claw.calibrate_arm()
+    robot.arm_and_claw.raise_arm()
+    robot.arm_and_claw.lower_arm()
+    robot.arm_and_claw.move_arm_to_position(8)
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # -----------------------------------------------------------------------------
