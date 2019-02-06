@@ -192,11 +192,7 @@ class ArmAndClaw(object):
 
     def raise_arm(self):
         """ Raises the Arm until its touch sensor is pressed. """
-        if self.touchsensor.is_pressed()==1:
-            pass
-        while self.touchsensor.is_pressed() != 1:
-            self.motor.turn_on(100)
-        self.motor.turn_off()
+
 
     def calibrate_arm(self):
         """
@@ -207,6 +203,7 @@ class ArmAndClaw(object):
                (i.e., 14.2 motor revolutions),
           3. Resets the motor's position to 0.
         """
+
 
     def move_arm_to_position(self, desired_arm_position):
         """
@@ -219,6 +216,7 @@ class ArmAndClaw(object):
         Lowers the Arm until it is all the way down, i.e., position 0.
         The robot must have previously calibrated its Arm.
         """
+
 
 ###############################################################################
 #    SensorSystem
