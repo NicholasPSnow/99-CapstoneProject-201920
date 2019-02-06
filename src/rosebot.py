@@ -114,6 +114,15 @@ class DriveSystem(object):
         at the given speed for the given number of inches,
         using the encoder (degrees traveled sensor) built into the motors.
         """
+        inches_per_degree = self.left_motor.WheelCircumference / 360
+        degree = inches/inches_per_degree
+        self.left_motor.reset_position()
+        self.go(speed,speed)
+        while True:
+            position = self.left_motor.get_position()
+            if abs(position) >= degree:
+                break
+        self.stop()
 
     # -------------------------------------------------------------------------
     # Methods for driving that use the color sensor.
