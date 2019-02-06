@@ -17,9 +17,9 @@ def main():
       2. Communicates via MQTT with the GUI code that runs on the LAPTOP.
     """
     test_go()
-    test_stop()
-    test_go_straight_for_seconds()
-    test_go_straight_for_inches_using_time()
+    #test_stop()
+    #test_go_straight_for_seconds()
+    #test_go_straight_for_inches_using_time()
 
 def test_go():
     robot = rosebot.RoseBot()
