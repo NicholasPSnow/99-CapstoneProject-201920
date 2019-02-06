@@ -3,7 +3,7 @@
   This code is the delegate for handling messages from the shared GUI.
 
   Author:  Your professors (for the framework)
-    and Nicholas Snow, Katana College, and Zach Kelly.
+    and Nicholas Snow, Katana Colledge, and Zach Kelly.
   Winter term, 2018-2019.
 """
 
