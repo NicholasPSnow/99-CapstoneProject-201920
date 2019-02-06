@@ -15,7 +15,7 @@ import shared_gui
 
 def main():
     """
-    This code, which must run on a LAPTOP:asadf
+    This code, which must run on a LAPTOP:
       1. Constructs a GUI for my part of the Capstone Project.
       2. Communicates via MQTT with the code that runs on the EV3 robot.
     """
