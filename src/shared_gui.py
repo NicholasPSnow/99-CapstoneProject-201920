@@ -268,6 +268,9 @@ def handle_exit(mqtt_sender):
     print('# Exit #')
     print('########')
 
+
+
+
 def get_Sprint_1_Drive_System_frame(window, mqtt_sender):
     """
     Constructs and returns a frame on the given window, where the frame
@@ -313,16 +316,87 @@ def get_Sprint_1_Drive_System_frame(window, mqtt_sender):
     forward_inches_button.grid(row=3, column=2)
 
     # Set the button callbacks:
-    forward_time_button["command"] = lambda: forward_time_button(wheel_speed_entry.get(), time_entry.get(), mqtt_sender)
-    forward_time_inches_button["command"] = lambda: forward_time_inches_button(wheel_speed_entry.get(), inches_entry.get(), mqtt_sender)
-    forward_inches_button["command"] = lambda: forward_inches_button(wheel_speed_entry.get(), inches_entry.get(), mqtt_sender)
-
+    forward_time_button["command"] = lambda: handle_forward_time_button(wheel_speed_entry.get(), time_entry.get(), mqtt_sender)
+    forward_time_inches_button["command"] = lambda: handle_forward_time_inches_button(wheel_speed_entry.get(), inches_entry.get(), mqtt_sender)
+    forward_inches_button["command"] = lambda: handle_forward_inches_button(wheel_speed_entry.get(), inches_entry.get(), mqtt_sender)
     return frame
 
 
-def forward_time_button(speed,time,mqtt_sender):
+def handle_forward_time_button(speed,time,mqtt_sender):
     mqtt_sender.send_message('Forward_Time', [speed,time])
-def forward_time_inches_button(speed,inches,mqtt_sender):
+    print('Forward_Time',speed,time)
+def handle_forward_time_inches_button(speed,inches,mqtt_sender):
     mqtt_sender.send_message('Forward_Time_Inches', [speed, inches])
-def forward_inches_button(speed,inches,mqtt_sender):
+    print('Forward_Time_Inches', speed, inches)
+def handle_forward_inches_button(speed,inches,mqtt_sender):
     mqtt_sender.send_message('Forward_Inches', [speed, inches])
+    print('Forward_Inches', speed, inches)
+
+
+
+def get_Sprint_1_Beeper_System_frame(window, mqtt_sender):
+    """
+    Constructs and returns a frame on the given window, where the frame
+    has Beeper objects that control the EV3 robot's motion
+    by passing messages using the given MQTT Sender.
+      :type  window:       ttk.Frame | ttk.Toplevel
+      :type  mqtt_sender:  com.MqttClient
+    """
+    # Construct the frame to return:
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+    frame.grid()
+
+    # Construct the widgets on the frame:
+    frame_label = ttk.Label(frame, text="Sprint_1_Beeper_System")
+    number_of_beeps_label = ttk.Label(frame, text="Number of Beeps")
+    tone_duration_label = ttk.Label(frame, text="Duration of Tone")
+    tone_frequency_label = ttk.Label(frame, text="Tone Frequency")
+    speak_text_label = ttk.Label(frame, text="Text to Speech")
+
+    number_of_beeps= ttk.Entry(frame, width=8)
+    number_of_beeps.insert(0, "10")
+    tone_duration = ttk.Entry(frame, width=8, justify=tkinter.RIGHT)
+    tone_duration.insert(0, "10")
+    tone_frequency = ttk.Entry(frame, width=8, justify=tkinter.RIGHT)
+    tone_frequency.insert(0, "10")
+    speak_text = ttk.Entry(frame, width=8, justify=tkinter.RIGHT)
+    speak_text.insert(0, "Type Here")
+
+
+    beep_button = ttk.Button(frame, text="Play Beeps")
+    tone_button = ttk.Button(frame, text="Play Tone")
+    speak_button = ttk.Button(frame, text="Read Text")
+
+
+    # Grid the widgets:
+    frame_label.grid(row=0, column=1)
+    number_of_beeps_label.grid(row=1, column=0)
+    tone_duration_label.grid(row=1, column=1)
+    tone_frequency_label.grid(row=1, column=2)
+    speak_text_label.grid(row=1, column=3)
+
+    number_of_beeps.grid(row=2, column=0)
+    tone_duration.grid(row=2, column=1)
+    tone_frequency.grid(row=2, column=2)
+    speak_text.grid(row=2, column=3)
+
+    beep_button.grid(row=3, column=0)
+    tone_button.grid(row=3, column=1)
+    speak_button.grid(row=3, column=3)
+
+    # Set the button callbacks:
+    beep_button["command"] = lambda: handle_beep_button(number_of_beeps.get(), mqtt_sender)
+    tone_button["command"] = lambda: handle_tone_button(tone_duration.get(), tone_frequency.get(), mqtt_sender)
+    speak_button["command"] = lambda: handle_speak_button(speak_text.get(), mqtt_sender)
+    return frame
+
+
+def handle_beep_button(numberofbeeps,mqtt_sender):
+    mqtt_sender.send_message('beep_button', [numberofbeeps])
+    print('beep_button',numberofbeeps)
+def handle_tone_button(duration,frequency,mqtt_sender):
+    mqtt_sender.send_message('tone_button', [duration, frequency])
+    print('tone_button', duration, frequency)
+def handle_speak_button(text,mqtt_sender):
+    mqtt_sender.send_message('speak_button', [text])
+    print('speak_button', text)
