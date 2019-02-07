@@ -50,7 +50,7 @@ def test_go_straight_for_inches_using_time():
 
 def real_thing():
     robot=rosebot.RoseBot()
-    delegate = shared_gui_delegate_on_robot.DelegateThatReceives
+    #delegate = shared_gui_delegate_on_robot.DelegateThatReceives
     mqtt_reciever = com.MqttClient(delegate)
     mqtt_reciever.connect_to_pc()
 
