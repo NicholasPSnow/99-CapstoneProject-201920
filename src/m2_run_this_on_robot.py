@@ -22,8 +22,8 @@ def main():
     #test_go_straight_for_inches_using_time()
 
 def test_go(speed):
-    robot = rosebot.RoseBot()
-    robot.drive_system.go(speed,speed)
+    robot = rosebot.DriveSystem()
+    robot.go(speed,speed)
 
 def test_stop():
     robot = rosebot.RoseBot()
