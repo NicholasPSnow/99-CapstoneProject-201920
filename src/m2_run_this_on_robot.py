@@ -8,7 +8,7 @@
 import rosebot
 import mqtt_remote_method_calls as com
 import time
-import shared_gui_delegate_on_robot
+#import shared_gui_delegate_on_robot
 
 
 def main():
@@ -49,7 +49,7 @@ def test_go_straight_for_inches_using_time():
     robot.drive_system.go_straight_for_inches_using_time(3,60)
 
 #def real_thing():
-    robot=rosebot.RoseBot()
+    #robot=rosebot.RoseBot()
     #delegate = shared_gui_delegate_on_robot.DelegateThatReceives
     #mqtt_reciever = com.MqttClient(delegate)
     #mqtt_reciever.connect_to_pc()
