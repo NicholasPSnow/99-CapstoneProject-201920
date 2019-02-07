@@ -22,29 +22,29 @@ def main():
     #test_go_straight_for_inches_using_time()
 
 def test_go(speed):
-    robot = rosebot.roseBot()
-    robot.go(speed)
+    robot = rosebot.RoseBot()
+    robot.drive_system.go(speed,speed)
 
 def test_stop():
-    robot = rosebot.roseBot()
-    robot.stop()
+    robot = rosebot.RoseBot()
+    robot.drive_system.stop()
 
 def test_go_straight_for_seconds():
-    robot = rosebot.roseBot()
-    robot.go_straight_for_seconds(5, 100)
-    robot.go_straight_for_seconds(5,-100)
-    robot.go_straight_for_seconds(0,10)
-    robot.go_straight_for_seconds(3,20)
-    robot.go_straight_for_seconds(3,0)
-    robot.go_straight_for_seconds(3,-20)
+    robot = rosebot.RoseBot()
+    robot.drive_system.go_straight_for_seconds(5, 100)
+    robot.drive_system.go_straight_for_seconds(5,-100)
+    robot.drive_system.go_straight_for_seconds(0,10)
+    robot.drive_system.go_straight_for_seconds(3,20)
+    robot.drive_system.go_straight_for_seconds(3,0)
+    robot.drive_system.go_straight_for_seconds(3,-20)
 
 def test_go_straight_for_inches_using_time():
     robot = rosebot.roseBot()
-    robot.go_straight_for_inches_using_time(10,100)
-    robot.go_straight_for_inches_using_time(10,-100)
-    robot.go_straight_for_inches_using_time(5,25)
-    robot.go_straight_for_inches_using_time(0,75)
-    robot.go_straight_for_inches_using_time(3,60)
+    robot.drive_system.go_straight_for_inches_using_time(10,100)
+    robot.drive_system.go_straight_for_inches_using_time(10,-100)
+    robot.drive_system.go_straight_for_inches_using_time(5,25)
+    robot.drive_system.go_straight_for_inches_using_time(0,75)
+    robot.drive_system.go_straight_for_inches_using_time(3,60)
 
 
 
