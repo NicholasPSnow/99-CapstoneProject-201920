@@ -8,7 +8,7 @@
 import rosebot
 import mqtt_remote_method_calls as com
 import time
-import shared_gui_delegate_on_robot
+#import shared_gui_delegate_on_robot
 
 
 def main():
@@ -17,15 +17,15 @@ def main():
       1. Makes the EV3 robot to various things.
       2. Communicates via MQTT with the GUI code that runs on the LAPTOP.
     """
-    test_go(100)
-    #test_stop()
+    test_go(70,-70)
+    test_stop()
     #test_go_straight_for_seconds()
     #test_go_straight_for_inches_using_time()
     #real_thing()
 
-def test_go(speed):
+def test_go(speed1, speed2):
     robot = rosebot.RoseBot()
-    robot.go(speed,speed)
+    robot.drive_system.go(speed1,speed2)
 
 def test_stop():
     robot = rosebot.RoseBot()
@@ -48,14 +48,14 @@ def test_go_straight_for_inches_using_time():
     robot.drive_system.go_straight_for_inches_using_time(0,75)
     robot.drive_system.go_straight_for_inches_using_time(3,60)
 
-def real_thing():
-    robot=rosebot.RoseBot()
-    delegate = shared_gui_delegate_on_robot.DelegateThatReceives
-    mqtt_reciever = com.MqttClient(delegate)
-    mqtt_reciever.connect_to_pc()
+#def real_thing():
+    #robot=rosebot.RoseBot()
+    #delegate = shared_gui_delegate_on_robot.DelegateThatReceives
+    #mqtt_reciever = com.MqttClient(delegate)
+    #mqtt_reciever.connect_to_pc()
 
-    while True:
-        time.sleep(0.01)
+    #while True:
+        #time.sleep(0.01)
 
 
 
