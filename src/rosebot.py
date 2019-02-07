@@ -240,7 +240,7 @@ class ArmAndClaw(object):
         """
         self.raise_arm()
         self.motor.reset_position()
-        while self.motor.get_position() <= (14.2 * 360):
+        while self.motor.get_position() < (14.1 * 360):
             self.motor.turn_on(-100)
         self.motor.turn_off()
         self.motor.reset_position()
