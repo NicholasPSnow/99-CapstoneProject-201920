@@ -46,10 +46,10 @@ def main():
     """
 
     robot = bot.RoseBot()
-    robot.arm_and_claw.calibrate_arm()
+    #robot.arm_and_claw.calibrate_arm()
     robot.arm_and_claw.raise_arm()
-    robot.arm_and_claw.lower_arm()
-    robot.arm_and_claw.move_arm_to_position(8)
+    #robot.arm_and_claw.lower_arm()
+    #robot.arm_and_claw.move_arm_to_position(8)
 
     name1 = input("Enter one name (subscriber): ")
     name2 = input("Enter another name (publisher): ")
