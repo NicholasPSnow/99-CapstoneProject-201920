@@ -26,6 +26,7 @@ def main():
     print('lower')
     robot.arm_and_claw.move_arm_to_position(14.2 * 8)
     print('moveto')
+    print('DOne')
 
 
 def real():
