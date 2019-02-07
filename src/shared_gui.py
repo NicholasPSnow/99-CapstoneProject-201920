@@ -267,3 +267,62 @@ def handle_exit(mqtt_sender):
     print('########')
     print('# Exit #')
     print('########')
+
+def get_Sprint_1_Drive_System_frame(window, mqtt_sender):
+    """
+    Constructs and returns a frame on the given window, where the frame
+    has Special objects that control the EV3 robot's motion
+    by passing messages using the given MQTT Sender.
+      :type  window:       ttk.Frame | ttk.Toplevel
+      :type  mqtt_sender:  com.MqttClient
+    """
+    # Construct the frame to return:
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+    frame.grid()
+
+    # Construct the widgets on the frame:
+    frame_label = ttk.Label(frame, text="Sprint_1_Drive_System")
+    wheel_speed_label = ttk.Label(frame, text="Wheel Speed (0 to 100)")
+    time_label = ttk.Label(frame, text="Movement Time (0 to INF)")
+    inches_label = ttk.Label(frame, text="Movement Distance (0 to INF)")
+
+    wheel_speed_entry = ttk.Entry(frame, width=8)
+    wheel_speed_entry.insert(0, "100")
+    time_entry = ttk.Entry(frame, width=8, justify=tkinter.RIGHT)
+    time_entry.insert(0, "10")
+    inches_entry = ttk.Entry(frame, width=8, justify=tkinter.RIGHT)
+    inches_entry.insert(0, "10")
+
+
+    forward_time_button = ttk.Button(frame, text="Forward for Seconds")
+    forward_time_inches_button = ttk.Button(frame, text="Forward for Inches(time)")
+    forward_inches_button = ttk.Button(frame, text="Forward for Inches(Encoder)")
+
+
+    # Grid the widgets:
+    frame_label.grid(row=0, column=1)
+    wheel_speed_label.grid(row=1, column=0)
+    time_label.grid(row=1, column=1)
+    inches_label.grid(row=1, column=2)
+    wheel_speed_entry.grid(row=2, column=0)
+    time_entry.grid(row=2, column=1)
+    inches_entry.grid(row=2, column=2)
+
+    forward_time_button.grid(row=3, column=0)
+    forward_time_inches_button.grid(row=3, column=1)
+    forward_inches_button.grid(row=3, column=2)
+
+    # Set the button callbacks:
+    forward_time_button["command"] = lambda: forward_time_button(wheel_speed_entry.get(), time_entry.get(), mqtt_sender)
+    forward_time_inches_button["command"] = lambda: forward_time_inches_button(wheel_speed_entry.get(), inches_entry.get(), mqtt_sender)
+    forward_inches_button["command"] = lambda: forward_inches_button(wheel_speed_entry.get(), inches_entry.get(), mqtt_sender)
+
+    return frame
+
+
+def forward_time_button(speed,time,mqtt_sender):
+    mqtt_sender.send_message('Forward_Time', [speed,time])
+def forward_time_inches_button(speed,inches,mqtt_sender):
+    mqtt_sender.send_message('Forward_Time_Inches', [speed, inches])
+def forward_inches_button(speed,inches,mqtt_sender):
+    mqtt_sender.send_message('Forward_Inches', [speed, inches])
