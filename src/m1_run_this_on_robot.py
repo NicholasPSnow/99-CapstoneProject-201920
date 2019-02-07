@@ -12,25 +12,29 @@ import math
 
 class DelegateThatReceives(object):
 
+    def __init__(self,robot):
+        self.robot=robot = bot.RoseBot()
     def Forward(self, leftspeed,rightspeed):
         print("Forward",leftspeed,rightspeed)
-
-
-
+        self.robot.drive_system.go(leftspeed,rightspeed)
     def Backward(self, leftspeed,rightspeed):
         print("Backward",leftspeed,rightspeed)
-
-
+        self.robot.drive_system.go(-leftspeed, -rightspeed)
     def Arm_Up(self):
         print("Arm Up")
+        self.robot.arm_and_claw.raise_arm()
     def Arm_Down(self):
         print("Arm Down")
+        self.robot.arm_and_claw.lower_arm()
     def Left(self):
         print("Left 0 600")
+        self.robot.drive_system.go(0,600)
     def Right(self):
         print("Right 0 600")
+        self.robot.drive_system.go(600,0)
     def Stop(self):
         print('Stop')
+        self.robot.drive_system.stop()
     def Quit(self):
         print("Quit")
 
@@ -50,7 +54,7 @@ def main():
     name1 = input("Enter one name (subscriber): ")
     name2 = input("Enter another name (publisher): ")
 
-    my_delegate = DelegateThatReceives()
+    my_delegate = DelegateThatReceives(robot)
     mqtt_client = com.MqttClient(my_delegate)
     mqtt_client.connect(name1, name2)
     time.sleep(1)  # Time to allow the MQTT setup.
