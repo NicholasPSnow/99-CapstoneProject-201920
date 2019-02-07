@@ -9,34 +9,11 @@ import rosebot as bot
 import mqtt_remote_method_calls as com
 import time
 import math
+import shared_gui
+import shared_gui_delegate_on_robot
 
-class DelegateThatReceives(object):
-
-    def __init__(self,robot):
-        self.robot=robot = bot.RoseBot()
-    def Forward(self, leftspeed,rightspeed):
-        print("Forward",leftspeed,rightspeed)
-        self.robot.drive_system.go(leftspeed,rightspeed)
-    def Backward(self, leftspeed,rightspeed):
-        print("Backward",leftspeed,rightspeed)
-        self.robot.drive_system.go(-leftspeed, -rightspeed)
-    def Arm_Up(self):
-        print("Arm Up")
-        self.robot.arm_and_claw.raise_arm()
-    def Arm_Down(self):
-        print("Arm Down")
-        self.robot.arm_and_claw.lower_arm()
-    def Left(self):
-        print("Left 0 600")
-        self.robot.drive_system.go(0,600)
-    def Right(self):
-        print("Right 0 600")
-        self.robot.drive_system.go(600,0)
-    def Stop(self):
-        print('Stop')
-        self.robot.drive_system.stop()
-    def Quit(self):
-        print("Quit")
+def DelegateThatReceives(robot):
+    return shared_gui_delegate_on_robot(robot)
 
 def main():
     """
@@ -49,7 +26,7 @@ def main():
     robot.arm_and_claw.calibrate_arm()
     robot.arm_and_claw.raise_arm()
     robot.arm_and_claw.lower_arm()
-    robot.arm_and_claw.move_arm_to_position(8)
+    robot.arm_and_claw.move_arm_to_position(14.2*8)
 
     name1 = input("Enter one name (subscriber): ")
     name2 = input("Enter another name (publisher): ")
@@ -60,8 +37,8 @@ def main():
     time.sleep(1)  # Time to allow the MQTT setup.
     print()
 
-    while True:
-        time.sleep(0.01)  # Time to allow message processing
+    #while True:
+        #time.sleep(0.01)  # Time to allow message processing
 
 
 
