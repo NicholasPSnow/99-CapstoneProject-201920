@@ -24,7 +24,7 @@ def main():
     #real_thing()
 
 def test_go(speed):
-    robot = rosebot.DriveSystem()
+    robot = rosebot.RoseBot()
     robot.go(speed,speed)
 
 def test_stop():
