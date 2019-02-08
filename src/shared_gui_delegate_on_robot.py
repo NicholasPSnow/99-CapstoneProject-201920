@@ -19,11 +19,18 @@ class DelegateThatReceives(object):
     def __init__(self, robot):
         self.robot = robot
 
-    def command(self):  # this should handle stop and quit
+
+    ##DRIVE SYSTEM
+
+    #Handle Stop and Quit
+    def command(self):
         pass
 
+    #Handle Forward and Backward
     def movement(self, left_speed, right_speed):
         self.robot.drive_system.go(int(left_speed), int(right_speed))
+
+    ##ARM SYSTEM
 
     def arm_movement(self, command, pos=0):
         method_dict = {'up': self.robot.arm_and_claw.raise_arm, 'move_to_pos': self.robot.arm_and_claw.move_arm_to_position,
@@ -32,3 +39,17 @@ class DelegateThatReceives(object):
             method_dict['move_to_pos'](pos)
         else:
             method_dict[command]()
+
+    ##Sprint 1 SYSTEM
+
+    def Forward_Time(self,speed,time):
+
+    def Forward_Time_Inches(self,speed,inches):
+
+    def Forward_Inches(self,speed,inches):
+
+    def beep_button(self,numberofbeeps):
+
+    def tone_button(self,duration,frequency):
+
+    def speak_button(self,text):
