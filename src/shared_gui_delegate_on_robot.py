@@ -13,12 +13,10 @@ import time
 import math
 import shared_gui
 
-
 class DelegateThatReceives(object):
 
     def __init__(self, robot):
-        self.robot = robot
-
+        self.robot = bot.RoseBot()
 
     ##DRIVE SYSTEM
 
@@ -29,7 +27,6 @@ class DelegateThatReceives(object):
     #Handle Forward and Backward
     def movement(self, left_speed, right_speed):
         self.robot.drive_system.go(int(left_speed), int(right_speed))
-
     ##ARM SYSTEM
 
     def arm_movement(self, command, pos=0):
@@ -43,13 +40,16 @@ class DelegateThatReceives(object):
     ##Sprint 1 SYSTEM
 
     def Forward_Time(self,speed,time):
-
+        self.robot.drive_system.go_straight_for_seconds(time,speed)
     def Forward_Time_Inches(self,speed,inches):
-
+        self.robot.drive_system.go_straight_for_inches_using_time(inches,speed)
     def Forward_Inches(self,speed,inches):
-
+        self.robot.drive_system.go_straight_for_inches_using_encoder(self,inches,speed)
     def beep_button(self,numberofbeeps):
+        for k in range(int(numberofbeeps)):
+            self.robot.SoundSystem.beeper
 
     def tone_button(self,duration,frequency):
-
+        self.robot.SoundSystem.tone_maker(frequency,duration)
     def speak_button(self,text):
+        self.robot.SoundSystem.speech_maker(text)
