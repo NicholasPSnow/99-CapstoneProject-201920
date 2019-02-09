@@ -115,7 +115,8 @@ class DriveSystem(object):
         at the given speed for the given number of inches,
         using the encoder (degrees traveled sensor) built into the motors.
         """
-        inches_per_degree = self.left_motor.WheelCircumference / 360
+        WheelCircumference = 1.3 * math.pi
+        inches_per_degree = WheelCircumference / 360
         degree = inches/inches_per_degree
         self.left_motor.reset_position()
         self.go(speed, speed)
