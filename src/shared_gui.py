@@ -102,6 +102,7 @@ def get_arm_frame(window, mqtt_sender):
     frame_label.grid(row=0, column=1)
     position_label.grid(row=1, column=0)
     position_entry.grid(row=1, column=1)
+    position_entry.insert(0, "0")
     move_arm_button.grid(row=1, column=2)
 
     blank_label.grid(row=2, column=1)
@@ -113,8 +114,7 @@ def get_arm_frame(window, mqtt_sender):
     raise_arm_button["command"] = lambda: handle_raise_arm(mqtt_sender)
     lower_arm_button["command"] = lambda: handle_lower_arm(mqtt_sender)
     calibrate_arm_button["command"] = lambda: handle_calibrate_arm(mqtt_sender)
-    move_arm_button["command"] = lambda: handle_move_arm_to_position(
-        position_entry, mqtt_sender)
+    move_arm_button["command"] = lambda: handle_move_arm_to_position(position_entry.get(), mqtt_sender)
 
     return frame
 
@@ -164,7 +164,7 @@ def handle_forward(left_entry_box, right_entry_box, mqtt_sender):
       :type  right_entry_box:  ttk.Entry
       :type  mqtt_sender:      com.MqttClient
     """
-    print('forward', left_entry_box, right_entry_box)
+    print('forward', left_entry_box.get(), right_entry_box.get())
     mqtt_sender.send_message('movement', [left_entry_box.get(), right_entry_box.get()])
 
 
@@ -245,15 +245,15 @@ def handle_calibrate_arm(mqtt_sender):
     mqtt_sender.send_message('calibrate')
     print("Calibrate")
 
-def handle_move_arm_to_position(arm_position_entry, mqtt_sender):
+def handle_move_arm_to_position(position_entry, mqtt_sender):
     """
     Tells the robot to move its Arm to the position in the given Entry box.
     The robot must have previously calibrated its Arm.
       :type  arm_position_entry  ttk.Entry
       :type  mqtt_sender:        com.MqttClient
     """
-    mqtt_sender.send_message('move_to_pos', [arm_position_entry])
-    print("Move to Position:",arm_position_entry)
+    mqtt_sender.send_message('move_to_pos', [str(position_entry)])
+    print("Move to Position:",position_entry)
 
 ###############################################################################
 # Handlers for Buttons in the Control frame.
@@ -334,13 +334,13 @@ def get_Sprint_1_Drive_System_frame(window, mqtt_sender):
 
 
 def handle_forward_time_button(speed,time,mqtt_sender):
-    mqtt_sender.send_message('Forward_Time', [speed,time])
+    mqtt_sender.send_message('Forward_Time', [str(speed),str(time)])
     print('Forward_Time',speed,time)
 def handle_forward_time_inches_button(speed,inches,mqtt_sender):
-    mqtt_sender.send_message('Forward_Time_Inches', [speed, inches])
+    mqtt_sender.send_message('Forward_Time_Inches', [str(speed), str(inches)])
     print('Forward_Time_Inches', speed, inches)
 def handle_forward_inches_button(speed,inches,mqtt_sender):
-    mqtt_sender.send_message('Forward_Inches', [speed, inches])
+    mqtt_sender.send_message('Forward_Inches', [str(speed), str(inches)])
     print('Forward_Inches', speed, inches)
 
 
@@ -403,10 +403,10 @@ def get_Sprint_1_Beeper_System_frame(window, mqtt_sender):
 
 
 def handle_beep_button(numberofbeeps,mqtt_sender):
-    mqtt_sender.send_message('beep_button', [numberofbeeps])
+    mqtt_sender.send_message('beep_button', [str(numberofbeeps)])
     print('beep_button',numberofbeeps)
 def handle_tone_button(duration,frequency,mqtt_sender):
-    mqtt_sender.send_message('tone_button', [duration, frequency])
+    mqtt_sender.send_message('tone_button', [str(duration), str(frequency)])
     print('tone_button', duration, frequency)
 def handle_speak_button(text,mqtt_sender):
     mqtt_sender.send_message('speak_button', [text])
