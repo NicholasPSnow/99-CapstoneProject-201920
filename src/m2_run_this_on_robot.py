@@ -19,8 +19,8 @@ def main():
     """
     #test_go(70,70)
     #test_stop()
-    test_go_straight_for_seconds()
-    #test_go_straight_for_inches_using_time()
+    #test_go_straight_for_seconds()
+    test_go_straight_for_inches_using_time()
     #real_thing()
 
 def test_go(speed1, speed2):
