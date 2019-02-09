@@ -203,7 +203,14 @@ class DriveSystem(object):
     # -------------------------------------------------------------------------
 
     def spin_clockwise_until_beacon_heading_is_nonnegative(self, speed):
-        pass
+        self.left_motor.turn_on(50)
+        self.right_motor.turn_on(-50)
+        last = self.sensor_system.ir_proximity_sensor.get_distance()
+        while True:
+            current = self.sensor_system.ir_proximity_sensor.get_distance()
+            if last > current:
+                break
+            last = current
 
     def spin_counterclockwise_until_beacon_heading_is_nonpositive(self, speed):
         pass
