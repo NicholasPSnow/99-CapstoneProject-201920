@@ -21,7 +21,8 @@ def main():
     delegate=shared_gui_delegate_on_robot.DelegateThatReceives(robot)
     mqtt_reciever=com.MqttClient(delegate)
     mqtt_reciever.connect_to_pc()
-    while True:
+
+    while shared_gui_delegate_on_robot.DelegateThatReceives.Exit==0:
         time.sleep(0.01)
 
 # -----------------------------------------------------------------------------
