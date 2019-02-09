@@ -40,14 +40,22 @@ class DelegateThatReceives(object):
         self.robot.drive_system.go(int(left_speed), int(right_speed))
 
     ##ARM SYSTEM
-    def arm_movement(self, command, pos=0):
-        print("Command Recieved: ",command)
-        method_dict = {'up': self.robot.arm_and_claw.raise_arm, 'move_to_pos': self.robot.arm_and_claw.move_arm_to_position,
-                       'calibrate': self.robot.arm_and_claw.calibrate_arm, 'down': self.robot.arm_and_claw.lower_arm}
-        if command == 'move_to_pos':
-            method_dict['move_to_pos'](pos)
-        else:
-            method_dict[command]()
+    def up(self):
+        print("Command Recieved: Up")
+        self.robot.arm_and_claw.raise_arm()
+
+    def down(self):
+        print("Command Recieved: Down")
+        self.robot.arm_and_claw.lower_arm()
+
+    def move_to_pos(self,position):
+        print("Command Recieved: Move to Position",position)
+        self.robot.arm_and_claw.move_arm_to_position(int(position))
+
+    def calibrate(self):
+        print("Command Recieved: Calibrate Arm")
+        self.robot.arm_and_claw.calibrate_arm()
+    
 
     ##Sprint 1 SYSTEM
 
@@ -67,7 +75,7 @@ class DelegateThatReceives(object):
             self.robot.sound_system.beeper.beep()
     def tone_button(self,duration,frequency):
         print("Command Recieved: Tone")
-        self.robot.sound_system.tone_maker.play_tone(frequency,duration*1000)
+        self.robot.sound_system.tone_maker.play_tone(frequency,duration)
 
     def speak_button(self,text):
         print("Command Recieved: Speak")
