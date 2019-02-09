@@ -62,10 +62,11 @@ class DelegateThatReceives(object):
     def beep_button(self,numberofbeeps):
         print("Command Recieved: Beep")
         for k in range(int(numberofbeeps)):
-            self.robot.SoundSystem.beeper
+            self.robot.sound_system.beeper.beep()
     def tone_button(self,duration,frequency):
         print("Command Recieved: Tone")
-        self.robot.SoundSystem.tone_maker(frequency,duration)
+        self.robot.sound_system.tone_maker.play_tone(frequency,duration)
+
     def speak_button(self,text):
         print("Command Recieved: Speak")
-        self.robot.SoundSystem.speech_maker(text)
+        self.robot.sound_system.speech_maker.speak(text)
