@@ -21,7 +21,7 @@ def main():
     #test_stop()
     #test_go_straight_for_seconds()
     #test_go_straight_for_inches_using_time()
-    test_go_straight_for_inches_using_encoder()
+    #test_go_straight_for_inches_using_encoder()
     #real_thing()
 
 def test_go_straight_for_inches_using_encoder():

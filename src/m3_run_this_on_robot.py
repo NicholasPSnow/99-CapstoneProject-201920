@@ -19,7 +19,7 @@ def main():
       2. Communicates via MQTT with the GUI code that runs on the LAPTOP.
     """
     # real_thing()
-
+    run_test_ir()
 
 def real_thing():
     robot = bot.RoseBot()
@@ -33,11 +33,21 @@ def real_thing():
 
 def run_test_ir():
     robot = bot.RoseBot()
-    robot.drive_system.go_forward_until_distance_is_less_than(24, 50)
+    """
+    robot.drive_system.go_forward_until_distance_is_less_than(6, 25)
     time.sleep(5)
-    robot.drive_system.go_backward_until_distance_is_greater_than(24, 50)
+    robot.drive_system.go_backward_until_distance_is_greater_than(6, 25)
     time.sleep(5)
-    robot.drive_system.go_until_distance_is_within(24, 50)
+    robot.drive_system.go_until_distance_is_within(6, 25)
+    time.sleep(5)
+    robot.drive_system.go_until_distance_is_within(6, 25)
+    """
+    a = time.time()
+    robot.drive_system.go(100, 100)
+    while time.time() - a < 5000:
+        if robot.sensor_system.ir_proximity_sensor.get_distance_in_inches() < 12:
+            robot.sound_system.beeper.beep()
+    robot.drive_system.stop()
 
 
 def run_test_arm():
