@@ -51,13 +51,13 @@ class DelegateThatReceives(object):
 
     def Forward_Time(self,speed,time):
         print("Command Recieved: Forward_Time")
-        self.robot.drive_system.go_straight_for_seconds(time,speed)
+        self.robot.drive_system.go_straight_for_seconds(int(time),int(speed))
     def Forward_Time_Inches(self,speed,inches):
         print("Command Recieved: Forward_Time_Inches")
-        self.robot.drive_system.go_straight_for_inches_using_time(inches,speed)
+        self.robot.drive_system.go_straight_for_inches_using_time(int(inches),int(speed))
     def Forward_Inches(self,speed,inches):
         print("Command Recieved: Forward_Inches")
-        self.robot.drive_system.go_straight_for_inches_using_encoder(self,inches,speed)
+        self.robot.drive_system.go_straight_for_inches_using_encoder(self,int(inches),int(speed))
 
     def beep_button(self,numberofbeeps):
         print("Command Recieved: Beep")
@@ -65,7 +65,7 @@ class DelegateThatReceives(object):
             self.robot.sound_system.beeper.beep()
     def tone_button(self,duration,frequency):
         print("Command Recieved: Tone")
-        self.robot.sound_system.tone_maker.play_tone(frequency,duration)
+        self.robot.sound_system.tone_maker.play_tone(frequency,duration*1000)
 
     def speak_button(self,text):
         print("Command Recieved: Speak")
