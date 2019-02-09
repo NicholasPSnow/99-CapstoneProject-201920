@@ -11,7 +11,6 @@ import mqtt_remote_method_calls as com
 import tkinter
 from tkinter import ttk
 import shared_gui
-import shared_gui_delegate_on_robot
 import time
 
 def main():

@@ -7,7 +7,6 @@
 import rosebot as bot
 import mqtt_remote_method_calls as com
 import time
-import math
 import shared_gui_delegate_on_robot
 
 
@@ -19,7 +18,7 @@ def main():
     """
 
     robot = bot.RoseBot()
-    delegate=shared_gui_delegate_on_robot(robot)
+    delegate=shared_gui_delegate_on_robot.DelegateThatReceives(robot)
     mqtt_reciever=com.MqttClient(delegate)
     mqtt_reciever.connect_to_pc()
     while True:
