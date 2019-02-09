@@ -120,14 +120,10 @@ class DriveSystem(object):
         degree = inches/inches_per_degree
         self.left_motor.reset_position()
         self.go(speed, speed)
-        print('go')
-        print('degree',degree)
-        print('position')
         while True:
             position = self.left_motor.get_position()
             print(position)
             if abs(position) >= degree:
-                print('break')
                 break
         self.stop()
 
