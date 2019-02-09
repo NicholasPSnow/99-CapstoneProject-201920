@@ -28,6 +28,7 @@ def test_go(speed1, speed2):
     robot.drive_system.go(speed1,speed2)
 
 def test_stop():
+
     robot = rosebot.RoseBot()
     robot.drive_system.stop()
 
