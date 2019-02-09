@@ -50,12 +50,15 @@ class DelegateThatReceives(object):
 
     def move_to_pos(self,position):
         print("Command Recieved: Move to Position",position)
-        self.robot.arm_and_claw.move_arm_to_position(int(position))
+        integerposition= int(position)
+        if integerposition <=10:
+            integerposition = 10
+        self.robot.arm_and_claw.move_arm_to_position(integerposition)
 
     def calibrate(self):
         print("Command Recieved: Calibrate Arm")
         self.robot.arm_and_claw.calibrate_arm()
-    
+
 
     ##Sprint 1 SYSTEM
 
