@@ -22,8 +22,11 @@ def main():
     mqtt_reciever=com.MqttClient(delegate)
     mqtt_reciever.connect_to_pc()
 
-    while shared_gui_delegate_on_robot.DelegateThatReceives.Exit==0:
+    while True:
         time.sleep(0.01)
+        if shared_gui_delegate_on_robot.DelegateThatReceives.is_exit()==1:
+            print("Quit Sucessful")
+            break;
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
