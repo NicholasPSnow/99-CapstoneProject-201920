@@ -19,16 +19,22 @@ class DelegateThatReceives(object):
         self.robot = bot.RoseBot()
 
     ##DRIVE SYSTEM
+    #Handle Quit and Exit
+    def command(self,argument):
+        if argument == "quit":
+            pass
+        if argument == 'exit':
+            pass
 
-    #Handle Stop and Quit
-    def command(self):
-        pass
+    def stop(self):
+        self.robot.drive_system.stop()
 
-    #Handle Forward and Backward
+
+    #Handle Forward and Backward and Left and Right
     def movement(self, left_speed, right_speed):
         self.robot.drive_system.go(int(left_speed), int(right_speed))
-    ##ARM SYSTEM
 
+    ##ARM SYSTEM
     def arm_movement(self, command, pos=0):
         method_dict = {'up': self.robot.arm_and_claw.raise_arm, 'move_to_pos': self.robot.arm_and_claw.move_arm_to_position,
                        'calibrate': self.robot.arm_and_claw.calibrate_arm, 'down': self.robot.arm_and_claw.lower_arm}
