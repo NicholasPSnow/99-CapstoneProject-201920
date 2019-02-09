@@ -20,7 +20,6 @@ class DelegateThatReceives(object):
         self.Quit=0
 
     def is_exit(self):
-        print("Quit Value is: ",self.Quit)
         return self.Quit
 
     ##DRIVE SYSTEM

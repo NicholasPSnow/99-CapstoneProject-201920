@@ -21,10 +21,9 @@ def main():
     delegate=shared_gui_delegate_on_robot.DelegateThatReceives(robot)
     mqtt_reciever=com.MqttClient(delegate)
     mqtt_reciever.connect_to_pc()
-
     while True:
         time.sleep(0.01)
-        if shared_gui_delegate_on_robot.DelegateThatReceives.is_exit()==1:
+        if delegate.is_exit()==1:
             print("Quit Sucessful")
             break;
 
