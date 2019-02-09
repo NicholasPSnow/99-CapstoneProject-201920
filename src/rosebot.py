@@ -41,6 +41,8 @@ class RoseBot(object):
 ###############################################################################
 #    DriveSystem
 ###############################################################################
+
+
 class DriveSystem(object):
     """
     Controls the robot's motion via GO and STOP methods,
@@ -120,7 +122,7 @@ class DriveSystem(object):
         inches_per_degree = self.left_motor.WheelCircumference / 360
         degree = inches/inches_per_degree
         self.left_motor.reset_position()
-        self.go(speed,speed)
+        self.go(speed, speed)
         while True:
             position = self.left_motor.get_position()
             if abs(position) >= degree:
@@ -136,7 +138,6 @@ class DriveSystem(object):
         Goes straight at the given speed until the intensity returned
         by the color_sensor is less than the given intensity.
         """
-
 
     def go_straight_until_intensity_is_greater_than(self, intensity, speed):
         """
@@ -164,6 +165,11 @@ class DriveSystem(object):
         Goes forward at the given speed until the robot is less than
         the given number of inches from the nearest object that it senses.
         """
+        self.go(speed, speed)
+        while True:
+            if self.sensor_system.ir_proximity_sensor.get_distance_in_inches() < inches:
+                break
+        self.stop()
 
     def go_backward_until_distance_is_greater_than(self, inches, speed):
         """
@@ -171,12 +177,28 @@ class DriveSystem(object):
         the given number of inches from the nearest object that it senses.
         Assumes that it senses an object when it starts.
         """
+        self.go(-speed, -speed)
+        while True:
+            if self.sensor_system.ir_proximity_sensor.get_distance_in_inches() > inches:
+                break
+        self.stop()
 
     def go_until_distance_is_within(self, delta_inches, speed):
         """
         Goes forward or backward, repeated as necessary, until the robot is
         within the given delta-inches from the nearest object that it senses.
         """
+        dist = self.sensor_system.ir_proximity_sensor.get_distance_in_inches() - delta_inches
+        multiplier = dist / abs(dist)
+        self.go(speed * multiplier, speed * multiplier)
+        if dist <= delta_inches:
+            while True:
+                if self.sensor_system.ir_proximity_sensor.get_distance_in_inches() > delta_inches:
+                    break
+        else:
+            while True:
+                if self.sensor_system.ir_proximity_sensor.get_distance_in_inches() < delta_inches:
+                    break
 
     # -------------------------------------------------------------------------
     # Methods for driving that use the infrared beacon sensor.
@@ -244,7 +266,6 @@ class ArmAndClaw(object):
             self.motor.turn_on(-100)
         self.motor.turn_off()
         self.motor.reset_position()
-
 
     def move_arm_to_position(self, desired_arm_position):
         """
