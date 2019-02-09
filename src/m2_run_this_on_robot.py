@@ -42,7 +42,7 @@ def test_go_straight_for_seconds():
     robot.drive_system.go_straight_for_seconds(3,-20)
 
 def test_go_straight_for_inches_using_time():
-    robot = rosebot.roseBot()
+    robot = rosebot.RoseBot()
     robot.drive_system.go_straight_for_inches_using_time(10,100)
     robot.drive_system.go_straight_for_inches_using_time(10,-100)
     robot.drive_system.go_straight_for_inches_using_time(5,25)
