@@ -70,7 +70,7 @@ class DelegateThatReceives(object):
         self.robot.drive_system.go_straight_for_inches_using_time(int(inches),int(speed))
     def Forward_Inches(self,speed,inches):
         print("Command Recieved: Forward_Inches")
-        self.robot.drive_system.go_straight_for_inches_using_encoder(self,int(inches),int(speed))
+        self.robot.drive_system.go_straight_for_inches_using_encoder(int(inches),int(speed))
 
     def beep_button(self,numberofbeeps):
         print("Command Recieved: Beep")
