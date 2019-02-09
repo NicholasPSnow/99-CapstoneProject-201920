@@ -17,9 +17,9 @@ def main():
       1. Makes the EV3 robot to various things.
       2. Communicates via MQTT with the GUI code that runs on the LAPTOP.
     """
-    test_go(70,-70)
-    test_stop()
-    #test_go_straight_for_seconds()
+    #test_go(70,70)
+    #test_stop()
+    test_go_straight_for_seconds()
     #test_go_straight_for_inches_using_time()
     #real_thing()
 
