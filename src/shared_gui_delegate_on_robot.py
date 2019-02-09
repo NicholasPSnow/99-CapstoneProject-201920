@@ -23,8 +23,10 @@ class DelegateThatReceives(object):
     def command(self,argument):
         print("Command Recieved: ",argument)
         if argument == "quit":
+            print("Quit")
             pass
         if argument == 'exit':
+            print("Exit")
             pass
 
     def stop(self):
