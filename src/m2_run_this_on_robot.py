@@ -20,8 +20,16 @@ def main():
     #test_go(70,70)
     #test_stop()
     #test_go_straight_for_seconds()
-    test_go_straight_for_inches_using_time()
+    #test_go_straight_for_inches_using_time()
+    test_go_straight_for_inches_using_encoder()
     #real_thing()
+
+def test_go_straight_for_inches_using_encoder():
+    robot = rosebot.RoseBot()
+    robot.drive_system.go_straight_for_inches_using_encoder(10,100)
+    robot.drive_system.go_straight_for_inches_using_encoder(10,-100)
+    robot.drive_system.go_straight_for_inches_using_encoder(20,100)
+    robot.drive_system.go_straight_for_inches_using_encoder(20,-100)
 
 def test_go(speed1, speed2):
     robot = rosebot.RoseBot()
