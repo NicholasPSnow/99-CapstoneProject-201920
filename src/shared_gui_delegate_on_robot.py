@@ -67,6 +67,20 @@ class DelegateThatReceives(object):
         self.robot.arm_and_claw.calibrate_arm()
 
 
+    # IR Sensor
+
+    def ir_forward(self, inches, speed):
+        print("Command Received: Go forward until distance is less than")
+        self.robot.drive_system.go_forward_until_distance_is_less_than(inches, speed)
+
+    def ir_backward(self, inches, speed):
+        print("Command Received: Go backward until distance is greater than")
+        self.robot.drive_system.go_backward_until_distance_is_greater_than(inches, speed)
+
+    def ir_within_dist(self, inches, speed):
+        print("Command Received: Go until distance is within")
+        self.robot.drive_system.go_until_distance_is_within(inches, speed)
+
     ##Sprint 1 SYSTEM
 
     def Forward_Time(self,speed,time):
