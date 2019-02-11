@@ -20,6 +20,8 @@ def main():
     """
     # real_thing()
     # run_test_ir(0)
+    # run_test_arm()
+    run_test_camera()
 
 def real_thing():
     robot = bot.RoseBot()
@@ -29,6 +31,13 @@ def real_thing():
 
     while True:
         time.sleep(0.01)
+
+
+def run_test_camera():
+    robot = bot.RoseBot()
+    robot.drive_system.spin_clockwise_until_sees_object(25, 100)
+    time.sleep(3)
+    robot.drive_system.spin_counterclockwise_until_sees_object(25, 100)
 
 
 def run_test_ir(n):
