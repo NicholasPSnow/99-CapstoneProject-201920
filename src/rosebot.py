@@ -198,12 +198,12 @@ class DriveSystem(object):
         Goes forward at the given speed until the robot is less than
         the given number of inches from the nearest object that it senses.
         """
-        self.go(speed, speed)
+        self.go(abs(speed), abs(speed))
         while True:
             distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
             if distance < inches:
+                self.stop()
                 break
-        self.stop()
 
     def go_backward_until_distance_is_greater_than(self, inches, speed):
         """
@@ -211,12 +211,12 @@ class DriveSystem(object):
         the given number of inches from the nearest object that it senses.
         Assumes that it senses an object when it starts.
         """
-        self.go(-speed, -speed)
+        self.go(-abs(speed),-abs(speed))
         while True:
             distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
             if distance > inches:
+                self.stop()
                 break
-        self.stop()
 
     def go_until_distance_is_within(self, delta, inches, speed):
         """
@@ -237,6 +237,7 @@ class DriveSystem(object):
             elif distance < minimum:
                 self.go_backward_until_distance_is_greater_than(self,minimum,speed)
             else:
+                self.stop()
                 break
 
 
@@ -249,29 +250,42 @@ class DriveSystem(object):
                Spins clockwise at the given speed until the heading to the Beacon
                is nonnegative.  Requires that the user turn on the Beacon.
                """
-        self.left_motor.turn_on(100)
-        self.right_motor.turn_on(100)
-        last = self.sensor_system.ir_proximity_sensor.get_distance()
+        self.left_motor.turn_on(abs(speed))
+        self.right_motor.turn_on(-abs(speed))
         while True:
-            current = self.sensor_system.ir_proximity_sensor.get_distance()
-            if last > current:
+            beacon = InfraredBeaconSensor.get_heading_to_beacon()
+            if beacon > 0:
+                self.stop()
                 break
-            last = current
+
+
 
     def spin_counterclockwise_until_beacon_heading_is_nonpositive(self, speed):
         """
         Spins counter-clockwise at the given speed until the heading to the Beacon
         is nonnegative.  Requires that the user turn on the Beacon.
         """
-        pass
+        self.left_motor.turn_on(-abs(speed))
+        self.right_motor.turn_on(abs(speed))
+        while True:
+            beacon = InfraredBeaconSensor.get_heading_to_beacon()
+            if beacon < 0:
+                self.stop()
+                break
 
-    def go_straight_to_the_beacon(self, speed):
+    def go_straight_to_the_beacon(self, speed,inches):
         """
         Goes forward at the given speed until the robot is less than the
         given number of inches from the Beacon.
         Assumes that the Beacon is turned on and placed straight ahead.
         """
-        pass
+        self.left_motor.turn_on(abs(speed))
+        self.right_motor.turn_on(abs(speed))
+        while True:
+            beacon = InfraredBeaconSensor.get_distance_to_beacon()
+            if beacon < inches:
+                self.stop()
+                break
 
     # -------------------------------------------------------------------------
     # Methods for driving that use the camera.
