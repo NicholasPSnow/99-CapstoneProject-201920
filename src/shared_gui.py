@@ -442,7 +442,7 @@ def get_Nick_frame(window, mqtt_sender):
     rate_of_beeps.insert(0, "10")
     initial_beeps_label = ttk.Label(frame, text="Initial Beep Rate")
     initial_beeps = ttk.Entry(frame, width=8, justify=tkinter.LEFT)
-    initial_beeps.insert(0, "10")
+    initial_beeps.insert(0, "5")
 
     speed_label = ttk.Label(frame, text="Turning Speed")
     speed = ttk.Entry(frame, width=8, justify=tkinter.LEFT)
@@ -478,15 +478,15 @@ def get_Nick_frame(window, mqtt_sender):
 
     # Set the button callbacks:
     proximity_button["command"] = lambda: handle_proximity_button(rate_of_beeps.get(), initial_beeps.get(), mqtt_sender)
-    camera_button["command"] = lambda: handle_camera_button(speed.get(),direction.get(), mqtt_sender)
+    camera_button["command"] = lambda: handle_camera_button(speed.get(),direction.get(),rate_of_beeps.get(), initial_beeps.get(), mqtt_sender)
     line_button["command"] = lambda: handle_line_button(starting_side.get(), mqtt_sender)
     return frame
 def handle_proximity_button(rate_of_beeps, initial_beeps, mqtt_sender):
     mqtt_sender.send_message('proximity_button', [str(rate_of_beeps),str(initial_beeps)])
     print('proximity',rate_of_beeps, initial_beeps)
-def handle_camera_button(speed,direction, mqtt_sender):
-    mqtt_sender.send_message('camera_button', [str(speed), str(direction)])
-    print('camera', speed, direction)
+def handle_camera_button(speed,direction,rate_of_beeps, initial_beeps, mqtt_sender):
+    mqtt_sender.send_message('camera_button', [str(speed), str(direction),str(rate_of_beeps),str(initial_beeps)])
+    print('camera', speed, direction, rate_of_beeps, initial_beeps)
 def handle_line_button(starting_side, mqtt_sender):
     mqtt_sender.send_message('line_button', [str(starting_side)])
     print('line', starting_side)

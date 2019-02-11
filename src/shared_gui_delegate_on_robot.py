@@ -117,8 +117,31 @@ class DelegateThatReceives(object):
 
     def proximity_button(self,rate_of_beeps, initial_beeps):
         print("Command Recieved: Proximity")
-    def camera_button(self,speed,direction):
+        self.robot.arm_and_claw.lower_arm()
+        int_initial_beeps=int(initial_beeps)
+        int_rate_of_beeps=int(rate_of_beeps)
+        while self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches()>2:
+            self.robot.drive_system.go(75,75)
+            time.sleep(int_initial_beeps/(int_rate_of_beeps*(1/self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches())))
+            self.robot.sound_system.beeper.beep()
+        self.robot.arm_and_claw.raise_arm()
+
+    def camera_button(self,speed,direction,rate_of_beeps, initial_beeps):
         print("Command Recieved: Camera")
+
+        if direction=="Clockwise":
+            while True:
+                self.robot.drive_system.go(50,-50)
+                if self.robot.sensor_system.camera.get_biggest_blob()==1:
+                    self.robot.drive_system.stop()
+                    break;
+        if direction=="Counter-Clockwise":
+            while True:
+                self.robot.drive_system.go(-50,50)
+                if self.robot.sensor_system.camera.get_biggest_blob()==1:
+                    self.robot.drive_system.stop()
+                    break;
+        self.proximity_button(rate_of_beeps, initial_beeps)
     def line_button(self,starting_side):
         print("Command Recieved: Line")
         original = self.robot.sensor_system.color_sensor.get_reflected_light_intensity()
