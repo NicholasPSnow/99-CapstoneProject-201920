@@ -117,15 +117,41 @@ class DelegateThatReceives(object):
 
     def proximity_button(self,rate_of_beeps, initial_beeps):
         print("Command Recieved: Proximity")
-
-
     def camera_button(self,speed,direction):
         print("Command Recieved: Camera")
-
-
     def line_button(self,starting_side):
         print("Command Recieved: Line")
 
 ## COlOR GUI HANDLER
+    def intensity_less_button(self,speed, intensity):
+        print("Command Recieved: Intensity Less Than")
+        self.robot.drive_system.go_straight_until_intensity_is_less_than(int(intensity),int(speed))
+    def intensity_greater_button(self,speed, intensity):
+        print("Command Recieved: Intensity Greater Than")
+        self.robot.drive_system.go_straight_until_intensity_is_greater_than(int(intensity),int(speed))
+    def until_color_button(self,speed, color):
+        intcolor = self.translate_color(color)
+        print("Command Recieved: Until Color", color, intcolor)
+        self.robot.drive_system.go_straight_until_color_is_not(intcolor, int(speed))
+    def until_not_color_button(self, speed, color):
+        intcolor = self.translate_color(color)
+        print("Command Recieved: Until Not Color", color, intcolor)
+        self.robot.drive_system.go_straight_until_color_is_not(intcolor,int(speed))
 
+    def translate_color(self,color):
+        if color=="Black":
+            intcolor=1
+        if color=="Blue":
+            intcolor=2
+        if color=="Green":
+            intcolor=3
+        if color=="Yellow":
+            intcolor=4
+        if color=="Red":
+            intcolor=5
+        if color=="White":
+            intcolor=6
+        if color=="Brown":
+            intcolor=7
 
+        return intcolor
