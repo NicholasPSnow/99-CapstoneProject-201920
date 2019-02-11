@@ -148,27 +148,8 @@ class DelegateThatReceives(object):
         print("Command Recieved: Intensity Greater Than")
         self.robot.drive_system.go_straight_until_intensity_is_greater_than(int(intensity),int(speed))
     def until_color_button(self,speed, color):
-        intcolor = self.translate_color(color)
-        print("Command Recieved: Until Color", color, intcolor)
-        self.robot.drive_system.go_straight_until_color_is_not(intcolor, int(speed))
+        print("Command Recieved: Until Color", color, self.robot.sensor_system.color_sensor.get_color_number_from_color_name(color))
+        self.robot.drive_system.go_straight_until_color_is_not(self.robot.sensor_system.color_sensor.get_color_number_from_color_name(color), int(speed))
     def until_not_color_button(self, speed, color):
-        intcolor = self.translate_color(color)
-        print("Command Recieved: Until Not Color", color, intcolor)
-        self.robot.drive_system.go_straight_until_color_is_not(intcolor,int(speed))
-    def translate_color(self,color):
-        if color=="Black":
-            intcolor=1
-        if color=="Blue":
-            intcolor=2
-        if color=="Green":
-            intcolor=3
-        if color=="Yellow":
-            intcolor=4
-        if color=="Red":
-            intcolor=5
-        if color=="White":
-            intcolor=6
-        if color=="Brown":
-            intcolor=7
-
-        return intcolor
+        print("Command Recieved: Until Not Color", color, self.robot.sensor_system.color_sensor.get_color_number_from_color_name(color))
+        self.robot.drive_system.go_straight_until_color_is_not(self.robot.sensor_system.color_sensor.get_color_number_from_color_name(color),int(speed))
