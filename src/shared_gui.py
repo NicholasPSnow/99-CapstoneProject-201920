@@ -481,7 +481,6 @@ def get_Nick_frame(window, mqtt_sender):
     camera_button["command"] = lambda: handle_camera_button(speed.get(),direction.get(), mqtt_sender)
     line_button["command"] = lambda: handle_line_button(starting_side.get(), mqtt_sender)
     return frame
-
 def handle_proximity_button(rate_of_beeps, initial_beeps, mqtt_sender):
     mqtt_sender.send_message('proximity_button', [str(rate_of_beeps),str(initial_beeps)])
     print('proximity',rate_of_beeps, initial_beeps)
@@ -491,3 +490,86 @@ def handle_camera_button(speed,direction, mqtt_sender):
 def handle_line_button(starting_side, mqtt_sender):
     mqtt_sender.send_message('line_button', [str(starting_side)])
     print('line', starting_side)
+
+
+def get_Sprint_2_Color_frame(window, mqtt_sender):
+    """
+    Constructs and returns a frame on the given window, where the frame
+    has Beeper objects that control the EV3 robot's motion
+    by passing messages using the given MQTT Sender.
+      :type  window:       ttk.Frame | ttk.Toplevel
+      :type  mqtt_sender:  com.MqttClient
+    """
+    # Construct the frame to return:
+    frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
+    frame.grid()
+
+    # Construct the widgets on the frame:
+    frame_label = ttk.Label(frame, text="Nick's System")
+    intensity_less_label = ttk.Label(frame, text="Go Until Intensity is Less Than")
+    intensity_less_button = ttk.Button(frame, text="Run Less than Intensity")
+
+    intensity_greater_label = ttk.Label(frame, text="Go Until Intensity is Greater Than")
+    intensity_greater_button = ttk.Button(frame, text="Run Less than Intensity")
+
+    until_color_label = ttk.Label(frame, text="Go Until Color")
+    until_color_button = ttk.Button(frame, text="Run Go Until Color")
+
+    until_not_color_label = ttk.Label(frame, text="Go Until Not Color")
+    until_not_color_button = ttk.Button(frame, text="Run Go Until Not Color")
+
+    color_label = ttk.Label(frame, text="Color")
+    color= ttk.Entry(frame, width=8, justify=tkinter.LEFT)
+    color.insert(0, "Red")
+    speed_label = ttk.Label(frame, text="Speed")
+    speed = ttk.Entry(frame, width=8, justify=tkinter.LEFT)
+    speed.insert(0, "100")
+
+    intensity_label = ttk.Label(frame, text="Light Intensity")
+    intensity = ttk.Entry(frame, width=8, justify=tkinter.LEFT)
+    intensity.insert(0, "50")
+
+
+
+    # Grid the widgets:
+    frame_label.grid(row=0, column=1)
+    color_label.grid(row=1, column=0)
+    color.grid(row=2, column=0)
+    speed_label.grid(row=1, column=1)
+    speed.grid(row=2, column=1)
+    intensity_label.grid(row=1, column=2)
+    intensity.grid(row=2, column=2)
+
+    intensity_less_label.grid(row=3, column=0)
+    intensity_less_button.grid(row=4, column=0)
+    intensity_greater_label.grid(row=5, column=0)
+    intensity_greater_button.grid(row=6, column=0)
+
+    until_color_label.grid(row=3, column=2)
+    until_color_button.grid(row=4, column=2)
+    until_not_color_label.grid(row=5, column=2)
+    until_not_color_button.grid(row=6, column=2)
+
+
+    # Set the button callbacks:
+    intensity_less_button["command"] = lambda: handle_intensity_less_button(speed.get(), intensity.get(), mqtt_sender)
+    intensity_greater_button["command"] = lambda: handle_intensity_greater_button(speed.get(),intensity.get(), mqtt_sender)
+    until_color_button["command"] = lambda: handle_until_color_button(speed.get(),color.get(), mqtt_sender)
+    until_not_color_button["command"] = lambda: handle_until_not_color_button(speed.get(),color.get(), mqtt_sender)
+    return frame
+
+def handle_intensity_less_button(speed, intensity, mqtt_sender):
+    mqtt_sender.send_message('intensity_less_button', [str(speed),str(intensity)])
+    print('intensity_less_button',speed, intensity)
+
+def handle_intensity_greater_button(speed, intensity, mqtt_sender):
+    mqtt_sender.send_message('intensity_greater_button', [str(speed), str(intensity)])
+    print('intensity_greater_button', speed, intensity)
+
+def handle_until_color_button(speed,color, mqtt_sender):
+    mqtt_sender.send_message('until_color_button', [str(speed),str(color)])
+    print('until_color_button', speed,color)
+
+def handle_until_not_color_button(speed,color, mqtt_sender):
+    mqtt_sender.send_message('until_not_color_button', [str(speed),str(color)])
+    print('until_not_color_button', speed,color)
