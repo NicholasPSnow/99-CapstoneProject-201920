@@ -35,9 +35,9 @@ def real_thing():
 
 def run_test_camera():
     robot = bot.RoseBot()
-    robot.drive_system.spin_clockwise_until_sees_object(25, 100)
+    robot.drive_system.spin_clockwise_until_sees_object(25, 10)
     time.sleep(3)
-    robot.drive_system.spin_counterclockwise_until_sees_object(25, 100)
+    robot.drive_system.spin_counterclockwise_until_sees_object(25, 10)
 
 
 def run_test_ir(n):
