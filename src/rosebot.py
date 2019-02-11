@@ -138,8 +138,8 @@ class DriveSystem(object):
         """
         self.go(speed, speed)
         while True:
-            color = ColorSensor.get_reflected_light_intensity()
-            if color < intensity:
+            sensor = ColorSensor.get_reflected_light_intensity()
+            if sensor < intensity:
                 self.stop()
                 break
 
@@ -151,8 +151,8 @@ class DriveSystem(object):
         """
         self.go(speed, speed)
         while True:
-            color = ColorSensor.get_reflected_light_intensity()
-            if color > intensity:
+            sensor = ColorSensor.get_reflected_light_intensity()
+            if sensor > intensity:
                 self.stop()
                 break
 
