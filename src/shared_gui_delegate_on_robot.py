@@ -21,8 +21,9 @@ class DelegateThatReceives(object):
         self.Exit=0
 
     def is_Quit(self):
-        self.stop()
-        self.down()
+        if self.Quit==1:
+            self.stop()
+            self.down()
         return self.Quit
 
     def is_Exit(self):
@@ -110,3 +111,17 @@ class DelegateThatReceives(object):
     def speak_button(self,text):
         print("Command Recieved: Speak")
         self.robot.sound_system.speech_maker.speak(text)
+
+
+## NICK'S GUI HANDLER
+
+    def proximity_button(self,rate_of_beeps, initial_beeps):
+        print("Command Recieved: Proximity")
+
+
+    def camera_button(self,speed,direction):
+        print("Command Recieved: Camera")
+
+
+    def line_button(self,starting_side):
+        print("Command Recieved: Line")
