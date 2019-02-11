@@ -121,6 +121,24 @@ class DelegateThatReceives(object):
         print("Command Recieved: Camera")
     def line_button(self,starting_side):
         print("Command Recieved: Line")
+        original = self.robot.sensor_system.color_sensor.get_reflected_light_intensity()
+
+        while self.Exit == 0  and self.Quit == 0:
+            current = self.robot.sensor_system.color_sensor.get_reflected_light_intensity()
+
+            if starting_side=='Right':
+                if original <=current+2 and original >=current-2:
+                    self.robot.drive_system.go(50,50)
+                else:
+                    self.robot.drive_system.go(-50,50)
+
+            if starting_side=='Left':
+                if original <=current+2 and original >=current-2:
+                    self.robot.drive_system.go(50,50)
+                else:
+                    self.robot.drive_system.go(50,-50)
+
+
 
 ## COlOR GUI HANDLER
     def intensity_less_button(self,speed, intensity):
@@ -137,7 +155,6 @@ class DelegateThatReceives(object):
         intcolor = self.translate_color(color)
         print("Command Recieved: Until Not Color", color, intcolor)
         self.robot.drive_system.go_straight_until_color_is_not(intcolor,int(speed))
-
     def translate_color(self,color):
         if color=="Black":
             intcolor=1

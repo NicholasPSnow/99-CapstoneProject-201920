@@ -451,7 +451,7 @@ def get_Nick_frame(window, mqtt_sender):
     direction = ttk.Entry(frame, width=8, justify=tkinter.LEFT)
     direction.insert(0, "Clockwise")
 
-    starting_side_label = ttk.Label(frame, text="Starting Side, Right or Left")
+    starting_side_label = ttk.Label(frame, text="Turning Direction, Right or Left")
     starting_side = ttk.Entry(frame, width=8, justify=tkinter.LEFT)
     starting_side.insert(0, "Right")
 
@@ -505,12 +505,12 @@ def get_Sprint_2_Color_frame(window, mqtt_sender):
     frame.grid()
 
     # Construct the widgets on the frame:
-    frame_label = ttk.Label(frame, text="Nick's System")
+    frame_label = ttk.Label(frame, text="Color Sensor")
     intensity_less_label = ttk.Label(frame, text="Go Until Intensity is Less Than")
     intensity_less_button = ttk.Button(frame, text="Run Less than Intensity")
 
     intensity_greater_label = ttk.Label(frame, text="Go Until Intensity is Greater Than")
-    intensity_greater_button = ttk.Button(frame, text="Run Less than Intensity")
+    intensity_greater_button = ttk.Button(frame, text="Run Greater than Intensity")
 
     until_color_label = ttk.Label(frame, text="Go Until Color")
     until_color_button = ttk.Button(frame, text="Run Go Until Color")
