@@ -19,10 +19,10 @@ class DelegateThatReceives(object):
         self.robot = bot.RoseBot()
         self.Quit=0
 
-    def is_exit(self):
-        self.stop()
-        self.down()
-        return self.Quit
+   # def is_exit(self):
+    #    self.stop()
+     #   self.down()
+      #  return self.Quit
 
     ##DRIVE SYSTEM
     #Handle Quit and Exit
@@ -30,7 +30,7 @@ class DelegateThatReceives(object):
         print("Command Recieved: ",argument)
         if argument == "quit":
             print("Quit")
-            self.Quit = 1
+            #self.Quit = 1
 
         if argument == 'exit':
             print("Exit")

@@ -23,9 +23,9 @@ def main():
     mqtt_reciever.connect_to_pc()
     while True:
         time.sleep(0.01)
-        if delegate.is_exit()==1:
-            print("Quit Sucessful")
-            break;
+        #if delegate.is_exit()==1:
+         #   print("Quit Sucessful")
+          #  break;
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
