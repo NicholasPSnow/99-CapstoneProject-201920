@@ -200,7 +200,8 @@ class DriveSystem(object):
         """
         self.go(speed, speed)
         while True:
-            if self.sensor_system.ir_proximity_sensor.get_distance_in_inches() < inches:
+            distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
+            if distance < inches:
                 break
         self.stop()
 
@@ -212,7 +213,8 @@ class DriveSystem(object):
         """
         self.go(-speed, -speed)
         while True:
-            if self.sensor_system.ir_proximity_sensor.get_distance_in_inches() > inches:
+            distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
+            if distance > inches:
                 break
         self.stop()
 
@@ -226,18 +228,17 @@ class DriveSystem(object):
         the robot should move until it is between 6.8 and 7.4 inches
         from the object.
         """
+        maximum = inches+abs(delta)
+        minimum = inches-abs(delta)
+        while True:
+            distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
+            if distance > maximum:
+                self.go_forward_until_distance_is_less_than(self, maximum, speed)
+            elif distance < minimum:
+                self.go_backward_until_distance_is_greater_than(self,minimum,speed)
+            else:
+                break
 
-        #dist = self.sensor_system.ir_proximity_sensor.get_distance_in_inches() - delta_inches
-        #multiplier = dist / abs(dist)
-        #self.go(speed * multiplier, speed * multiplier)
-        #if dist <= delta_inches:
-        #    while True:
-        #        if self.sensor_system.ir_proximity_sensor.get_distance_in_inches() > delta_inches:
-        #            break
-        #else:
-        #    while True:
-        #        if self.sensor_system.ir_proximity_sensor.get_distance_in_inches() < delta_inches:
-        #            break
 
     # -------------------------------------------------------------------------
     # Methods for driving that use the infrared beacon sensor.
@@ -248,8 +249,8 @@ class DriveSystem(object):
                Spins clockwise at the given speed until the heading to the Beacon
                is nonnegative.  Requires that the user turn on the Beacon.
                """
-        self.left_motor.turn_on(50)
-        self.right_motor.turn_on(-50)
+        self.left_motor.turn_on(100)
+        self.right_motor.turn_on(100)
         last = self.sensor_system.ir_proximity_sensor.get_distance()
         while True:
             current = self.sensor_system.ir_proximity_sensor.get_distance()
