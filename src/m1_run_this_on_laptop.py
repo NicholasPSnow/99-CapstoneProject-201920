@@ -42,7 +42,7 @@ def main():
     # -------------------------------------------------------------------------
     # Sub-frames for the shared GUI that the team developed:
     # -------------------------------------------------------------------------
-    arm_frame,control_frame,teleoperation_frame,Sprint_1_Drive_System_frame,Sprint_1_Beeper_System_frame=get_shared_frames(main_frame,mqtt_sender)
+    arm_frame,control_frame,teleoperation_frame,Sprint_1_Drive_System_frame,Sprint_1_Beeper_System_frame,Nick_frame=get_shared_frames(main_frame,mqtt_sender)
 
     # -------------------------------------------------------------------------
     # Frames that are particular to my individual contributions to the project.
@@ -52,7 +52,7 @@ def main():
     # -------------------------------------------------------------------------
     # Grid the frames.
     # -------------------------------------------------------------------------
-    grid_frames(teleoperation_frame,arm_frame,control_frame,Sprint_1_Drive_System_frame,Sprint_1_Beeper_System_frame)
+    grid_frames(teleoperation_frame,arm_frame,control_frame,Sprint_1_Drive_System_frame,Sprint_1_Beeper_System_frame,Nick_frame)
     # -------------------------------------------------------------------------
     # The event loop:
     # -------------------------------------------------------------------------
@@ -65,14 +65,16 @@ def get_shared_frames(main_frame, mqtt_sender):
     teleoperation_frame=shared_gui.get_teleoperation_frame(main_frame,mqtt_sender)
     Sprint_1_Drive_System_frame=shared_gui.get_Sprint_1_Drive_System_frame(main_frame,mqtt_sender)
     Sprint_1_Beeper_System_frame=shared_gui.get_Sprint_1_Beeper_System_frame(main_frame,mqtt_sender)
-    return  arm_frame,control_frame,teleoperation_frame,Sprint_1_Drive_System_frame,Sprint_1_Beeper_System_frame
+    Nick_frame=shared_gui.get_Nick_frame(main_frame,mqtt_sender)
+    return  arm_frame,control_frame,teleoperation_frame,Sprint_1_Drive_System_frame,Sprint_1_Beeper_System_frame,Nick_frame
 
-def grid_frames(teleop_frame, arm_frame, control_frame,Sprint_1_Drive_System_frame,Sprint_1_Beeper_System_frame):
+def grid_frames(teleop_frame, arm_frame, control_frame,Sprint_1_Drive_System_frame,Sprint_1_Beeper_System_frame,Nick_frame):
     teleop_frame.grid(row=0,column=0)
     arm_frame.grid(row=1,column=0)
     control_frame.grid(row=2,column=0)
     Sprint_1_Drive_System_frame.grid(row=0,column=1)
     Sprint_1_Beeper_System_frame.grid(row=1,column=1)
+    Nick_frame.grid(row=3,column=0)
 
 
 # -----------------------------------------------------------------------------
