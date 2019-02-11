@@ -125,3 +125,7 @@ class DelegateThatReceives(object):
 
     def line_button(self,starting_side):
         print("Command Recieved: Line")
+
+## COlOR GUI HANDLER
+
+
