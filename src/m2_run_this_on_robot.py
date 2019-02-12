@@ -22,7 +22,16 @@ def main():
     #test_go_straight_for_seconds()
     #test_go_straight_for_inches_using_time()
     #test_go_straight_for_inches_using_encoder()
-    real_thing()
+    #real_thing()
+    test_distance()
+
+def test_distance():
+    robot = rosebot.RoseBot()
+    robot.drive_system.go_forward_until_distance_is_less_than(1,100)
+    robot.drive_system.go_backward_until_distance_is_greater_than(5,50)
+    robot.drive_system.go_until_distance_is_within(1,3,25)
+
+
 
 def test_go_straight_for_inches_using_encoder():
     robot = rosebot.RoseBot()
@@ -31,11 +40,11 @@ def test_go_straight_for_inches_using_encoder():
     robot.drive_system.go_straight_for_inches_using_encoder(20,100)
     robot.drive_system.go_straight_for_inches_using_encoder(20,-100)
 
-def test_go(speed1, speed2):
-    robot = rosebot.RoseBot()
-    robot.drive_system.go(speed1,speed2)
+#def test_go(speed1, speed2):
+ #   robot = rosebot.RoseBot()
+ #   robot.drive_system.go(speed1,speed2)
 
-def test_stop():
+#def test_stop():
 
     robot = rosebot.RoseBot()
     robot.drive_system.stop()
@@ -57,16 +66,16 @@ def test_go_straight_for_inches_using_time():
     robot.drive_system.go_straight_for_inches_using_time(0,75)
     robot.drive_system.go_straight_for_inches_using_time(3,60)
 
-def real_thing():
-    robot=rosebot.RoseBot()
-    delegate = shared_gui_delegate_on_robot.DelegateThatReceives
-    mqtt_reciever = com.MqttClient(delegate)
-    mqtt_reciever.connect_to_pc()
+#def real_thing():
+ #   robot=rosebot.RoseBot()
+  #  delegate = shared_gui_delegate_on_robot.DelegateThatReceives
+   # mqtt_reciever = com.MqttClient(delegate)
+    #mqtt_reciever.connect_to_pc()
 
-    while True:
-        if delegate.stop_program:
-            break
-        time.sleep(0.01)
+   # while True:
+    #    if delegate.stop_program:
+     #       break
+      #  time.sleep(0.01)
 
 
 #
