@@ -115,7 +115,7 @@ class DelegateThatReceives(object):
 
 ## NICK'S GUI HANDLER
 
-    def proximity_button(self,rate_of_beeps, initial_beeps):
+    def m1proximity_button(self,rate_of_beeps, initial_beeps):
         print("Command Recieved: Proximity")
         self.robot.arm_and_claw.lower_arm()
         int_initial_beeps=int(initial_beeps)
@@ -125,24 +125,18 @@ class DelegateThatReceives(object):
             time.sleep(int_initial_beeps/(int_rate_of_beeps*(1/self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches())))
             self.robot.sound_system.beeper.beep()
         self.robot.arm_and_claw.raise_arm()
-
-    def camera_button(self,speed,direction,rate_of_beeps, initial_beeps):
+    def m1camera_button(self,speed,direction,rate_of_beeps, initial_beeps):
         print("Command Recieved: Camera")
 
         if direction=="Clockwise":
-            while True:
-                self.robot.drive_system.go(50,-50)
-                if self.robot.sensor_system.camera.get_biggest_blob()==1:
-                    self.robot.drive_system.stop()
-                    break;
+            self.robot.drive_system.spin_clockwise_until_sees_object(100, 100)
+
         if direction=="Counter-Clockwise":
-            while True:
-                self.robot.drive_system.go(-50,50)
-                if self.robot.sensor_system.camera.get_biggest_blob()==1:
-                    self.robot.drive_system.stop()
-                    break;
+            self.robot.drive_system.spin_counterclockwise_until_sees_object(100, 100)
+
         self.proximity_button(rate_of_beeps, initial_beeps)
-    def line_button(self,starting_side):
+
+    def m1line_button(self,starting_side):
         print("Command Recieved: Line")
         original = self.robot.sensor_system.color_sensor.get_reflected_light_intensity()
 
@@ -176,3 +170,16 @@ class DelegateThatReceives(object):
     def until_not_color_button(self, speed, color):
         print("Command Recieved: Until Not Color", color, self.robot.sensor_system.color_sensor.get_color_number_from_color_name(color))
         self.robot.drive_system.go_straight_until_color_is_not(self.robot.sensor_system.color_sensor.get_color_number_from_color_name(color),int(speed))
+
+## Proximity GUI HANDLER
+    def distance_greater_button(self,speed, inches):
+        print("Command Recieved: Until Distance Greater")
+        self.robot.drive_system.go_backward_until_distance_is_greater_than(inches,speed)
+
+    def distance_less_button(self,speed, inches):
+        print("Command Recieved: Until Distance Less")
+        self.robot.drive_system.go_forward_until_distance_is_less_than(inches, speed)
+
+    def until_distance_button(self,speed, inches, delta):
+        print("Command Recieved: Until Within Delta")
+        self.robot.drive_system.go_until_distance_is_within(delta,inches,speed)
