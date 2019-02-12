@@ -528,6 +528,16 @@ class ColorSensor(object):
             'White',
             'Brown',
         )
+        self.COLOR_NUMBERS = {
+            'NoColor': 0,
+            'Black': 1,
+            'Blue': 2,
+            'Green': 3,
+            'Yellow': 4,
+            'Red': 5,
+            'White': 6,
+            'Brown': 7,
+        }
 
     def get_reflected_light_intensity(self):
         """
@@ -562,6 +572,21 @@ class ColorSensor(object):
           - 7: Brown
         """
         return self._color_sensor.color
+
+    def get_color_as_name(self):
+        """
+        Same as  get_color  but returns the color as a STRING, in particular,
+        as one of the strings listed in the doc-string for get_color.
+        """
+        return self.COLORS[self.get_color()]
+
+    def get_color_number_from_color_name(self, color_name):
+        """
+        Returns the color NUMBER associated with the given color NAME.
+        The color_name must be one of the 7 strings
+        listed in the doc-string for get_color.
+        """
+        return self.COLOR_NUMBERS[color_name]
 
     def get_raw_color(self):
         """
