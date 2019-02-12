@@ -295,7 +295,7 @@ def get_Sprint_1_Drive_System_frame(window, mqtt_sender):
     frame.grid()
 
     # Construct the widgets on the frame:
-    frame_label = ttk.Label(frame, text="Sprint_1_Drive_System")
+    frame_label = ttk.Label(frame, text="Secondary Drive System")
     wheel_speed_label = ttk.Label(frame, text="Wheel Speed (0 to 100)")
     time_label = ttk.Label(frame, text="Movement Time (0 to INF)")
     inches_label = ttk.Label(frame, text="Movement Distance (0 to INF)")
@@ -358,7 +358,7 @@ def get_Sprint_1_Beeper_System_frame(window, mqtt_sender):
     frame.grid()
 
     # Construct the widgets on the frame:
-    frame_label = ttk.Label(frame, text="Sprint_1_Beeper_System")
+    frame_label = ttk.Label(frame, text="Sound System")
     number_of_beeps_label = ttk.Label(frame, text="Number of Beeps")
     tone_duration_label = ttk.Label(frame, text="Duration of Tone")
     tone_frequency_label = ttk.Label(frame, text="Tone Frequency")
