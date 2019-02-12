@@ -668,50 +668,45 @@ def get_Sprint_2_Camera_frame(window, mqtt_sender):
     # Construct the widgets on the frame:
     frame_label = ttk.Label(frame, text="Proximity Sensor")
 
-    distance_less_label = ttk.Label(frame, text="Go Until Distance is Less Than")
-    distance_less_button = ttk.Button(frame, text="Run Less than Distance")
+    counter_clockwise_label = ttk.Label(frame, text="Search Counterclockwise")
+    counter_clockwise_button = ttk.Button(frame, text="Run CCW Search")
 
-    distance_greater_label = ttk.Label(frame, text="Go Until Distance is Greater Than")
-    distance_greater_button = ttk.Button(frame, text="Run Greater than Distance")
-
-    until_distance_label = ttk.Label(frame, text="Go Until Distance Within")
-    until_distance_button = ttk.Button(frame, text="Run Go Until Distance Within")
-
-
-
-    inches_label = ttk.Label(frame, text="Inches")
-    inches = ttk.Entry(frame, width=8, justify=tkinter.LEFT)
-    inches.insert(0, "10")
+    clockwise_label = ttk.Label(frame, text="Search Counterclockwise")
+    clockwise_button = ttk.Button(frame, text="Run CW Search")
 
     speed_label = ttk.Label(frame, text="Speed")
     speed = ttk.Entry(frame, width=8, justify=tkinter.LEFT)
     speed.insert(0, "100")
 
-    delta_label = ttk.Label(frame, text="Delta Distance")
-    delta = ttk.Entry(frame, width=8, justify=tkinter.LEFT)
-    delta.insert(0, "50")
+    area_label = ttk.Label(frame, text="Area Size")
+    area = ttk.Entry(frame, width=8, justify=tkinter.LEFT)
+    area.insert(0, "20")
 
     # Grid the widgets:
     frame_label.grid(row=0, column=1)
 
-    distance_less_label.grid(row=3, column=0)
-    distance_less_button.grid(row=4, column=0)
-    distance_greater_label.grid(row=3, column=1)
-    distance_greater_button.grid(row=4, column=1)
-    until_distance_label.grid(row=3, column=2)
-    until_distance_button.grid(row=4, column=2)
+    counter_clockwise_label.grid(row=1, column=0)
+    counter_clockwise_button.grid(row=2, column=0)
+    clockwise_label.grid(row=1, column=2)
+    clockwise_button.grid(row=2, column=2)
 
-    delta_label.grid(row=1, column=0)
-    delta.grid(row=2, column=0)
 
-    speed_label.grid(row=1, column=1)
-    speed.grid(row=2, column=1)
+    area_label.grid(row=1, column=1)
+    area.grid(row=2, column=1)
 
-    inches_label.grid(row=1, column=2)
-    inches.grid(row=2, column=2)
+    speed_label.grid(row=3, column=1)
+    speed.grid(row=4, column=1)
 
     # Set the button callbacks:
-    distance_greater_button["command"] = lambda: handle_distance_greater_button(speed.get(), inches.get(), mqtt_sender)
-    distance_less_button["command"] = lambda: handle_distance_less_button(speed.get(), inches.get(),mqtt_sender)
-    until_distance_button["command"] = lambda: handle_until_distance_button(speed.get(), inches.get(), delta.get(), mqtt_sender)
+    counter_clockwise_button["command"] = lambda: handle_counter_clockwise_button(speed.get(), area.get(), mqtt_sender)
+    clockwise_button["command"] = lambda: handle_clockwise_button(speed.get(), area.get(),mqtt_sender)
+
     return frame
+
+def handle_counter_clockwise_button(speed, area, mqtt_sender):
+    mqtt_sender.send_message('camera_counter_clockwise_button', [str(speed), str(area)])
+    print('camera_counter_clockwise_button', speed, area)
+
+def handle_clockwise_button(speed, area, mqtt_sender):
+    mqtt_sender.send_message('camera_clockwise_button', [str(speed), str(area)])
+    print('camera_clockwise_button', speed, area)

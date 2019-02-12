@@ -183,3 +183,13 @@ class DelegateThatReceives(object):
     def until_distance_button(self,speed, inches, delta):
         print("Command Recieved: Until Within Delta")
         self.robot.drive_system.go_until_distance_is_within(delta,inches,speed)
+
+
+##CAMERA GUI HANDLER
+
+    def camera_counter_clockwise_button(self,speed, area, mqtt_sender):
+        print("Command Recieved: Camera Search CCW")
+        self.robot.drive_system.spin_counterclockwise_until_sees_object(speed,area)
+    def camera_clockwise_button(self,speed, area, mqtt_sender):
+        print("Command Recieved: Camera Search CW")
+        self.robot.drive_system.spin_clockwise_until_sees_object(speed,area)
