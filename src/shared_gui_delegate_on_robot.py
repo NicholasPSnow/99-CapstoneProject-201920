@@ -166,7 +166,7 @@ class DelegateThatReceives(object):
         self.robot.drive_system.go_straight_until_intensity_is_greater_than(int(intensity),int(speed))
     def until_color_button(self,speed, color):
         print("Command Recieved: Until Color", color, self.robot.sensor_system.color_sensor.get_color_number_from_color_name(color))
-        self.robot.drive_system.go_straight_until_color_is_not(self.robot.sensor_system.color_sensor.get_color_number_from_color_name(color), int(speed))
+        self.robot.drive_system.go_straight_until_color(self.robot.sensor_system.color_sensor.get_color_number_from_color_name(color), int(speed))
     def until_not_color_button(self, speed, color):
         print("Command Recieved: Until Not Color", color, self.robot.sensor_system.color_sensor.get_color_number_from_color_name(color))
         self.robot.drive_system.go_straight_until_color_is_not(self.robot.sensor_system.color_sensor.get_color_number_from_color_name(color),int(speed))
