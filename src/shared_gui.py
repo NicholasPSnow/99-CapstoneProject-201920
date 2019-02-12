@@ -427,7 +427,7 @@ def get_Nick_frame(window, mqtt_sender):
     frame.grid()
 
     # Construct the widgets on the frame:
-    frame_label = ttk.Label(frame, text="Nick's System")
+    frame_label = ttk.Label(frame, text="Nick's Sprint 2 System")
     proximity_label = ttk.Label(frame, text="Go to and Pick up Object (Proximity)")
     proximity_button = ttk.Button(frame, text="Run Proximity Grab")
 
