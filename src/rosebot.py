@@ -201,6 +201,7 @@ class DriveSystem(object):
         self.go(abs(speed), abs(speed))
         while True:
             distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
+            print(distance,inches)
             if distance < inches:
                 self.stop()
                 break
@@ -214,6 +215,7 @@ class DriveSystem(object):
         self.go(-abs(speed),-abs(speed))
         while True:
             distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
+            print(distance,inches)
             if distance > inches:
                 self.stop()
                 break
