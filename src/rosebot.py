@@ -307,6 +307,7 @@ class DriveSystem(object):
         of the trained color whose area is at least the given area.
         Requires that the user train the camera on the color of the object.
         """
+
         self.left_motor.turn_on(speed)
         self.right_motor.turn_on(-1 * speed)
 
