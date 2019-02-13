@@ -53,9 +53,6 @@ def main():
     # -------------------------------------------------------------------------
     # TODO: Implement and call get_my_frames(...)
 
-    feature_11_frame = get_my_frames(main_frame)
-    feature_11_frame.grid(row=5, column=0)
-
     # -------------------------------------------------------------------------
     # Grid the frames.
     # -------------------------------------------------------------------------
@@ -86,40 +83,9 @@ def grid_frames(teleop_frame, arm_frame, control_frame, sprint_1_drive_system, s
     sprint_1_beeper.grid(row=3, column=0)
     control_frame.grid(row=4, column=0)
 
-def get_my_frames(frame, mqtt_sender):
-    feature_11_frame = ttk.Frame(frame, padding=10, borderwidth=5, relief="ridge")
-
-    b_label = ttk.Label(feature_11_frame, text="B Value")
-    b_entry = ttk.Entry(feature_11_frame)
-    k1_label = ttk.Label(feature_11_frame, text="K1 Value")
-    k1_entry = ttk.Entry(feature_11_frame)
-    kd1_label = ttk.Label(feature_11_frame, text="KD1 Value")
-    kd1_entry = ttk.Entry(feature_11_frame)
-    kd2_label = ttk.Label(feature_11_frame, text="KD2 Value")
-    kd2_entry = ttk.Entry(feature_11_frame)
-    button = ttk.Button(feature_11_frame, text='Run Feature 11')
-    title = ttk.Label(feature_11_frame, text='Feature 11')
-
-    b_label.grid(row=2, column=0)
-    b_entry.grid(row=3, column=0)
-    k1_label.grid(row=2, column=2)
-    k1_entry.grid(row=3, column=2)
-    kd1_label.grid(row=4, column=0)
-    kd1_entry.grid(row=5, column=0)
-    kd2_label.grid(row=4, column=2)
-    kd2_entry.grid(row=5, column=2)
-    button.grid(row=1, column=1)
-    title.grid(row=0, column=1)
-
-    button['command'] = lambda: handle_feature_11(mqtt_sender, b_entry.get(), k1_entry.get(), kd1_entry.get(), kd2_entry.get())
-
-    return feature_11_frame
-
-
-def handle_feature_11(mqtt_sender, b, k1, kd1, kd2):
-    mqtt_sender.send_message("feature_11", [b, k1, kd1, kd2])
-
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # -----------------------------------------------------------------------------
+
+
 main()

@@ -1,7 +1,6 @@
 """
   Capstone Project.  Code to run on the EV3 robot (NOT on a laptop).
-  Author:  Your professors (for the framework)
-    and Zach Kelly.
+  Author:  Your professors (for the framework) and Zach Kelly.
   Winter term, 2018-2019.
 """
 
@@ -9,7 +8,6 @@ import rosebot as bot
 import mqtt_remote_method_calls as com
 import time
 import shared_gui_delegate_on_robot as gui_delegate
-import rosebot
 
 
 def main():
@@ -21,7 +19,8 @@ def main():
     # real_thing()
     # run_test_ir(0)
     # run_test_arm()
-    run_test_camera()
+    # run_test_camera()
+
 
 def real_thing():
     robot = bot.RoseBot()
@@ -32,6 +31,10 @@ def real_thing():
     while True:
         time.sleep(0.01)
 
+
+# -------------------------------------------------------------------------
+# Test Functions
+# -------------------------------------------------------------------------
 
 def run_test_camera():
     robot = bot.RoseBot()
