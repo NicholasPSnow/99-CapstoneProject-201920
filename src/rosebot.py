@@ -260,13 +260,26 @@ class DriveSystem(object):
         maximum = inches+abs(delta)
         minimum = inches-abs(delta)
         while True:
-            distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
-            if distance > maximum:
-                self.go_forward_until_distance_is_less_than(self, maximum, speed)
-            elif distance < minimum:
-                self.go_backward_until_distance_is_greater_than(self,minimum,speed)
-            else:
-                self.stop()
+            near = 0
+            far = 0
+            in_range = 0
+            while True:
+                distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
+                if distance < minimum:
+                    near = near + 1
+                elif distance > maximum:
+                    far = far + 1
+                else:
+                    in_range = in_range+1
+                if far >= 5:
+                    self.go_forward_until_distance_is_less_than(self, maximum, speed)
+                    break
+                elif near >=5:
+                    self.go_backward_until_distance_is_greater_than(self,minimum,speed)
+                    break
+                elif in_range >=5:
+                    break
+            if in_range >= 5:
                 break
 
 
