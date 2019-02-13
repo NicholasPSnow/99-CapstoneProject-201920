@@ -122,12 +122,16 @@ class DelegateThatReceives(object):
         int_initial_beeps=int(initial_beeps)
         int_rate_of_beeps=int(rate_of_beeps)
 
-        while self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches()>2:
-            self.robot.drive_system.go(75,75)
+        self.robot.drive_system.go(75, 75)
+        print("Searching")
+        while self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches() >= 4:
+            print("Delay is: ",(int(initial_beeps)/(int(rate_of_beeps)*self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches())))
             time.sleep((int(initial_beeps)/(int(rate_of_beeps)*self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches())))
             self.robot.sound_system.beeper.beep()
+        print("Object Found")
         self.robot.arm_and_claw.raise_arm()
         self.robot.drive_system.stop()
+
     def m1camera_button(self,speed,direction,rate_of_beeps, initial_beeps):
         print("Command Recieved: Camera")
 
