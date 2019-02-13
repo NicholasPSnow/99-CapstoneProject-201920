@@ -193,3 +193,8 @@ class DelegateThatReceives(object):
     def camera_clockwise_button(self,speed, area, mqtt_sender):
         print("Command Recieved: Camera Search CW")
         self.robot.drive_system.spin_clockwise_until_sees_object(speed,area)
+
+##Zach's GUI Handler
+
+    def feature_11(self, b, k1, kd1, kd2):
+        pass
