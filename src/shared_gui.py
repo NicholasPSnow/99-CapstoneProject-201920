@@ -465,13 +465,14 @@ def get_Katana_frame(window, mqtt_sender):
 
     # Set the button callbacks:
     #obtain_with_sensor_button["command"] = lambda: handle_obtain_with_sensor_button(rate_of_frequency.get(),
-                                                                                    initial_frequency.get(),
-                                                                                    mqtt_sender)
+    #                                                                                initial_frequency.get(),
+    #                                                                                mqtt_sender)
+
     #obtain_with_camera_button["command"] = lambda: handle_obtain_with_camera_button(spin_speed.get(),
-                                                                                    spin_direction.get(),
-                                                                                    rate_of_frequency.get(),
-                                                                                    initial_frequency.get(),
-                                                                                    mqtt_sender)
+    #                                                                                spin_direction.get(),
+    #                                                                                rate_of_frequency.get(),
+    #                                                                                initial_frequency.get(),
+    #                                                                                mqtt_sender)
     return frame
 
 
