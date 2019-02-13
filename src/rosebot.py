@@ -355,6 +355,7 @@ class DriveSystem(object):
         while True:
             blob = self.sensor_system.camera.get_biggest_blob()
             blob_area = blob.width * blob.height
+
             if blob_area >= area:
                 self.stop()
                 break
