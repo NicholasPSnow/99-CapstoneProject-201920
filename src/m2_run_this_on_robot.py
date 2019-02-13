@@ -30,8 +30,8 @@ def feature_9():
 
 def test_distance():
     robot = rosebot.RoseBot()
-    #robot.drive_system.go_forward_until_distance_is_less_than(1,100)
-    robot.drive_system.go_backward_until_distance_is_greater_than(5,25)
+    robot.drive_system.go_forward_until_distance_is_less_than(5,100)
+    #robot.drive_system.go_backward_until_distance_is_greater_than(5,25)
     #robot.drive_system.go_until_distance_is_within(1,3,25)
 
 def test_go_straight_for_inches_using_encoder():
