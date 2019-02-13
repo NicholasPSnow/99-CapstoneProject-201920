@@ -113,8 +113,57 @@ class DelegateThatReceives(object):
         print("Command Recieved: Speak")
         self.robot.sound_system.speech_maker.speak(text)
 
+## Katana'S GUI Handler
 
-## NICK'S GUI HANDLER
+    def handle_obtain_with_sensor_button(self, rate_of_frequency, initial_frequency):
+        print("Command Recieved: obtain_with_sensor")
+        self.robot.arm_and_claw.lower_arm()
+        initial_frequency_int = int(initial_frequency)
+        rate_of_frequency_int = int(rate_of_frequency)
+
+        self.robot.drive_system.go(75, 75)
+        print("Searching")
+        while self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches() >= 4:
+            print("Delay is: ", (int(initial_beeps) / (int(
+                rate_of_beeps) * self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches())))
+            time.sleep((int(initial_beeps) / (int(
+                rate_of_beeps) * self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches())))
+            self.robot.sound_system.beeper.beep()
+        print("Object Found")
+        self.robot.arm_and_claw.raise_arm()
+        self.robot.drive_system.stop()
+
+    def m1camera_button(self, speed, direction, rate_of_beeps, initial_beeps):
+        print("Command Recieved: Camera")
+
+        if direction == "Clockwise":
+            self.robot.drive_system.spin_clockwise_until_sees_object(100, 100)
+
+        if direction == "Counter-Clockwise":
+            self.robot.drive_system.spin_counterclockwise_until_sees_object(100, 100)
+
+        self.proximity_button(rate_of_beeps, initial_beeps)
+
+    def m1line_button(self, starting_side):
+        print("Command Recieved: Line")
+        original = self.robot.sensor_system.color_sensor.get_reflected_light_intensity()
+
+        while self.Exit == 0 and self.Quit == 0:
+            current = self.robot.sensor_system.color_sensor.get_reflected_light_intensity()
+
+            if starting_side == 'Right':
+                if original <= current + 2 and original >= current - 2:
+                    self.robot.drive_system.go(50, 50)
+                else:
+                    self.robot.drive_system.go(-50, 50)
+
+            if starting_side == 'Left':
+                if original <= current + 2 and original >= current - 2:
+                    self.robot.drive_system.go(50, 50)
+                else:
+                    self.robot.drive_system.go(50, -50)
+
+    ## NICK'S GUI HANDLER
 
     def m1proximity_button(self,rate_of_beeps, initial_beeps):
         print("Command Recieved: Proximity")
