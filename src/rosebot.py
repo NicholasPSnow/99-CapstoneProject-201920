@@ -202,9 +202,23 @@ class DriveSystem(object):
         while True:
             distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
             print(distance,inches)
-            if distance < inches:
-                self.stop()
+            counter_agree=0
+            counter_disagree = 0
+            while distance < inches:
+                distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
+                print(distance, inches)
+                if distance > inches:
+                    counter_disagree = counter_disagree+1
+                else:
+                    counter_agree = counter_agree+1
+                if counter_agree > 50:
+                    break
+                if counter_disagree > 20:
+                    break
+            if counter_agree > 50:
                 break
+
+        self.stop()
 
     def go_backward_until_distance_is_greater_than(self, inches, speed):
         """
@@ -217,8 +231,9 @@ class DriveSystem(object):
             distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
             print(distance,inches)
             if distance > inches:
-                self.stop()
                 break
+        self.stop()
+
 
     def go_until_distance_is_within(self, delta, inches, speed):
         """
@@ -632,7 +647,7 @@ class InfraredProximitySensor(object):
         is within its field of vision.
         """
         inches_per_cm = 2.54
-        return 70 * inches_per_cm * self.get_distance() / 100
+        return 70 * inches_per_cm * self.get_distance() / 300
 
 
 class InfraredBeaconSensor(object):

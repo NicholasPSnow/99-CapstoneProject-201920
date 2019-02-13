@@ -25,6 +25,9 @@ def main():
     #real_thing()
     test_distance()
 
+def feature_9():
+    pass
+
 def test_distance():
     robot = rosebot.RoseBot()
     #robot.drive_system.go_forward_until_distance_is_less_than(1,100)
