@@ -26,7 +26,10 @@ def main():
         if delegate.is_Quit()==1:
             print("Quit Sucessful")
             break;
-
+        if delegate.is_Exit()==1:
+            print("Exit Sucessful")
+            break;
+    print("Program Has Ended")
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # -----------------------------------------------------------------------------

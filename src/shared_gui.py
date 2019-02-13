@@ -666,7 +666,7 @@ def get_Sprint_2_Camera_frame(window, mqtt_sender):
     frame = ttk.Frame(window, padding=10, borderwidth=5, relief="ridge")
     frame.grid()
     # Construct the widgets on the frame:
-    frame_label = ttk.Label(frame, text="Proximity Sensor")
+    frame_label = ttk.Label(frame, text="Camera Sensor")
 
     counter_clockwise_label = ttk.Label(frame, text="Search Counterclockwise")
     counter_clockwise_button = ttk.Button(frame, text="Run CCW Search")

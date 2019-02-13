@@ -27,8 +27,9 @@ class DelegateThatReceives(object):
         return self.Quit
 
     def is_Exit(self):
-        self.stop()
-        self.down()
+        if self.Quit == 1:
+            self.stop()
+            self.down()
         return self.Exit
 
     ##DRIVE SYSTEM
