@@ -365,7 +365,7 @@ class DriveSystem(object):
         of the trained color whose area is at least the given area.
         Requires that the user train the camera on the color of the object.
         """
-        self.spin_clockwise_until_beacon_heading_is_nonnegative(-1 * speed, area)
+        self.spin_clockwise_until_sees_object(-1 * speed, area)
 
 
 ###############################################################################
