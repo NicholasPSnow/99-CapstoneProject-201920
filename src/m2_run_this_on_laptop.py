@@ -71,14 +71,22 @@ def get_shared_frames(main_frame, mqtt_sender):
     teleoperation_frame=shared_gui.get_teleoperation_frame(main_frame,mqtt_sender)
     Sprint_1_Drive_System_frame=shared_gui.get_Sprint_1_Drive_System_frame(main_frame,mqtt_sender)
     Sprint_1_Beeper_System_frame=shared_gui.get_Sprint_1_Beeper_System_frame(main_frame,mqtt_sender)
-    return  arm_frame,control_frame,teleoperation_frame,Sprint_1_Drive_System_frame,Sprint_1_Beeper_System_frame
+    Katana_frame=shared_gui.get_Nick_frame(main_frame,mqtt_sender)
+    Sprint_2_Color_frame=shared_gui.get_Sprint_2_Color_frame(main_frame,mqtt_sender)
+    Sprint_2_Proximity_frame=shared_gui.get_Sprint_2_Proximity_frame(main_frame,mqtt_sender)
+    Sprint_2_Camera_frame=shared_gui.get_Sprint_2_Camera_frame(main_frame,mqtt_sender)
+    return  arm_frame,control_frame,teleoperation_frame,Sprint_1_Drive_System_frame,Sprint_1_Beeper_System_frame,Katana_frame,Sprint_2_Color_frame,Sprint_2_Proximity_frame,Sprint_2_Camera_frame
 
-def grid_frames(teleop_frame, arm_frame, control_frame,Sprint_1_Drive_System_frame,Sprint_1_Beeper_System_frame):
+def grid_frames(teleop_frame, arm_frame, control_frame,Sprint_1_Drive_System_frame,Sprint_1_Beeper_System_frame,Katana_frame,Sprint_2_Color_frame,Sprint_2_Proximity_frame,Sprint_2_Camera_frame):
     teleop_frame.grid(row=0,column=0)
     arm_frame.grid(row=1,column=0)
     control_frame.grid(row=2,column=0)
     Sprint_1_Drive_System_frame.grid(row=0,column=1)
     Sprint_1_Beeper_System_frame.grid(row=1,column=1)
+    Katana_frame.grid(row=2,column=1)
+    Sprint_2_Color_frame.grid(row=0,column=2)
+    Sprint_2_Proximity_frame.grid(row=1,column=2)
+    Sprint_2_Camera_frame.grid(row=2,column=2)
 
 
 # -----------------------------------------------------------------------------

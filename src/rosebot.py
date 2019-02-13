@@ -201,12 +201,11 @@ class DriveSystem(object):
         self.go(abs(speed), abs(speed))
         while True:
             distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
-            print(distance,inches)
             counter_agree=0
             counter_disagree = 0
             while distance < inches:
                 distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
-                print(distance, inches,counter_disagree,counter_agree)
+                print(counter_disagree,counter_agree)
                 if distance > inches:
                     counter_disagree = counter_disagree+1
                 else:
@@ -671,8 +670,10 @@ class InfraredProximitySensor(object):
         in inches, where about 39.37 inches (which is 100 cm) means no object
         is within its field of vision.
         """
-        inches_per_cm = 2.54
-        return 70 * self.get_distance() / (100*inches_per_cm)
+        cm_per_inch = 2.54
+        distance = 48/cm_per-inch*self.get_distance() / 100
+        print(distance)
+        return distance
 
 
 class InfraredBeaconSensor(object):
