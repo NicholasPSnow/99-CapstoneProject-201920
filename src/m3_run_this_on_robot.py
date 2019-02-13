@@ -33,8 +33,60 @@ def real_thing():
 
 
 # -------------------------------------------------------------------------
+# Sprint 2 Functions
+# -------------------------------------------------------------------------
+
+def feature_9(robot, init_rate, acceleration):  # init_rate is cycles per second
+    distance = []                               # acceleration is cycles per second per inch
+    last_state = time.time()
+    for _ in range(10):
+        distance.append(robot.drive_system.sensor_system.ir_proximity_sensor.get_distance_in_inches())
+    average = average_list(distance)
+    initial_dist = average
+    state = 0
+
+    robot.drive_system.go(25, 25)
+
+    while average > 1:
+        distance.append(robot.drive_system.sensor_system.ir_proximity_sensor.get_distance_in_inches())
+        distance.pop(0)
+        average = average_list(distance)
+        state, last_state = update_state(last_state, initial_dist, average, init_rate, acceleration, state)
+        led_cycle(robot, state)
+
+    robot.drive_system.stop()
+
+
+def update_state(last_state, initial_dist, current_dist, init_rate, acceleration, state):
+    cycle_time = (1.0 / init_rate) - ((initial_dist - current_dist) / acceleration)
+    if (last_state - time.time()) >= cycle_time:
+        return (state + 1) % 4, time.time()
+    return state, last_state
+
+
+def average_list(list1):
+    average = 0
+    for i in list1:
+        average = average + i
+    return average / len(list1)
+
+
+def led_cycle(robot, state):
+    if state == 0:
+        robot.led_system.left_led.turn_on()
+    elif state == 1:
+        robot.led_system.left_led.turn_off()
+        robot.led_system.right_led.turn_on()
+    elif state == 2:
+        robot.led_system.left_led.turn_on()
+    else:
+        robot.led_system.left_led.turn_oof()
+        robot.led_system.left_led.turn_off()
+
+# -------------------------------------------------------------------------
 # Test Functions
 # -------------------------------------------------------------------------
+
 
 def run_test_camera():
     robot = bot.RoseBot()
