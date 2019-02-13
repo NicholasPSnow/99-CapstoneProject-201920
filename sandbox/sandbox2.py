@@ -81,7 +81,7 @@ go_until_distance_is_within
 
 #######################################################################
 
-def get__frame(window, mqtt_sender):
+def get_Katana_frame(window, mqtt_sender):
     """
     Constructs and returns a frame on the given window, where the frame
     has Beeper objects that control the EV3 robot's motion
@@ -94,8 +94,8 @@ def get__frame(window, mqtt_sender):
     frame.grid()
 
     # Construct the widgets on the frame:
-    frame_label = ttk.Label(frame, text="Nick's Sprint 2 System")
-    proximity_label = ttk.Label(frame, text="Go to and Pick up Object (Proximity)")
+    frame_label = ttk.Label(frame, text="Katana's System")
+    proximity_label = ttk.Label(frame, text="Retrieve Object")
     proximity_button = ttk.Button(frame, text="Run Proximity Grab")
 
     camera_label = ttk.Label(frame, text="Go to and Pick up Object (Camera)")
