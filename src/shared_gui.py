@@ -464,17 +464,23 @@ def get_Katana_frame(window, mqtt_sender):
     spin_direction.grid(row=6, column=1)
 
     # Set the button callbacks:
-    #obtain_with_sensor_button["command"] = lambda: handle_obtain_with_sensor_button(rate_of_frequency.get(),
-    #                                                                                initial_frequency.get(),
-    #                                                                                mqtt_sender)
+    obtain_with_sensor_button["command"] = lambda: handle_obtain_with_sensor_button(rate_of_frequency.get(),
+                                                                                    initial_frequency.get(),
+                                                                                    mqtt_sender)
 
-    #obtain_with_camera_button["command"] = lambda: handle_obtain_with_camera_button(spin_speed.get(),
-    #                                                                                spin_direction.get(),
-    #                                                                                rate_of_frequency.get(),
-    #                                                                                initial_frequency.get(),
-    #                                                                                mqtt_sender)
+    obtain_with_camera_button["command"] = lambda: handle_obtain_with_camera_button(spin_speed.get(),
+                                                                                    spin_direction.get(),
+                                                                                    rate_of_frequency.get(),
+                                                                                    initial_frequency.get(),
+                                                                                    mqtt_sender)
     return frame
 
+def handle_obtain_with_sensor_button(rate_of_frequency, initial_frequency, mqtt_sender):
+    mqtt_sender.send_message('obtain_with _sensor_button', [str(rate_of_frequency),str(initial_frequency)])
+    print('obtain_with_sensor',rate_of_frequency, initial_frequency)
+def handle_obtain_with_camera_button(spin_speed,spin_direction,rate_of_frequency, initial_frequency, mqtt_sender):
+    mqtt_sender.send_message('obtain_with_camera_button', [str(spin_speed), str(spin_direction),str(rate_of_frequency),str(initial_frequency)])
+    print('obtain_with_camera', spin_speed, spin_direction, rate_of_frequency, initial_frequency)
 
 def get_Nick_frame(window, mqtt_sender):
     """
