@@ -115,14 +115,14 @@ class DelegateThatReceives(object):
 
 ## Katana'S GUI Handler
 
-    def handle_obtain_with_sensor_button(self, rate_of_frequency, initial_frequency):
+    def handle_obtain_with_sensor_button(self, speed,rate_of_frequency, initial_frequency):
         print("Command Recieved: obtain_with_sensor")
         self.robot.arm_and_claw.lower_arm()
         initial_frequency_int = int(initial_frequency)
         rate_of_frequency_int = int(rate_of_frequency)
+        self.robot.drive_system.go(speed, speed)
+        print("Looking")
 
-        self.robot.drive_system.go(75, 75)
-        print("Searching")
         while self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches() >= 4:
             print("Delay is: ", (int(initial_beeps) / (int(
                 rate_of_beeps) * self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches())))

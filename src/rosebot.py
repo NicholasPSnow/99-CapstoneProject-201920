@@ -271,10 +271,10 @@ class DriveSystem(object):
                 else:
                     in_range = in_range+1
                 if far >= 5:
-                    self.go_forward_until_distance_is_less_than(self, maximum, speed)
+                    self.go_forward_until_distance_is_less_than(inches,maximum)
                     break
                 elif near >=5:
-                    self.go_backward_until_distance_is_greater_than(self,minimum,speed)
+                    self.go_backward_until_distance_is_greater_than(minimum,speed)
                     break
                 elif in_range >=5:
                     break
