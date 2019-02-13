@@ -211,9 +211,9 @@ class DriveSystem(object):
                     counter_disagree = counter_disagree+1
                 else:
                     counter_agree = counter_agree+1
-                if counter_agree > 50:
+                if counter_agree > 10:
                     break
-                if counter_disagree > 20:
+                if counter_disagree > 5:
                     break
             if counter_agree > 50:
                 break
