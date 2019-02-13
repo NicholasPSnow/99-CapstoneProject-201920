@@ -46,7 +46,7 @@ def main():
     # Sub-frames for the shared GUI that the team developed:
     # -------------------------------------------------------------------------
 
-    arm_frame,control_frame,teleoperation_frame,Sprint_1_Drive_System_frame,Sprint_1_Beeper_System_frame=get_shared_frames(main_frame,mqtt_sender)
+    arm_frame,control_frame,teleoperation_frame,Sprint_1_Drive_System_frame,Sprint_1_Beeper_System_frame,Katana_frame,Sprint_2_Color_frame,Sprint_2_Proximity_frame,Sprint_2_Camera_frame=get_shared_frames(main_frame,mqtt_sender)
 
     # -------------------------------------------------------------------------
     # Frames that are particular to my individual contributions to the project.
@@ -57,7 +57,7 @@ def main():
     # Grid the frames.
     # ---------------------------------------------------------------- ---------
 
-    grid_frames(teleoperation_frame,arm_frame,control_frame,Sprint_1_Drive_System_frame,Sprint_1_Beeper_System_frame)
+    grid_frames(teleoperation_frame,arm_frame,control_frame,Sprint_1_Drive_System_frame,Sprint_1_Beeper_System_frame,Katana_frame,Sprint_2_Color_frame,Sprint_2_Proximity_frame,Sprint_2_Camera_frame)
 
     # -------------------------------------------------------------------------
     # The event loop:
@@ -71,7 +71,7 @@ def get_shared_frames(main_frame, mqtt_sender):
     teleoperation_frame=shared_gui.get_teleoperation_frame(main_frame,mqtt_sender)
     Sprint_1_Drive_System_frame=shared_gui.get_Sprint_1_Drive_System_frame(main_frame,mqtt_sender)
     Sprint_1_Beeper_System_frame=shared_gui.get_Sprint_1_Beeper_System_frame(main_frame,mqtt_sender)
-    Katana_frame=shared_gui.get_Nick_frame(main_frame,mqtt_sender)
+    Katana_frame=shared_gui.get_Katana_frame(main_frame,mqtt_sender)
     Sprint_2_Color_frame=shared_gui.get_Sprint_2_Color_frame(main_frame,mqtt_sender)
     Sprint_2_Proximity_frame=shared_gui.get_Sprint_2_Proximity_frame(main_frame,mqtt_sender)
     Sprint_2_Camera_frame=shared_gui.get_Sprint_2_Camera_frame(main_frame,mqtt_sender)
