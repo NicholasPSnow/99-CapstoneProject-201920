@@ -481,6 +481,7 @@ def get_Nick_frame(window, mqtt_sender):
     camera_button["command"] = lambda: handle_camera_button(speed.get(),direction.get(),rate_of_beeps.get(), initial_beeps.get(), mqtt_sender)
     line_button["command"] = lambda: handle_line_button(starting_side.get(), mqtt_sender)
     return frame
+
 def handle_proximity_button(rate_of_beeps, initial_beeps, mqtt_sender):
     mqtt_sender.send_message('m1proximity_button', [str(rate_of_beeps),str(initial_beeps)])
     print('proximity',rate_of_beeps, initial_beeps)

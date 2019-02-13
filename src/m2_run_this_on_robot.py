@@ -23,10 +23,19 @@ def main():
     #test_go_straight_for_inches_using_time()
     #test_go_straight_for_inches_using_encoder()
     #real_thing()
-    test_distance()
+    #test_distance()
+    gui()
 
-def feature_9():
-    pass
+def gui():
+    robot = rosebot.RoseBot()
+    delegate=shared_gui_delegate_on_robot.DelegateThatReceives(robot)
+    mqtt_reciever=com.MqttClient(delegate)
+    mqtt_reciever.connect_to_pc()
+    while True:
+        time.sleep(0.01)
+        if delegate.is_Quit()==1:
+            print("Quit Sucessful")
+            break;
 
 def test_distance():
     robot = rosebot.RoseBot()
