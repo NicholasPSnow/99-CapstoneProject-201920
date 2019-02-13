@@ -206,18 +206,17 @@ class DriveSystem(object):
             counter_disagree = 0
             while distance < inches:
                 distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
-                print(distance, inches)
+                print(distance, inches,counter_disagree,counter_agree)
                 if distance > inches:
                     counter_disagree = counter_disagree+1
                 else:
                     counter_agree = counter_agree+1
-                if counter_agree > 10:
+                if counter_agree >= 5:
                     break
-                if counter_disagree > 5:
+                if counter_disagree >= 3:
                     break
-            if counter_agree > 50:
+            if counter_agree >= 5:
                 break
-
         self.stop()
 
     def go_backward_until_distance_is_greater_than(self, inches, speed):
@@ -226,11 +225,24 @@ class DriveSystem(object):
         the given number of inches from the nearest object that it senses.
         Assumes that it senses an object when it starts.
         """
-        self.go(-abs(speed),-abs(speed))
+        self.go(-abs(speed), -abs(speed))
         while True:
             distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
             print(distance,inches)
-            if distance > inches:
+            counter_agree=0
+            counter_disagree = 0
+            while distance > inches:
+                distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
+                print(distance, inches,counter_disagree,counter_agree)
+                if distance < inches:
+                    counter_disagree = counter_disagree+1
+                else:
+                    counter_agree = counter_agree+1
+                if counter_agree >= 5:
+                    break
+                if counter_disagree >= 3:
+                    break
+            if counter_agree >= 5:
                 break
         self.stop()
 
