@@ -181,16 +181,16 @@ class DelegateThatReceives(object):
         self.robot.arm_and_claw.raise_arm()
         self.robot.drive_system.stop()
 
-    def m1camera_button(self,speed,direction,rate_of_beeps, initial_beeps):
+    def m1camera_button(self,speed,area,direction):
         print("Command Recieved: Camera")
 
         if direction=="Clockwise":
-            self.robot.drive_system.spin_clockwise_until_sees_object(100, 100)
+            self.robot.drive_system.spin_clockwise_until_sees_object(speed, area)
 
         if direction=="Counter-Clockwise":
-            self.robot.drive_system.spin_counterclockwise_until_sees_object(100, 100)
+            self.robot.drive_system.spin_counterclockwise_until_sees_object(speed, area)
 
-        self.proximity_button(rate_of_beeps, initial_beeps)
+        self.proximity_button(10, 5)
 
     def m1line_button(self,starting_side):
         print("Command Recieved: Line")
@@ -222,7 +222,7 @@ class DelegateThatReceives(object):
         self.robot.drive_system.go_straight_until_intensity_is_greater_than(int(intensity),int(speed))
     def until_color_button(self,speed, color):
         print("Command Recieved: Until Color", color, self.robot.sensor_system.color_sensor.get_color_number_from_color_name(color))
-        self.robot.drive_system.go_straight_until_color(self.robot.sensor_system.color_sensor.get_color_number_from_color_name(color), int(speed))
+        self.robot.drive_system.go_straight_until_color_is(self.robot.sensor_system.color_sensor.get_color_number_from_color_name(color), int(speed))
     def until_not_color_button(self, speed, color):
         print("Command Recieved: Until Not Color", color, self.robot.sensor_system.color_sensor.get_color_number_from_color_name(color))
         self.robot.drive_system.go_straight_until_color_is_not(self.robot.sensor_system.color_sensor.get_color_number_from_color_name(color),int(speed))
@@ -230,25 +230,25 @@ class DelegateThatReceives(object):
 ## Proximity GUI HANDLER
     def distance_greater_button(self,speed, inches):
         print("Command Recieved: Until Distance Greater")
-        self.robot.drive_system.go_backward_until_distance_is_greater_than(inches,speed)
+        self.robot.drive_system.go_backward_until_distance_is_greater_than(int(inches),int(speed))
 
     def distance_less_button(self,speed, inches):
         print("Command Recieved: Until Distance Less")
-        self.robot.drive_system.go_forward_until_distance_is_less_than(inches, speed)
+        self.robot.drive_system.go_forward_until_distance_is_less_than(int(inches),int(speed))
 
     def until_distance_button(self,speed, inches, delta):
         print("Command Recieved: Until Within Delta")
-        self.robot.drive_system.go_until_distance_is_within(delta,inches,speed)
+        self.robot.drive_system.go_until_distance_is_within(int(delta),int(inches),int(speed))
 
 
 ##CAMERA GUI HANDLER
 
-    def camera_counter_clockwise_button(self,speed, area, mqtt_sender):
+    def camera_counter_clockwise_button(self,speed, area):
         print("Command Recieved: Camera Search CCW")
-        self.robot.drive_system.spin_counterclockwise_until_sees_object(speed,area)
-    def camera_clockwise_button(self,speed, area, mqtt_sender):
+        self.robot.drive_system.spin_counterclockwise_until_sees_object(int(speed),int(area))
+    def camera_clockwise_button(self,speed, area):
         print("Command Recieved: Camera Search CW")
-        self.robot.drive_system.spin_clockwise_until_sees_object(speed,area)
+        self.robot.drive_system.spin_clockwise_until_sees_object(int(speed),int(area))
 
 ##Zach's GUI Handler
 

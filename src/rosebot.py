@@ -186,6 +186,7 @@ class DriveSystem(object):
         self.go(speed, speed)
         while True:
             colorsensor = self.sensor_system.color_sensor.get_color()
+            print(colorsensor)
             if colorsensor != color:
                 self.stop()
                 break

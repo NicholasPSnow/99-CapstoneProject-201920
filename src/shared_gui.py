@@ -599,7 +599,7 @@ def get_Sprint_2_Color_frame(window, mqtt_sender):
     color.insert(0, "Red")
     speed_label = ttk.Label(frame, text="Speed")
     speed = ttk.Entry(frame, width=8, justify=tkinter.LEFT)
-    speed.insert(0, "100")
+    speed.insert(0, "50")
 
     intensity_label = ttk.Label(frame, text="Light Intensity")
     intensity = ttk.Entry(frame, width=8, justify=tkinter.LEFT)
@@ -729,7 +729,7 @@ def handle_until_distance_button(speed, inches, delta, mqtt_sender):
 
 
 
-##PROXIMITY SENSOR
+##Camera SENSOR
 def get_Sprint_2_Camera_frame(window, mqtt_sender):
     """
     Constructs and returns a frame on the given window, where the frame
@@ -775,7 +775,7 @@ def get_Sprint_2_Camera_frame(window, mqtt_sender):
 
     # Set the button callbacks:
     counter_clockwise_button["command"] = lambda: handle_counter_clockwise_button(speed.get(), area.get(), mqtt_sender)
-    clockwise_button["command"] = lambda: handle_clockwise_button(speed.get(), area.get(),mqtt_sender)
+    clockwise_button["command"] = lambda: handle_clockwise_button(speed.get(), area.get(), mqtt_sender)
 
     return frame
 
