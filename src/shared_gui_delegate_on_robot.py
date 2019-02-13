@@ -130,6 +130,8 @@ class DelegateThatReceives(object):
         print("Command Recieved: Camera")
             ## TODO: Write code
 
+
+
     ## NICK'S GUI HANDLER
 
     def m1proximity_button(self,rate_of_beeps, initial_beeps):
@@ -148,16 +150,16 @@ class DelegateThatReceives(object):
         self.robot.arm_and_claw.raise_arm()
         self.robot.drive_system.stop()
 
-    def m1camera_button(self,speed,area,direction):
+    def m1camera_button(self,speed,direction,rate_of_beeps, initial_beeps):
         print("Command Recieved: Camera")
 
         if direction=="Clockwise":
-            self.robot.drive_system.spin_clockwise_until_sees_object(speed, area)
+            self.robot.drive_system.spin_clockwise_until_sees_object(speed, 20)
 
         if direction=="Counter-Clockwise":
-            self.robot.drive_system.spin_counterclockwise_until_sees_object(speed, area)
+            self.robot.drive_system.spin_counterclockwise_until_sees_object(speed, 20)
 
-        self.proximity_button(10, 5)
+        self.proximity_button(rate_of_beeps,initial_beeps)
 
     def m1line_button(self,starting_side):
         print("Command Recieved: Line")
