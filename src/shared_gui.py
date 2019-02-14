@@ -475,11 +475,10 @@ def get_Katana_frame(window, mqtt_sender):
                                                                                     initial_frequency.get(),
                                                                                     mqtt_sender)
 
-    obtain_with_camera_button["command"] = lambda: handle_obtain_with_camera_button(wheel_speed_entry.get(),
+    obtain_with_camera_button["command"] = lambda: handle_obtain_with_camera_button(wheel_speed_entry.get(),spin_speed.get(),
                                                                                     spin_direction.get(),
                                                                                     rate_of_frequency.get(),
-                                                                                    initial_frequency.get(),
-                                                                                    mqtt_sender)
+                                                                                    initial_frequency.get(),mqtt_sender)
     return frame
 
 def handle_obtain_with_sensor_button(wheel_speed,rate_of_frequency, initial_frequency, mqtt_sender):

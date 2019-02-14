@@ -121,8 +121,9 @@ class DelegateThatReceives(object):
         initial_frequency_int = int(initial_frequency)
         rate_of_frequency_int = int(rate_of_frequency)
         speed_int = int(speed)
-        self.robot.drive_system.go(speed_int, speed_int)
-        print("Looking")
+        distance = self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches()
+        self.robot.drive_system.go_forward_until_distance_is_less_than(4,speed)
+
 
         ##Todo: Write code for movign towards and picking up code stuff
 
