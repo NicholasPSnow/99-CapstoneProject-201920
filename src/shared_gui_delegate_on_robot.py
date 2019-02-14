@@ -126,7 +126,7 @@ class DelegateThatReceives(object):
         frequency = int(initial_frequency_str)
 
         print("Retrieving Object")
-        #self.robot.arm_and_claw.calibrate_arm()
+        self.robot.arm_and_claw.calibrate_arm()
         self.robot.sound_system.tone_maker.play_tone(frequency,duration)
         self.robot.drive_system.go(speed,speed)
         inches = 5
@@ -134,8 +134,8 @@ class DelegateThatReceives(object):
             distance = self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches()
             counter_agree=0
             counter_disagree = 0
-            #frequency = frequency + increase_frequency
-            #self.robot.sound_system.tone_maker.play_tone(frequency, duration)
+            frequency = frequency + increase_frequency
+            self.robot.sound_system.tone_maker.play_tone(frequency, duration)
             while distance < inches:
                 distance = self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches()
                 print(counter_disagree,counter_agree)
@@ -150,10 +150,10 @@ class DelegateThatReceives(object):
             if counter_agree >= 3:
                 break
         self.robot.drive_system.stop()
-        #self.robot.arm_and_claw.raise_arm()
+        self.robot.arm_and_claw.raise_arm()
         print("Obtained Object")
-        #victory = [100,200,300,400,300,400]
-        #self.robot.sound_system.tone_maker.play_tone_sequence(victory)
+        victory = [100,200,300,400,300,400]
+        self.robot.sound_system.tone_maker.play_tone_sequence(victory)
 
 
     def obtain_with_camera_button(self,wheel_speed_str,spin_speed_str,spin_direction,rate_of_increase_str, initial_frequency_str):
