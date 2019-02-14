@@ -36,6 +36,10 @@ def real_thing():
 # Sprint 2 Functions
 # -------------------------------------------------------------------------
 
+# -------------------------------------------------------------------------
+# Feature 9
+# -------------------------------------------------------------------------
+
 def feature_9(robot, init_rate, acceleration):  # init_rate is cycles per second
     distance = []                               # acceleration is cycles per second per inch
     last_state = time.time()
@@ -85,6 +89,14 @@ def led_cycle(robot, state):
     else:
         robot.led_system.left_led.turn_oof()
         robot.led_system.left_led.turn_off()
+
+# -------------------------------------------------------------------------
+# Feature 10
+# -------------------------------------------------------------------------
+
+
+def feature_10(speed, direction):
+    pass
 
 # -------------------------------------------------------------------------
 # Test Functions
