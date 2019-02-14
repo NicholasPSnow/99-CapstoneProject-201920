@@ -11,7 +11,7 @@ import rosebot as bot
 import mqtt_remote_method_calls as com
 import time
 import math
-import m3_run_this_on_robot as m3
+
 
 
 class DelegateThatReceives(object):
@@ -114,70 +114,6 @@ class DelegateThatReceives(object):
         print("Command Recieved: Speak")
         self.robot.sound_system.speech_maker.speak(text)
 
-## Katana'S GUI Handler
-
-    def obtain_with_sensor_button(self, speed_str, rate_of_increase_str, initial_frequency_str):
-
-        print("Command Recieved: obtain_with_sensor")
-
-        increase_frequency = int(rate_of_increase_str)
-        speed = int(speed_str)
-        duration = 20
-        frequency = int(initial_frequency_str)
-
-        print("Retrieving Object")
-        self.robot.arm_and_claw.calibrate_arm()
-        self.robot.sound_system.tone_maker.play_tone(frequency,duration)
-        self.robot.drive_system.go(speed,speed)
-        inches = 5
-        while True:
-            distance = self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches()
-            counter_agree=0
-            counter_disagree = 0
-            frequency = frequency + increase_frequency
-            self.robot.sound_system.tone_maker.play_tone(frequency, duration)
-            while distance < inches:
-                distance = self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches()
-                print(counter_disagree,counter_agree)
-                if distance > inches:
-                    counter_disagree = counter_disagree+1
-                else:
-                    counter_agree = counter_agree+1
-                if counter_agree >= 3:
-                    break
-                if counter_disagree >= 3:
-                    break
-            if counter_agree >= 3:
-                break
-        self.robot.drive_system.stop()
-        self.robot.arm_and_claw.raise_arm()
-        print("Obtained Object")
-        victory = [100,200,300,400,300,400]
-        self.robot.sound_system.tone_maker.play_tone_sequence(victory)
-
-
-    def obtain_with_camera_button(self,wheel_speed_str,spin_speed_str,spin_direction,rate_of_increase_str, initial_frequency_str):
-
-        print("Command Recieved: Camera obtain")
-
-        self.robot.arm_and_claw.lower_arm()
-        wheel_speed = int(wheel_speed_str)
-        spin_speed = int(spin_speed_str)
-        direction = str(spin_direction)
-        increase_frequency = int(rate_of_increase_str)
-        inital_frequency = int(initial_frequency_str)
-
-        if direction == 'Clockwise':
-            self.robot.drive_system.spin_clockwise_until_sees_object(spin_speed,20)
-            self.obtain_with_sensor_button(wheel_speed,increase_frequency,inital_frequency)
-        elif direction == 'Counter Clockwise':
-            self.robot.drive_system.spin_counterclockwise_until_sees_object(spin_speed,20)
-            self.obtain_with_sensor_button(wheel_speed,increase_frequency,inital_frequency)
-        else:
-            print('Incorrect direction value. Please input "Clockwise" or "Counter Clockwise"')
-            pass
-
-
 
     ## NICK'S GUI HANDLER
 
@@ -265,15 +201,3 @@ class DelegateThatReceives(object):
         print("Command Recieved: Camera Search CW")
         self.robot.drive_system.spin_clockwise_until_sees_object(int(speed),int(area))
 
-    # -------------------------------------------------------------------------
-    # Zach's Sprint 2 Handlers
-    # -------------------------------------------------------------------------
-
-    def m3_feature_9(self, init_rate, acceleration):
-
-        print("Command Received: M3 Feature 9")
-        m3.feature_9(self.robot, init_rate, acceleration)
-
-    def m3_feature_10(self, speed, direction):
-        print("Command Received: M3 Feature 10")
-        m3.feature_10(self.robot, speed, direction)
