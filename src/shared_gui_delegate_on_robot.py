@@ -14,6 +14,7 @@ import math
 import m3_extra as m3
 
 
+
 class DelegateThatReceives(object):
 
     def __init__(self, robot):
