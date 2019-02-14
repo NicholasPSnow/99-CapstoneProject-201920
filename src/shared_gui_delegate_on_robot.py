@@ -184,9 +184,6 @@ class DelegateThatReceives(object):
     def m1proximity_button(self,rate_of_beeps, initial_beeps):
         print("Command Recieved: Proximity")
         self.robot.arm_and_claw.lower_arm()
-        int_initial_beeps=int(initial_beeps)
-        int_rate_of_beeps=int(rate_of_beeps)
-
         self.robot.drive_system.go(75, 75)
         print("Searching")
         while self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches() >= 4:
@@ -206,7 +203,7 @@ class DelegateThatReceives(object):
         if direction=="Counter-Clockwise":
             self.robot.drive_system.spin_counterclockwise_until_sees_object(speed, 20)
 
-        self.proximity_button(rate_of_beeps,initial_beeps)
+        self.m1proximity_button(int(rate_of_beeps),int(initial_beeps))
 
     def m1line_button(self,starting_side):
         print("Command Recieved: Line")
