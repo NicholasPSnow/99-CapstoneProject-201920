@@ -11,10 +11,14 @@ import rosebot as bot
 import mqtt_remote_method_calls as com
 import time
 import math
+class LAPTOP_DelegateThatReceives(object):
+    def __init__(self):
+        self.robot=bot.RoseBot()
+    def say(self,command):
+        print("Robot Says: ",command)
 
 
-
-class DelegateThatReceives(object):
+class ROBOT_DelegateThatReceives(object):
 
     def __init__(self, robot):
         self.robot = bot.RoseBot()
