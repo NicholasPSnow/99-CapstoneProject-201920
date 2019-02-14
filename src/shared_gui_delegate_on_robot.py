@@ -122,7 +122,7 @@ class DelegateThatReceives(object):
 
         increase_frequency = int(rate_of_increase_str)
         speed = int(speed_str)
-        duration = 5
+        duration = 20
         frequency = int(initial_frequency_str)
 
         print("Retrieving Object")
