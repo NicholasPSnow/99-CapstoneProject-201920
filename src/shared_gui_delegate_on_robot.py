@@ -227,3 +227,6 @@ class DelegateThatReceives(object):
     def m3_feature_9(self, init_rate, acceleration):
         print("Command Received: M3 Feature 9")
         m3.feature_9(init_rate, acceleration)
+
+    def m3_feature_10(self, speed, direction):
+        pass

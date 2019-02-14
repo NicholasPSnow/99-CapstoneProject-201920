@@ -51,15 +51,16 @@ def main():
     # -------------------------------------------------------------------------
     # Frames that are particular to my individual contributions to the project.
     # -------------------------------------------------------------------------
-    # TODO: Implement and call get_my_frames(...)
+    # Done: Implement and call get_my_frames(...)
 
     feature_9 = feature_9_frame(main_frame, sender)
+    feature_10 = feature_10_frame(main_frame, sender)
 
     # -------------------------------------------------------------------------
     # Grid the frames.
     # -------------------------------------------------------------------------
 
-    grid_frames(teleop_frame, arm_frame, control_frame, sprint_1_drive_system, sprint_1_beeper, feature_9)
+    grid_frames(teleop_frame, arm_frame, control_frame, sprint_1_drive_system, sprint_1_beeper, feature_9, feature_10)
 
     # -------------------------------------------------------------------------
     # The event loop:
@@ -78,14 +79,56 @@ def get_shared_frames(main_frame, mqtt_sender):
     return teleop_frame, arm_frame, control_frame, sprint_1_drive_system, sprint_1_beeper
 
 
-def grid_frames(teleop_frame, arm_frame, control_frame, sprint_1_drive_system, sprint_1_beeper, feature_9):
+def grid_frames(teleop_frame, arm_frame, control_frame, sprint_1_drive_system, sprint_1_beeper, feature_9, feature_10):
     teleop_frame.grid(row=0, column=0)
     arm_frame.grid(row=1, column=0)
     sprint_1_drive_system.grid(row=2, column=0)
     sprint_1_beeper.grid(row=3, column=0)
     control_frame.grid(row=4, column=0)
     feature_9.grid(row=5, column=0)
+    feature_10.grid(row=6, column=0)
 
+# -------------------------------------------------------------------------
+# Feature 10
+# -------------------------------------------------------------------------
+
+
+def feature_10_frame(frame, sender):
+    feature_frame = ttk.Frame(frame, padding=10, borderwidth=5, relief="ridge")
+    feature_10_widgets(feature_frame, sender)
+
+    return feature_frame
+
+
+def feature_10_widgets(frame, sender):
+    # -----------------------------------------------------------------------------
+    # Setup
+    # -----------------------------------------------------------------------------
+    speed_label = ttk.Label(frame, text="Speed")
+    direction_label = ttk.Label(frame, text="Spin Direction (unchecked is ccw)")
+    title_label = ttk.Label(frame, text="Feature 10")
+
+    speed_entry = ttk.Entry(frame)
+    direction_checkbox = ttk.Checkbutton(frame)
+
+    feature_10_button = ttk.Button(frame, text="Feature 10")
+    feature_10_button["command"] = lambda: sender.send_message("m3_feature_10", [speed_entry.get(),
+                                                                                 direction_checkbox.state()])
+    # -----------------------------------------------------------------------------
+    # Grid
+    # -----------------------------------------------------------------------------
+    speed_label.grid(row=1, column=0)
+    direction_label.grid(row=2, column=0)
+    title_label.grid(row=0, column=0)
+
+    speed_entry.grid(row=1, column=1)
+    direction_checkbox.grid(row=2, column=1)
+
+    feature_10_button.grid(row=0, column=1)
+
+# -------------------------------------------------------------------------
+# Feature 9
+# -------------------------------------------------------------------------
 
 
 def feature_9_frame(frame, sender):
