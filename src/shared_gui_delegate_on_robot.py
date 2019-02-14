@@ -167,16 +167,16 @@ class DelegateThatReceives(object):
         inital_frequency = int(initial_frequency_str)
 
         if direction == 'Clockwise':
-            self.robot.drive_system.spin_clockwise_until_sees_object(spin_speed,20)
-            self.obtain_with_sensor_button(wheel_speed,increase_frequency,inital_frequency)
+            print('Clockwise')
+            self.robot.drive_system.spin_clockwise_until_sees_object(spin_speed,10)
         elif direction == 'Counter Clockwise':
-            self.robot.drive_system.spin_counterclockwise_until_sees_object(spin_speed,20)
-            self.obtain_with_sensor_button(wheel_speed,increase_frequency,inital_frequency)
+            print('Counter Clockwise')
+            self.robot.drive_system.spin_counterclockwise_until_sees_object(spin_speed,10)
         else:
             print('Incorrect direction value. Please input "Clockwise" or "Counter Clockwise"')
             pass
-
-
+        print('Found object, getting it')
+        self.obtain_with_sensor_button(wheel_speed, increase_frequency, inital_frequency)
 
     ## NICK'S GUI HANDLER
 
