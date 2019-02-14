@@ -127,7 +127,9 @@ class DelegateThatReceives(object):
 
         print("Retrieving Object")
         self.robot.arm_and_claw.calibrate_arm()
+        print('arm')
         self.robot.sound_system.tone_maker.play_tone(frequency,duration)
+        print('go')
         self.robot.drive_system.go(speed,speed)
         inches = 5
         while True:
@@ -159,7 +161,6 @@ class DelegateThatReceives(object):
 
         print("Command Recieved: Camera obtain")
 
-        self.robot.arm_and_claw.lower_arm()
         wheel_speed = int(wheel_speed_str)
         spin_speed = int(spin_speed_str)
         direction = str(spin_direction)
