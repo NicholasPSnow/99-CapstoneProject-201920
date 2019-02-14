@@ -117,7 +117,9 @@ class DelegateThatReceives(object):
 ## Katana'S GUI Handler
 
     def obtain_with_sensor_button(self, speed_str, rate_of_increase_str, initial_frequency_str):
+
         print("Command Recieved: obtain_with_sensor")
+
         self.robot.arm_and_claw.lower_arm()
         increase_frequency = int(rate_of_increase_str)
         speed = int(speed_str)
@@ -125,6 +127,7 @@ class DelegateThatReceives(object):
         frequency = int(initial_frequency_str)
 
         print("Retrieving Object")
+
         self.robot.sound_system.tone_maker.play_tone(frequency,duration)
         self.robot.drive_system.go(speed,speed)
         while True:
@@ -154,7 +157,9 @@ class DelegateThatReceives(object):
         self.robot.sound_system.tone_maker.play_tone_sequence(victory)
 
     def obtain_with_camera_button(self,wheel_speed_str,spin_speed_str,spin_direction,rate_of_increase_str, initial_frequency_str):
+
         print("Command Recieved: Camera obtain")
+
         self.robot.arm_and_claw.lower_arm()
         wheel_speed = int(wheel_speed_str)
         spin_speed = int(spin_speed_str)
