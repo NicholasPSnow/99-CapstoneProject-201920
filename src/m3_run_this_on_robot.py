@@ -59,10 +59,13 @@ def feature_9(robot, init_rate, acceleration):  # init_rate is cycles per second
         led_cycle(robot, state)
 
     robot.drive_system.stop()
+    robot.arm_and_claw.raise_arm()
 
 
 def update_state(last_state, initial_dist, current_dist, init_rate, acceleration, state):
     cycle_time = (1.0 / init_rate) - ((initial_dist - current_dist) / acceleration)
+    if cycle_time < 0.1:
+        cycle_time = 0.1
     if (last_state - time.time()) >= cycle_time:
 
         return (state + 1) % 4, time.time()
@@ -109,6 +112,9 @@ def feature_10(robot, speed, direction):
         if blob_area >= 4 and 139 < blob.center.x < 180:
             robot.drive_system.stop()
             break
+
+    feature_9(robot, 0.5, 0.1)
+
 
 # -------------------------------------------------------------------------
 # Test Functions
