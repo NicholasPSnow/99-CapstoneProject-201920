@@ -44,7 +44,7 @@ def feature_9(robot, init_rate, acceleration):  # init_rate is cycles per second
     distance = []                               # acceleration is cycles per second per inch
     last_state = time.time()
     for _ in range(10):
-        distance.append(robot.drive_system.sensor_system.ir_proximity_sensor.get_distance_in_inches())
+        distance.append(robot.sensor_system.ir_proximity_sensor.get_distance_in_inches())
     average = average_list(distance)
     initial_dist = average
     state = 0
@@ -52,7 +52,7 @@ def feature_9(robot, init_rate, acceleration):  # init_rate is cycles per second
     robot.drive_system.go(25, 25)
 
     while average > 1:
-        distance.append(robot.drive_system.sensor_system.ir_proximity_sensor.get_distance_in_inches())
+        distance.append(robot.sensor_system.ir_proximity_sensor.get_distance_in_inches())
         distance.pop(0)
         average = average_list(distance)
         state, last_state = update_state(last_state, initial_dist, average, init_rate, acceleration, state)
@@ -95,8 +95,20 @@ def led_cycle(robot, state):
 # -------------------------------------------------------------------------
 
 
-def feature_10(speed, direction):
-    pass
+def feature_10(robot, speed, direction):
+    if direction[0] == 'selected':
+        speed = speed * -1
+
+    robot.drive_system.left_motor.turn_on(speed)
+    robot.drive_system.right_motor.turn_on(-1 * speed)
+
+    while True:
+        blob = robot.sensor_system.camera.get_biggest_blob()
+        blob_area = blob.width * blob.height
+
+        if blob_area >= 4 and 139 < blob.center.x < 180:
+            robot.drive_system.stop()
+            break
 
 # -------------------------------------------------------------------------
 # Test Functions
