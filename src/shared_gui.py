@@ -427,7 +427,7 @@ def get_Katana_frame(window, mqtt_sender):
 
     # Construct the widgets on the frame:
     frame_label = ttk.Label(frame, text="Katana's System")
-    obtain_with_sensor_label = ttk.Label(frame, text="Pick Up Object")
+    obtain_with_sensor_label = ttk.Label(frame, text="Get Object with Proximity")
     obtain_with_sensor_button = ttk.Button(frame, text="Get")
 
     wheel_speed_label = ttk.Label(frame, text="Move Speed")
@@ -438,7 +438,7 @@ def get_Katana_frame(window, mqtt_sender):
     initial_frequency = ttk.Entry(frame, width=8, justify=tkinter.LEFT)
     initial_frequency.insert(0, "5")
 
-    obtain_with_camera_label = ttk.Label(frame, text="Pick up Object with Camera")
+    obtain_with_camera_label = ttk.Label(frame, text="Get Object with Camera")
     obtain_with_camera_button = ttk.Button(frame, text="Get")
 
     wheel_speed_entry = ttk.Entry(frame, width=8)
@@ -451,24 +451,23 @@ def get_Katana_frame(window, mqtt_sender):
     spin_direction.insert(0, "Counter Clockwise")
 
     # Grid the widgets:
-    frame_label.grid(row=0, column=1)
-    obtain_with_sensor_label.grid(row=1, column=0)
-    obtain_with_sensor_button.grid(row=2, column=0)
-    rate_of_frequency.grid(row=1, column=1)
-    rate_of_frequency.grid(row=2, column=1)
-    initial_frequency.grid(row=1, column=2)
-    initial_frequency.grid(row=2, column=2)
-    wheel_speed_label.grid(row=1, column=3)
-    wheel_speed_entry.grid(row=2, column=3)
+    frame_label.grid(row=0, column=2)
+    obtain_with_sensor_label.grid(row=1, column=1)
+    obtain_with_sensor_button.grid(row=2, column=1)
+    rate_of_frequency_label.grid(row=1,column=2)
+    rate_of_frequency.grid(row=2, column=2)
+    initial_frequency_label.grid(row=1, column=3)
+    initial_frequency.grid(row=2, column=3)
 
-    obtain_with_camera_label.grid(row=4, column=0)
-    obtain_with_camera_button.grid(row=5, column=0)
-    spin_speed_label.grid(row=4, column=1)
-    spin_speed.grid(row=5, column=1)
-    spin_direction.grid(row=4, column=2)
-    spin_direction.grid(row=5, column=2)
-    wheel_speed_label.grid(row=4, column=3)
-    wheel_speed_entry.grid(row=5, column=3)
+    wheel_speed_label.grid(row=3, column=2)
+    wheel_speed_entry.grid(row=4, column=2)
+
+    obtain_with_camera_label.grid(row=5, column=1)
+    obtain_with_camera_button.grid(row=6, column=1)
+    spin_speed_label.grid(row=5, column=2)
+    spin_speed.grid(row=6, column=2)
+    spin_direction_label.grid(row=5, column=3)
+    spin_direction.grid(row=6, column=3)
 
     # Set the button callbacks:
     obtain_with_sensor_button["command"] = lambda: handle_obtain_with_sensor_button(wheel_speed_entry.get(),rate_of_frequency.get(),
