@@ -87,6 +87,19 @@ class DriveSystem(object):
         self.left_motor.turn_off()
         self.right_motor.turn_off()
 
+    def rotate_right(self):
+        self.go(100,-100)
+        time.sleep(1)
+        self.stop()
+
+    def rotate_left(self):
+        self.go(100, -100)
+        time.sleep(1)
+        self.stop()
+
+    def goto_point(self,x,y):
+        pass
+
     def go_straight_for_seconds(self, seconds, speed):
         """
         Makes the robot go straight (forward if speed > 0, else backward)

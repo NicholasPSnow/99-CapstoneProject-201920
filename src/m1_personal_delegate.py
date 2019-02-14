@@ -24,6 +24,11 @@ class ROBOT_DelegateThatReceives(object):
         self.robot = bot.RoseBot()
         self.Quit=0
         self.Exit=0
+        self.Done=0
+        self.x=250
+        self.y=250
+        self.path=[]
+
 
     def is_Quit(self):
         if self.Quit==1:
@@ -48,6 +53,8 @@ class ROBOT_DelegateThatReceives(object):
         if argument == 'exit':
             print("Exit")
             self.Exit = 1
+    def is_done(self):
+        return self.Done
 
     def stop(self):
         print("Command Recieved: Stop")
@@ -58,6 +65,8 @@ class ROBOT_DelegateThatReceives(object):
     def movement(self, left_speed, right_speed):
         print("Command Recieved: Movement",left_speed,right_speed)
         self.robot.drive_system.go(int(left_speed), int(right_speed))
+        if self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches()<5:
+            print("Crashing in 5 Inches!")
 
     ##ARM SYSTEM
     def up(self):
@@ -204,4 +213,22 @@ class ROBOT_DelegateThatReceives(object):
     def camera_clockwise_button(self,speed, area):
         print("Command Recieved: Camera Search CW")
         self.robot.drive_system.spin_clockwise_until_sees_object(int(speed),int(area))
+
+
+    def Store_Path(self,x,y):
+        self.path.append(x)
+        self.path.append(y)
+
+    def Follow_Path(self):
+        for k in range(0,len(self.path)-1,2):
+            self.robot.drive_system.goto_point(self.path[k],self.path[k+1])
+        print("Pathing Complete!")
+        self.Done=1
+
+
+    def victory_dance(self):
+        self.robot.arm_and_claw.calibrate_arm()
+        self.s
+
+
 

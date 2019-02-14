@@ -23,23 +23,44 @@ def main():
     # -------------------------------------------------------------------------
     # Construct and connect the MQTT Client:
     # -------------------------------------------------------------------------
-    mqtt_sender = com.MqttClient(m1_personal_delegate.LAPTOP_DelegateThatReceives)
+    delegate = m1_personal_delegate.ROBOT_DelegateThatReceives
+    mqtt_sender = com.MqttClient(delegate)
     mqtt_sender.connect_to_ev3()
 
     time.sleep(1)  # Time to allow the MQTT setup.
     print()
 
+    #Inital Position of Robot
+    previous_click = [250, 250]
     # -------------------------------------------------------------------------
     # The root TK object for the GUI:
     # -------------------------------------------------------------------------
     root = tkinter.Tk()
     root.title("MQTT EV3 Remote")
 
+    canvasbase = tkinter.Tk()
+    canvasbase.title("Drawing Frame")
+
+
+
     # -------------------------------------------------------------------------
     # The main frame, upon which the other frames are placed.
     # -------------------------------------------------------------------------
     main_frame = ttk.Frame(root, padding=10, borderwidth=5,relief='groove')
     main_frame.grid()
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     # -------------------------------------------------------------------------
     # Sub-frames for the shared GUI that the team developed:
@@ -49,7 +70,34 @@ def main():
     # -------------------------------------------------------------------------
     # Frames that are particular to my individual contributions to the project.
     # -------------------------------------------------------------------------
-    # Done: Implement and call get_my_frames(...)
+    drawpad = tkinter.Canvas(canvasbase, width=500, height=500)
+    drawpad.configure(bg="white")
+    drawpad.pack()
+    buttonBG = drawpad.create_rectangle(0, 0, 100, 30, fill="grey40", outline="grey60")
+    buttonTXT = drawpad.create_text(50, 15, text="Click to Run")
+
+    #Functions Triggered:
+    def click(event):
+        x= event.x
+        y= event.y
+        print("Clicked")
+        print('{}, {}'.format(x, y))
+        drawpad.create_line(previous_click[len(previous_click)-2], previous_click[len(previous_click)-1], x, y)
+        previous_click.append(x)
+        previous_click.append(y)
+        mqtt_sender.send_message('Store_Path',[x,y])
+
+    def clicked(event):
+        for k in range(len(previous_click)):
+            print(previous_click[k],end=' ')
+        mqtt_sender.send_message('Follow_Path')
+
+
+
+    # Get The Clicks
+    drawpad.tag_bind(buttonBG, "<Button-1>", clicked)
+    drawpad.tag_bind(buttonTXT, "<Button-1>", clicked)
+    canvasbase.bind('<Button>', click)
 
     # -------------------------------------------------------------------------
     # Grid the frames.

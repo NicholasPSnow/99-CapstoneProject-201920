@@ -22,14 +22,29 @@ def main():
     mqtt_reciever=com.MqttClient(delegate)
     mqtt_reciever.connect_to_pc()
     while True:
+        if robot.sensor_system.ir_proximity_sensor.get_distance_in_inches()<5:
+            robot.sound_system.speech_maker.speak("I'm Going to Crash")
+            print("I'm Going to Crash")
+            mqtt_reciever.send_message('say',["I'm Going to Crash"])
+        if delegate.is_done()==1:
+            print("Path Sucessful")
+            mqtt_reciever.send_message('say', ["Path Sucessful"])
+
+
+
+
         time.sleep(0.01)
         if delegate.is_Quit()==1:
             print("Quit Sucessful")
+            mqtt_reciever.send_message('say', ["Quit Sucessful"])
             break;
         if delegate.is_Exit()==1:
             print("Exit Sucessful")
+            mqtt_reciever.send_message('say', ["Exit Sucessful"])
             break;
     print("Program Has Ended")
+    mqtt_reciever.send_message('say', ["Program Has Ended"])
+
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # -----------------------------------------------------------------------------
