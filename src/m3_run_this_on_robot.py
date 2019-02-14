@@ -16,7 +16,7 @@ def main():
       1. Makes the EV3 robot to various things.
       2. Communicates via MQTT with the GUI code that runs on the LAPTOP.
     """
-    # real_thing()
+    real_thing()
     # run_test_ir(0)
     # run_test_arm()
     # run_test_camera()
@@ -60,7 +60,9 @@ def feature_9(robot, init_rate, acceleration):  # init_rate is cycles per second
 def update_state(last_state, initial_dist, current_dist, init_rate, acceleration, state):
     cycle_time = (1.0 / init_rate) - ((initial_dist - current_dist) / acceleration)
     if (last_state - time.time()) >= cycle_time:
+
         return (state + 1) % 4, time.time()
+
     return state, last_state
 
 
@@ -68,6 +70,7 @@ def average_list(list1):
     average = 0
     for i in list1:
         average = average + i
+
     return average / len(list1)
 
 

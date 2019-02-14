@@ -53,11 +53,13 @@ def main():
     # -------------------------------------------------------------------------
     # TODO: Implement and call get_my_frames(...)
 
+    feature_9 = feature_9_frame(main_frame, sender)
+
     # -------------------------------------------------------------------------
     # Grid the frames.
     # -------------------------------------------------------------------------
 
-    grid_frames(teleop_frame, arm_frame, control_frame, sprint_1_drive_system, sprint_1_beeper)
+    grid_frames(teleop_frame, arm_frame, control_frame, sprint_1_drive_system, sprint_1_beeper, feature_9)
 
     # -------------------------------------------------------------------------
     # The event loop:
@@ -76,12 +78,49 @@ def get_shared_frames(main_frame, mqtt_sender):
     return teleop_frame, arm_frame, control_frame, sprint_1_drive_system, sprint_1_beeper
 
 
-def grid_frames(teleop_frame, arm_frame, control_frame, sprint_1_drive_system, sprint_1_beeper):
+def grid_frames(teleop_frame, arm_frame, control_frame, sprint_1_drive_system, sprint_1_beeper, feature_9):
     teleop_frame.grid(row=0, column=0)
     arm_frame.grid(row=1, column=0)
     sprint_1_drive_system.grid(row=2, column=0)
     sprint_1_beeper.grid(row=3, column=0)
     control_frame.grid(row=4, column=0)
+    feature_9.grid(row=5, column=0)
+
+
+
+def feature_9_frame(frame, sender):
+    feature_frame = ttk.Frame(frame, padding=10, borderwidth=5, relief="ridge")
+    feature_9_widgets(feature_frame, sender)
+
+    return feature_frame
+
+
+def feature_9_widgets(frame, sender):
+    # -----------------------------------------------------------------------------
+    # Setup
+    # -----------------------------------------------------------------------------
+    init_rate_label = ttk.Label(frame, text="Initial Cycle Rate (cycles/sec)")
+    acceleration_label = ttk.Label(frame, text="Acceleration (cycles/sec/inch)")
+    title_label = ttk.Label(frame, text="Feature 9")
+
+    init_rate_entry = ttk.Entry(frame)
+    acceleration_entry = ttk.Entry(frame)
+
+    feature_9_button = ttk.Button(frame, text="Feature 9")
+    feature_9_button["command"] = lambda: sender.send_message("m3_feature_9", [init_rate_entry.get(),
+                                                                               acceleration_entry.get()])
+    # -----------------------------------------------------------------------------
+    # Grid
+    # -----------------------------------------------------------------------------
+    init_rate_label.grid(row=1, column=0)
+    acceleration_label.grid(row=2, column=0)
+    title_label.grid(row=0, column=0)
+
+    init_rate_entry.grid(row=1, column=1)
+    acceleration_entry.grid(row=2, column=1)
+
+    feature_9_button.grid(row=0, column=1)
+
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
