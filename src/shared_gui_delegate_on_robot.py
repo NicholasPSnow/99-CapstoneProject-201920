@@ -182,7 +182,7 @@ class DelegateThatReceives(object):
 
     def m1proximity_button(self,rate_of_beeps, initial_beeps):
         print("Command Recieved: Proximity")
-        self.robot.arm_and_claw.lower_arm()
+        self.robot.arm_and_claw.calibrate_arm()
         self.robot.drive_system.go(75, 75)
         print("Searching")
         while self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches() >= 4:
