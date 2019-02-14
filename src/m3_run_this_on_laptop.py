@@ -105,7 +105,7 @@ def feature_10_widgets(frame, sender):
     # Setup
     # -----------------------------------------------------------------------------
     speed_label = ttk.Label(frame, text="Speed")
-    direction_label = ttk.Label(frame, text="Spin Direction (unchecked is ccw)")
+    direction_label = ttk.Label(frame, text="Spin Direction (unchecked is cw)")
     title_label = ttk.Label(frame, text="Feature 10")
 
     speed_entry = ttk.Entry(frame)
