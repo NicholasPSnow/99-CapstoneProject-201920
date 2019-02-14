@@ -11,6 +11,7 @@ import rosebot as bot
 import mqtt_remote_method_calls as com
 import time
 import math
+import m3_run_this_on_robot as m3
 
 
 class DelegateThatReceives(object):
@@ -219,7 +220,10 @@ class DelegateThatReceives(object):
         print("Command Recieved: Camera Search CW")
         self.robot.drive_system.spin_clockwise_until_sees_object(int(speed),int(area))
 
-##Zach's GUI Handler
+    # -------------------------------------------------------------------------
+    # Zach's Sprint 2 Handlers
+    # -------------------------------------------------------------------------
 
-    def feature_11(self, b, k1, kd1, kd2):
-        pass
+    def m3_feature_9(self, init_rate, acceleration):
+        print("Command Received: M3 Feature 9")
+        m3.feature_9(init_rate, acceleration)
