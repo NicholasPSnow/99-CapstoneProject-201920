@@ -126,7 +126,7 @@ class DelegateThatReceives(object):
         frequency = int(initial_frequency_str)
 
         print("Retrieving Object")
-        self.robot.arm_and_claw.calibrate_arm()
+        self.robot.arm_and_claw.lower_arm()
         print('arm')
         self.robot.sound_system.tone_maker.play_tone(frequency,duration)
         print('go')
