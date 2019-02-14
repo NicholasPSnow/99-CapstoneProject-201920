@@ -482,9 +482,11 @@ def get_Katana_frame(window, mqtt_sender):
     return frame
 
 def handle_obtain_with_sensor_button(wheel_speed,rate_of_frequency, initial_frequency, mqtt_sender):
+    print('handler')
     mqtt_sender.send_message('obtain_with_sensor_button', [str(wheel_speed),str(rate_of_frequency),str(initial_frequency)])
     print('obtain_with_sensor',wheel_speed, rate_of_frequency, initial_frequency)
-def handle_obtain_with_camera_button(wheel_speed,spin_speed,spin_direction,rate_of_frequency, initial_frequency, mqtt_sender):
+
+def handle_obtain_with_camera_button(wheel_speed, spin_speed, spin_direction, rate_of_frequency, initial_frequency, mqtt_sender):
     mqtt_sender.send_message('obtain_with_camera_button', [str(wheel_speed),str(spin_speed), str(spin_direction),str(rate_of_frequency),str(initial_frequency)])
     print('obtain_with_camera', wheel_speed, spin_speed, spin_direction, rate_of_frequency, initial_frequency)
 

@@ -120,41 +120,41 @@ class DelegateThatReceives(object):
 
         print("Command Recieved: obtain_with_sensor")
 
-        self.robot.arm_and_claw.lower_arm()
         increase_frequency = int(rate_of_increase_str)
         speed = int(speed_str)
         duration = 5
         frequency = int(initial_frequency_str)
 
         print("Retrieving Object")
-
+        #self.robot.arm_and_claw.calibrate_arm()
         self.robot.sound_system.tone_maker.play_tone(frequency,duration)
         self.robot.drive_system.go(speed,speed)
+        inches = 5
         while True:
-            distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
-            counter_agree = 0
+            distance = self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches()
+            counter_agree=0
             counter_disagree = 0
-            while distance > 5:
-                distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
-                print(distance, counter_disagree, counter_agree)
-                frequency = frequency + increase_frequency
-                self.robot.sound_system.tone_maker.play_tone(frequency, duration)
-                if distance < 5:
-                    counter_disagree = counter_disagree + 1
+            #frequency = frequency + increase_frequency
+            #self.robot.sound_system.tone_maker.play_tone(frequency, duration)
+            while distance < inches:
+                distance = self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches()
+                print(counter_disagree,counter_agree)
+                if distance > inches:
+                    counter_disagree = counter_disagree+1
                 else:
-                    counter_agree = counter_agree + 1
-                if counter_agree >= 5:
+                    counter_agree = counter_agree+1
+                if counter_agree >= 3:
                     break
                 if counter_disagree >= 3:
                     break
-            if counter_agree >= 5:
+            if counter_agree >= 3:
                 break
         self.robot.drive_system.stop()
-        self.robot.arm_and_claw.raise_arm()
-
+        #self.robot.arm_and_claw.raise_arm()
         print("Obtained Object")
-        victory = [100,200,300,400,300,400]
-        self.robot.sound_system.tone_maker.play_tone_sequence(victory)
+        #victory = [100,200,300,400,300,400]
+        #self.robot.sound_system.tone_maker.play_tone_sequence(victory)
+
 
     def obtain_with_camera_button(self,wheel_speed_str,spin_speed_str,spin_direction,rate_of_increase_str, initial_frequency_str):
 
