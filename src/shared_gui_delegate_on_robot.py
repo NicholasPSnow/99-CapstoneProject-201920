@@ -116,21 +116,61 @@ class DelegateThatReceives(object):
 
 ## Katana'S GUI Handler
 
-    def handle_obtain_with_sensor_button(self, speed, rate_of_frequency, initial_frequency):
+    def obtain_with_sensor_button(self, speed_str, rate_of_increase_str, initial_frequency_str):
         print("Command Recieved: obtain_with_sensor")
         self.robot.arm_and_claw.lower_arm()
-        initial_frequency_int = int(initial_frequency)
-        rate_of_frequency_int = int(rate_of_frequency)
-        speed_int = int(speed)
-        distance = self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches()
-        self.robot.drive_system.go_forward_until_distance_is_less_than(4,speed)
+        increase_frequency = int(rate_of_increase_str)
+        speed = int(speed_str)
+        duration = 5
+        frequency = int(initial_frequency_str)
 
+        print("Retrieving Object")
+        self.robot.sound_system.tone_maker.play_tone(frequency,duration)
+        self.robot.drive_system.go(speed,speed)
+        while True:
+            distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
+            counter_agree = 0
+            counter_disagree = 0
+            while distance > 5:
+                distance = self.sensor_system.ir_proximity_sensor.get_distance_in_inches()
+                print(distance, counter_disagree, counter_agree)
+                frequency = frequency + increase_frequency
+                self.robot.sound_system.tone_maker.play_tone(frequency, duration)
+                if distance < 5:
+                    counter_disagree = counter_disagree + 1
+                else:
+                    counter_agree = counter_agree + 1
+                if counter_agree >= 5:
+                    break
+                if counter_disagree >= 3:
+                    break
+            if counter_agree >= 5:
+                break
+        self.robot.drive_system.stop()
+        self.robot.arm_and_claw.raise_arm()
 
-        ##Todo: Write code for movign towards and picking up code stuff
+        print("Obtained Object")
+        victory = [100,200,300,400,300,400]
+        self.robot.sound_system.tone_maker.play_tone_sequence(victory)
 
-    def obtain_with_camera_button(self, speed, direction, rate_of_beeps, initial_beeps):
-        print("Command Recieved: Camera")
-            ## TODO: Write code
+    def obtain_with_camera_button(self,wheel_speed_str,spin_speed_str,spin_direction,rate_of_increase_str, initial_frequency_str):
+        print("Command Recieved: Camera obtain")
+        self.robot.arm_and_claw.lower_arm()
+        wheel_speed = int(wheel_speed_str)
+        spin_speed = int(spin_speed_str)
+        direction = str(spin_direction)
+        increase_frequency = int(rate_of_increase_str)
+        inital_frequency = int(initial_frequency_str)
+
+        if direction == 'Clockwise':
+            self.robot.drive_system.spin_clockwise_until_sees_object(spin_speed,20)
+            self.obtain_with_sensor_button(wheel_speed,increase_frequency,inital_frequency)
+        elif direction == 'Counter Clockwise':
+            self.robot.drive_system.spin_counterclockwise_until_sees_object(spin_speed,20)
+            self.obtain_with_sensor_button(wheel_speed,increase_frequency,inital_frequency)
+        else:
+            print('Incorrect direction value. Please input "Clockwise" or "Counter Clockwise"')
+            pass
 
 
 
