@@ -134,8 +134,6 @@ class DelegateThatReceives(object):
             distance = self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches()
             counter_agree=0
             counter_disagree = 0
-            frequency = frequency + increase_frequency
-            self.robot.sound_system.tone_maker.play_tone(frequency, duration)
             while distance < inches:
                 distance = self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches()
                 print(counter_disagree,counter_agree)
@@ -143,6 +141,8 @@ class DelegateThatReceives(object):
                     counter_disagree = counter_disagree+1
                 else:
                     counter_agree = counter_agree+1
+                    frequency = frequency + increase_frequency
+                    self.robot.sound_system.tone_maker.play_tone(frequency, duration)
                 if counter_agree >= 3:
                     break
                 if counter_disagree >= 3:
