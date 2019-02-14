@@ -757,7 +757,7 @@ def get_Sprint_2_Camera_frame(window, mqtt_sender):
 
     area_label = ttk.Label(frame, text="Area Size")
     area = ttk.Entry(frame, width=8, justify=tkinter.LEFT)
-    area.insert(0, "20")
+    area.insert(0, "10")
 
     # Grid the widgets:
     frame_label.grid(row=0, column=1)
