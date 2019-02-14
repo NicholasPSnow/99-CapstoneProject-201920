@@ -153,8 +153,7 @@ class DelegateThatReceives(object):
         self.robot.drive_system.stop()
         self.robot.arm_and_claw.raise_arm()
         print("Obtained Object")
-        victory = [100,200,300,400,300,400]
-        self.robot.sound_system.tone_maker.play_tone_sequence(victory)
+
 
 
     def obtain_with_camera_button(self,wheel_speed_str,spin_speed_str,spin_direction,rate_of_increase_str, initial_frequency_str):
