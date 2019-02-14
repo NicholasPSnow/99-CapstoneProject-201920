@@ -24,22 +24,21 @@ def main():
     # -------------------------------------------------------------------------
     # Construct and connect the MQTT Client:
     # -------------------------------------------------------------------------
-
     mqtt_sender = com.MqttClient()
     mqtt_sender.connect_to_ev3()
+    time.sleep(1)  # Time to allow the MQTT setup.
+    print()
 
     # -------------------------------------------------------------------------
-    # The root Tk object for the GUI:
+    # The root TK object for the GUI:
     # -------------------------------------------------------------------------
-    root=tkinter.Tk()
-    root.title("CSSE 120 Final Project, Katana Colledge, Winter 2018-19")
-
+    root = tkinter.Tk()
+    root.title("MQTT EV3 Remote")
 
     # -------------------------------------------------------------------------
     # The main frame, upon which the other frames are placed.
     # -------------------------------------------------------------------------
-
-    main_frame = ttk.Frame(root,padding = 20, borderwidth = 3, relief="groove")
+    main_frame = ttk.Frame(root, padding=10, borderwidth=5, relief='groove')
     main_frame.grid()
 
     # -------------------------------------------------------------------------
