@@ -18,7 +18,7 @@ def main():
     """
 
     robot = bot.RoseBot()
-    delegate=m1_personal_delegate.DelegateThatReceives(robot)
+    delegate=m1_personal_delegate.ROBOT_DelegateThatReceives(robot)
     mqtt_reciever=com.MqttClient(delegate)
     mqtt_reciever.connect_to_pc()
     while True:

@@ -12,6 +12,7 @@ import tkinter
 from tkinter import ttk
 import m1_personal_GUI
 import time
+import m1_personal_delegate
 
 def main():
     """
@@ -22,8 +23,9 @@ def main():
     # -------------------------------------------------------------------------
     # Construct and connect the MQTT Client:
     # -------------------------------------------------------------------------
-    mqtt_sender = com.MqttClient()
+    mqtt_sender = com.MqttClient(m1_personal_delegate.LAPTOP_DelegateThatReceives)
     mqtt_sender.connect_to_ev3()
+
     time.sleep(1)  # Time to allow the MQTT setup.
     print()
 

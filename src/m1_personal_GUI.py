@@ -787,3 +787,8 @@ def handle_counter_clockwise_button(speed, area, mqtt_sender):
 def handle_clockwise_button(speed, area, mqtt_sender):
     mqtt_sender.send_message('camera_clockwise_button', [str(speed), str(area)])
     print('camera_clockwise_button', speed, area)
+
+
+
+
+
