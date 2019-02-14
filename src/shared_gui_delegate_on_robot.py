@@ -11,7 +11,7 @@ import rosebot as bot
 import mqtt_remote_method_calls as com
 import time
 import math
-import m3_run_this_on_robot as m3
+import m3_extra as m3
 
 
 class DelegateThatReceives(object):
