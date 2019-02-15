@@ -4,6 +4,7 @@
     and Nicholas Snow.
   Winter term, 2018-2019.
 """
+#Import Libraries
 import rosebot as bot
 import mqtt_remote_method_calls as com
 import time
@@ -18,7 +19,7 @@ def main():
       1. Makes the EV3 robot to various things.
       2. Communicates via MQTT with the GUI code that runs on the LAPTOP.
     """
-
+#Sets up robot
     robot = bot.RoseBot()
     delegate=m1_personal_delegate.ROBOT_DelegateThatReceives(robot)
     mqtt_reciever=com.MqttClient(delegate)
@@ -28,7 +29,7 @@ def main():
     while True:
         time.sleep(0.01)
 
-
+#Assorted conditions below for sending to laptop
         if delegate.is_done()==1:
             print('Path Sucessful')
             mqtt_reciever.send_message('status', ["Path Sucessful"])
@@ -47,8 +48,10 @@ def main():
     print("Program Has Ended")
     mqtt_reciever.send_message('status', ["Program Has Ended"])
 
+
+#Victory Dance
     robot.arm_and_claw.raise_arm()
-    robot.drive_system.rotate_right()
+    robot.drive_system.rotate_right(180)
     time.sleep(5)
     robot.drive_system.stop()
     robot.arm_and_claw.lower_arm()

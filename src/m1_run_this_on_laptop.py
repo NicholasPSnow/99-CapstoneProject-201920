@@ -6,7 +6,7 @@
     and Nicholas Snow.
   Winter term, 2018-2019.
 """
-
+#Import Libraries
 import mqtt_remote_method_calls as com
 import tkinter
 from tkinter import ttk
@@ -14,7 +14,7 @@ import m1_personal_GUI
 import time
 import m1_personal_delegate
 
-
+#This allows for changing of text in GUI
 def change_text(argument, drawpad,statusboxTXT):
     drawpad.itemconfigure(statusboxTXT, text=argument)
 

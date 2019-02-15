@@ -225,19 +225,19 @@ class ROBOT_DelegateThatReceives(object):
         self.robot.drive_system.spin_clockwise_until_sees_object(int(speed),int(area))
 
 ##NEW STUFF
-
+## Allows for reset stuff
     def Reset_All(self):
         self.x = 250
         self.y = 250
         self.path = []
         print("Reset Complete!")
-
+##This stores the path as the path is drawn
     def Store_Path(self,x,y):
         self.path.append(x)
         self.path.append(y)
         for k in range(len(self.path)):
             print(self.path[k])
-
+##This has the robot follow the path
     def Follow_Path(self):
         for k in range(0, len(self.path)-1, 2):
 
