@@ -84,7 +84,7 @@ def main():
     def click(event):
         x = event.x
         y = event.y
-        if x > 100 and y > 30 and x < 400:
+        if x > 100 and y > 30 or y > 30 and x < 400:
 
             print("Clicked")
             print('{}, {}'.format(x, y))
