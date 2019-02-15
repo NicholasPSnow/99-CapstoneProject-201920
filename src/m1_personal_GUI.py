@@ -45,6 +45,8 @@ def get_teleoperation_frame(window, mqtt_sender):
     backward_button = ttk.Button(frame, text="Backward")
     left_button = ttk.Button(frame, text="Left")
     right_button = ttk.Button(frame, text="Right")
+    rotate_left_button = ttk.Button(frame, text="Rotate Left")
+    rotate_right_button = ttk.Button(frame, text="Rotate Right")
     stop_button = ttk.Button(frame, text="Stop")
 
     # Grid the widgets:
@@ -56,8 +58,10 @@ def get_teleoperation_frame(window, mqtt_sender):
 
     forward_button.grid(row=3, column=1)
     left_button.grid(row=4, column=0)
+    rotate_left_button.grid(row=5, column=0)
     stop_button.grid(row=4, column=1)
     right_button.grid(row=4, column=2)
+    rotate_right_button.grid(row=5, column=2)
     backward_button.grid(row=5, column=1)
 
     # Set the button callbacks:
@@ -70,7 +74,8 @@ def get_teleoperation_frame(window, mqtt_sender):
     right_button["command"] = lambda: handle_right(
         left_speed_entry, right_speed_entry, mqtt_sender)
     stop_button["command"] = lambda: handle_stop(mqtt_sender)
-
+    rotate_left_button["command"] = lambda: handle_rotate_left(mqtt_sender)
+    rotate_right_button["command"] = lambda: handle_rotate_right(mqtt_sender)
     return frame
 
 
@@ -167,7 +172,12 @@ def handle_forward(left_entry_box, right_entry_box, mqtt_sender):
     print('forward', left_entry_box.get(), right_entry_box.get())
     mqtt_sender.send_message('movement', [left_entry_box.get(), right_entry_box.get()])
 
-
+def handle_rotate_left(mqtt_sender):
+    mqtt_sender.send_message('rotate_left')
+    print("Rotate Left")
+def handle_rotate_right(mqtt_sender):
+    mqtt_sender.send_message('rotate_right')
+    print("Rotate Right")
 def handle_backward(left_entry_box, right_entry_box, mqtt_sender):
     """
     Tells the robot to move using the speeds in the given entry boxes,

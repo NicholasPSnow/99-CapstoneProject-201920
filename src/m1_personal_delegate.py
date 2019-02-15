@@ -11,11 +11,14 @@ import rosebot as bot
 import mqtt_remote_method_calls as com
 import time
 import math
+
+
 class LAPTOP_DelegateThatReceives(object):
     def __init__(self):
-        self.robot=bot.RoseBot()
-    def say(self,command):
-        print("Robot Says: ",command)
+        pass
+
+    def status(self,argument):
+        print("Message Recieved:",argument)
 
 
 class ROBOT_DelegateThatReceives(object):
@@ -65,8 +68,14 @@ class ROBOT_DelegateThatReceives(object):
     def movement(self, left_speed, right_speed):
         print("Command Recieved: Movement",left_speed,right_speed)
         self.robot.drive_system.go(int(left_speed), int(right_speed))
-        if self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches()<5:
-            print("Crashing in 5 Inches!")
+
+    def rotate_left(self):
+        print("Command Recieved: Rotate Left")
+        self.robot.drive_system.rotate_left()
+
+    def rotate_right(self):
+        print("Command Recieved: Rotate Right")
+        self.robot.drive_system.rotate_right()
 
     ##ARM SYSTEM
     def up(self):
@@ -214,21 +223,34 @@ class ROBOT_DelegateThatReceives(object):
         print("Command Recieved: Camera Search CW")
         self.robot.drive_system.spin_clockwise_until_sees_object(int(speed),int(area))
 
+##NEW STUFF
+
+    def Reset_All(self):
+        self.x = 250
+        self.y = 250
+        self.path = []
+        print("Reset Complete!")
 
     def Store_Path(self,x,y):
         self.path.append(x)
         self.path.append(y)
+        for k in range(len(self.path)):
+            print(self.path[k])
 
     def Follow_Path(self):
         for k in range(0,len(self.path)-1,2):
-            self.robot.drive_system.goto_point(self.path[k],self.path[k+1])
+            self.robot.drive_system.goto_point(self.x,self.y,self.path[k],self.path[k+1])
+            self.x=self.path[k]
+            self.y=self.path[k + 1]
         print("Pathing Complete!")
         self.Done=1
 
 
     def victory_dance(self):
         self.robot.arm_and_claw.calibrate_arm()
-        self.s
+        self.robot.led_system.left_led.turn_on()
+        self.robot.led_system.right_led.turn_on()
+        self.robot.sound_system.speech_maker.speak("I DID IT!")
 
 
 

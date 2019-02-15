@@ -85,20 +85,52 @@ class DriveSystem(object):
     def stop(self):
         """ Stops the left and right wheel motors. """
         self.left_motor.turn_off()
+
         self.right_motor.turn_off()
 
     def rotate_right(self):
-        self.go(100,-100)
-        time.sleep(1)
+        self.left_motor.reset_position()
+        self.go(100, 0)
+        while True:
+            degrees = self.left_motor.get_position()
+            if abs(degrees) >= 2.5*360:
+                break
         self.stop()
+
 
     def rotate_left(self):
-        self.go(100, -100)
-        time.sleep(1)
+        self.right_motor.reset_position()
+        self.go(0, 100)
+        while True:
+            degrees = self.right_motor.get_position()
+            if abs(degrees) >= 2.5*360:
+                break
         self.stop()
 
-    def goto_point(self,x,y):
-        pass
+    def goto_point(self,currentx,currenty,newx,newy):
+        if newx >=currentx:
+            self.rotate_right()
+            distance=abs(int(newx)-int(currentx))/6
+            self.go_straight_for_inches_using_encoder(distance,100)
+            self.rotate_left()
+
+        if newx < currentx:
+            self.rotate_left()
+            distance = abs(int(newx) - int(currentx))/6
+            self.go_straight_for_inches_using_encoder(distance, 100)
+            self.rotate_right()
+
+        if newy >= currenty:
+            self.rotate_right()
+            self.rotate_right()
+            distance = abs(int(newy) - int(currenty))/6
+            self.go_straight_for_inches_using_encoder(distance, 100)
+            self.rotate_right()
+            self.rotate_right()
+        if newy < currenty:
+            distance = abs(int(newy) - int(currenty))/6
+            self.go_straight_for_inches_using_encoder(distance, 100)
+
 
     def go_straight_for_seconds(self, seconds, speed):
         """
@@ -137,7 +169,11 @@ class DriveSystem(object):
             position = self.left_motor.get_position()
             print(position)
             if abs(position) >= degree:
-                break
+                break;
+            if self.sensor_system.ir_proximity_sensor.get_distance_in_inches() <= 5:
+                print("Stopping Motion Due to Impending Crash")
+                self.stop()
+                break;
         self.stop()
 
     # -------------------------------------------------------------------------

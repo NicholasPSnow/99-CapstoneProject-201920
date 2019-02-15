@@ -21,29 +21,34 @@ def main():
     delegate=m1_personal_delegate.ROBOT_DelegateThatReceives(robot)
     mqtt_reciever=com.MqttClient(delegate)
     mqtt_reciever.connect_to_pc()
+    time.sleep(0.05)
+    mqtt_reciever.send_message('status',["Online!"])
     while True:
+        time.sleep(0.01)
         if robot.sensor_system.ir_proximity_sensor.get_distance_in_inches()<5:
             robot.sound_system.speech_maker.speak("I'm Going to Crash")
-            print("I'm Going to Crash")
-            mqtt_reciever.send_message('say',["I'm Going to Crash"])
+            print("I'm Going to Crash","Crashing!")
+            mqtt_reciever.send_message('status',["I'm Going to Crash"])
+
         if delegate.is_done()==1:
-            print("Path Sucessful")
-            mqtt_reciever.send_message('say', ["Path Sucessful"])
+            print('Path Sucessful')
+            mqtt_reciever.send_message('status', ["Path Sucessful"])
+            break;
 
 
 
 
-        time.sleep(0.01)
+
         if delegate.is_Quit()==1:
             print("Quit Sucessful")
-            mqtt_reciever.send_message('say', ["Quit Sucessful"])
+            mqtt_reciever.send_message('status', ["Quit Sucessful"])
             break;
         if delegate.is_Exit()==1:
             print("Exit Sucessful")
-            mqtt_reciever.send_message('say', ["Exit Sucessful"])
+            mqtt_reciever.send_message('status', ['Exit Sucessful'])
             break;
     print("Program Has Ended")
-    mqtt_reciever.send_message('say', ["Program Has Ended"])
+    mqtt_reciever.send_message('status', ["Program Has Ended"])
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.

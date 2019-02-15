@@ -23,12 +23,13 @@ def main():
     # -------------------------------------------------------------------------
     # Construct and connect the MQTT Client:
     # -------------------------------------------------------------------------
-    delegate = m1_personal_delegate.ROBOT_DelegateThatReceives
+    delegate = m1_personal_delegate.LAPTOP_DelegateThatReceives()
     mqtt_sender = com.MqttClient(delegate)
     mqtt_sender.connect_to_ev3()
 
-    time.sleep(1)  # Time to allow the MQTT setup.
-    print()
+
+
+
 
     #Inital Position of Robot
     previous_click = [250, 250]
@@ -73,30 +74,44 @@ def main():
     drawpad = tkinter.Canvas(canvasbase, width=500, height=500)
     drawpad.configure(bg="white")
     drawpad.pack()
-    buttonBG = drawpad.create_rectangle(0, 0, 100, 30, fill="grey40", outline="grey60")
-    buttonTXT = drawpad.create_text(50, 15, text="Click to Run")
+    startbutton = drawpad.create_rectangle(0, 0, 100, 30, fill="grey40", outline="grey60")
+    startbuttonTXT = drawpad.create_text(50, 15, text="Click to Run")
+
+    resetbutton = drawpad.create_rectangle(400, 0, 500, 30, fill="grey40", outline="grey60")
+    resetbuttonTXT = drawpad.create_text(450, 15, text="Click to Reset")
 
     #Functions Triggered:
     def click(event):
-        x= event.x
-        y= event.y
-        print("Clicked")
-        print('{}, {}'.format(x, y))
-        drawpad.create_line(previous_click[len(previous_click)-2], previous_click[len(previous_click)-1], x, y)
-        previous_click.append(x)
-        previous_click.append(y)
-        mqtt_sender.send_message('Store_Path',[x,y])
+        x = event.x
+        y = event.y
+        if x > 100 and y > 30 and x < 400:
 
-    def clicked(event):
+            print("Clicked")
+            print('{}, {}'.format(x, y))
+            drawpad.create_line(previous_click[len(previous_click)-2], previous_click[len(previous_click)-1], x, y,tags='lines')
+            previous_click.append(x)
+            previous_click.append(y)
+            mqtt_sender.send_message('Store_Path',[x,y])
+
+    def startclicked(event):
         for k in range(len(previous_click)):
             print(previous_click[k],end=' ')
         mqtt_sender.send_message('Follow_Path')
 
+    def resetclicked(event):
+        drawpad.delete("lines")
+        mqtt_sender.send_message('Reset_All')
+        print("RESET ALL")
+        previous_click = [250, 250]
+
+
 
 
     # Get The Clicks
-    drawpad.tag_bind(buttonBG, "<Button-1>", clicked)
-    drawpad.tag_bind(buttonTXT, "<Button-1>", clicked)
+    drawpad.tag_bind(startbutton, "<Button-1>", startclicked)
+    drawpad.tag_bind(startbuttonTXT, "<Button-1>", startclicked)
+    drawpad.tag_bind(resetbutton, "<Button-1>", resetclicked)
+    drawpad.tag_bind(resetbuttonTXT, "<Button-1>", resetclicked)
     canvasbase.bind('<Button>', click)
 
     # -------------------------------------------------------------------------
