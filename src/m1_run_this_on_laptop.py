@@ -14,6 +14,11 @@ import m1_personal_GUI
 import time
 import m1_personal_delegate
 
+
+def change_text(argument, drawpad,statusboxTXT):
+    drawpad.itemconfigure(statusboxTXT, text=argument)
+
+
 def main():
     """
     This code, which must run on a LAPTOP:
@@ -80,28 +85,41 @@ def main():
     resetbutton = drawpad.create_rectangle(400, 0, 500, 30, fill="grey40", outline="grey60")
     resetbuttonTXT = drawpad.create_text(450, 15, text="Click to Reset")
 
+
+    statusbox=drawpad.create_rectangle(100, 0, 400, 30, fill="grey40", outline="grey60")
+    statusboxTXT = drawpad.create_text(250, 15, text='statustext')
+
+    change_text("Starting", drawpad, statusboxTXT)
+
+
+
+
+
     #Functions Triggered:
     def click(event):
         x = event.x
         y = event.y
-        if x > 100 and y > 30 or y > 30 and x < 400:
-
+        if y > 30 :
             print("Clicked")
             print('{}, {}'.format(x, y))
             drawpad.create_line(previous_click[len(previous_click)-2], previous_click[len(previous_click)-1], x, y,tags='lines')
             previous_click.append(x)
             previous_click.append(y)
             mqtt_sender.send_message('Store_Path',[x,y])
+            change_text("Path Stored", drawpad, statusboxTXT)
+
 
     def startclicked(event):
         for k in range(len(previous_click)):
             print(previous_click[k],end=' ')
         mqtt_sender.send_message('Follow_Path')
+        change_text("Following Path",drawpad,statusboxTXT)
 
     def resetclicked(event):
         drawpad.delete("lines")
         mqtt_sender.send_message('Reset_All')
         print("RESET ALL")
+        change_text("Reseting Now",drawpad,statusboxTXT)
         previous_click.append(250)
         previous_click.append(250)
 
@@ -152,4 +170,6 @@ def grid_frames(teleop_frame, arm_frame, control_frame,Sprint_1_Drive_System_fra
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # -----------------------------------------------------------------------------
+
+
 main()

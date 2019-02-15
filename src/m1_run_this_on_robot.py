@@ -27,10 +27,7 @@ def main():
     mqtt_reciever.send_message('status',["Online!"])
     while True:
         time.sleep(0.01)
-        if robot.sensor_system.ir_proximity_sensor.get_distance_in_inches()<5:
-            robot.sound_system.speech_maker.speak("I'm Going to Crash")
-            print("I'm Going to Crash","Crashing!")
-            mqtt_reciever.send_message('status',["I'm Going to Crash"])
+
 
         if delegate.is_done()==1:
             print('Path Sucessful')
@@ -50,10 +47,14 @@ def main():
     print("Program Has Ended")
     mqtt_reciever.send_message('status', ["Program Has Ended"])
 
-    robot.arm_and_claw.calibrate_arm()
+    robot.arm_and_claw.raise_arm()
+    robot.drive_system.rotate_right()
+    time.sleep(5)
+    robot.drive_system.stop()
+    robot.arm_and_claw.lower_arm()
     robot.led_system.left_led.turn_on()
     robot.led_system.right_led.turn_on()
-    robot.sound_system.speech_maker.speak("I DID IT!")
+    robot.sound_system.speech_maker.speak("Shutting Down")
 
 
 

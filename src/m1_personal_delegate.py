@@ -13,6 +13,7 @@ import time
 import math
 
 
+
 class LAPTOP_DelegateThatReceives(object):
     def __init__(self):
         pass
@@ -239,13 +240,14 @@ class ROBOT_DelegateThatReceives(object):
 
     def Follow_Path(self):
         for k in range(0, len(self.path)-1, 2):
+
             print(self.x, self.y, self.path[k], self.path[k + 1])
             self.robot.drive_system.goto_point(self.x,self.y,self.path[k],self.path[k+1])
             self.x=self.path[k]
             self.y=self.path[k + 1]
         print("Pathing Complete!")
         self.Done=1
-        time.sleep(1)
+        time.sleep(.1)
         self.Done=0
 
 

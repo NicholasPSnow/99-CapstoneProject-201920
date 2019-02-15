@@ -225,6 +225,10 @@ class DriveSystem(object):
         self.left_motor.reset_position()
         self.go(speed, speed)
         while True:
+            if self.sensor_system.ir_proximity_sensor.get_distance_in_inches()<5:
+                print("Crashing!")
+                self.stop()
+                break;
             position = self.left_motor.get_position()
             print(position)
             if abs(position) >= degree:
