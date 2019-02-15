@@ -10,6 +10,8 @@ import time
 import m1_personal_delegate
 
 
+
+
 def main():
     """
     This code, which must run on the EV3 ROBOT:
@@ -33,9 +35,6 @@ def main():
         if delegate.is_done()==1:
             print('Path Sucessful')
             mqtt_reciever.send_message('status', ["Path Sucessful"])
-            break;
-
-
 
 
 
@@ -43,12 +42,20 @@ def main():
             print("Quit Sucessful")
             mqtt_reciever.send_message('status', ["Quit Sucessful"])
             break;
+
         if delegate.is_Exit()==1:
             print("Exit Sucessful")
             mqtt_reciever.send_message('status', ['Exit Sucessful'])
             break;
     print("Program Has Ended")
     mqtt_reciever.send_message('status', ["Program Has Ended"])
+
+    robot.arm_and_claw.calibrate_arm()
+    robot.led_system.left_led.turn_on()
+    robot.led_system.right_led.turn_on()
+    robot.sound_system.speech_maker.speak("I DID IT!")
+
+
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.

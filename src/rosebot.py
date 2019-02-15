@@ -88,7 +88,7 @@ class DriveSystem(object):
 
         self.right_motor.turn_off()
 #
-    #2.5*360
+
     def rotate_right(self,angle):
         self.left_motor.reset_position()
         self.go(100, 0)
@@ -109,33 +109,86 @@ class DriveSystem(object):
         self.stop()
 
     def goto_point(self,currentx,currenty,newx,newy):
-        if newx >=currentx and newy < currenty:
-            distance = math.sqrt((abs(int(newx) - int(currentx))) ** 2 + (abs(int(newy) - int(currenty))) ** 2)/6
-            angle = math.atan((abs(int(newy) - int(currenty))) / (abs(int(newx) - int(currentx))))
+        currentintx = int(currentx)
+        currentinty = int(currenty)
+        newintx = int(newx)
+        newinty = int(newy)
+
+        ##STRAIGHT LINES
+        if newinty==currentinty:
+            #Move Right
+            if newintx>currentintx:
+                distance = math.sqrt((abs(currentintx - newintx)) ** 2 + (abs(currentinty - newinty)) ** 2) / 6
+                self.rotate_right(90)
+                self.go_straight_for_inches_using_encoder(distance, 100)
+                self.rotate_left(90)
+            #Move Left
+            if newintx < currentintx:
+                distance = math.sqrt((abs(currentintx - newintx)) ** 2 + (abs(currentinty - newinty)) ** 2) / 6
+                self.rotate_left(90)
+                self.go_straight_for_inches_using_encoder(distance, 100)
+                self.rotate_right(90)
+
+        if newintx==currentintx:
+            #Move Up
+            if newinty>currentinty:
+                distance = math.sqrt((abs(currentintx - newintx)) ** 2 + (abs(currentinty - newinty)) ** 2) / 6
+                self.go_straight_for_inches_using_encoder(distance, 100)
+            #Move Down
+            if newinty < currentinty:
+                distance = math.sqrt((abs(currentintx - newintx)) ** 2 + (abs(currentinty - newinty)) ** 2) / 6
+                self.rotate_left(180)
+                self.go_straight_for_inches_using_encoder(distance, 100)
+                self.rotate_right(180)
+
+
+        #TOP RIGHT SEGMENT
+        if newintx>currentintx and newinty<currentinty:
+            distance = math.sqrt((abs(currentintx - newintx)) ** 2 + (abs(currentinty - newinty)) ** 2) / 6
+            angle = math.atan((abs(int(newy) - int(currenty))) / (abs(int(newx) - int(currentx)))) * 57.2958
+            print("Angle: ", angle)
+            print("Distance: ", distance)
             self.rotate_right(90-angle)
-            self.go_straight_for_inches_using_encoder(distance,100)
-            self.rotate_left(angle)
-
-        if newx < currentx and newy < currenty:
-            distance = math.sqrt((abs(int(newx) - int(currentx))) ** 2 + (abs(int(newy) - int(currenty))) ** 2)/6
-            angle = math.atan((abs(int(newy) - int(currenty))) / (abs(int(newx) - int(currentx))))
-            self.rotate_left(90 - angle)
             self.go_straight_for_inches_using_encoder(distance, 100)
-            self.rotate_right(angle)
+            self.stop()
+            self.rotate_left(90-angle)
 
-        if newx >= currentx and newy >= currenty:
-            distance = math.sqrt((abs(int(newx) - int(currentx))) ** 2 + (abs(int(newy) - int(currenty))) ** 2)/6
-            angle = math.atan((abs(int(newy) - int(currenty))) / (abs(int(newx) - int(currentx))))
-            self.rotate_right((90)+angle)
+        #TOP LEFT SEGMENT
+        if newintx < currentintx and newinty < currentinty:
+            distance = math.sqrt((abs(currentintx - newintx)) ** 2 + (abs(currentinty - newinty)) ** 2) / 6
+            angle = math.atan((abs(int(newy) - int(currenty))) / (abs(int(newx) - int(currentx))))*57.2958
+            print("Angle: ",angle)
+            print("Distance: ",distance)
+            self.rotate_left(90-angle)
             self.go_straight_for_inches_using_encoder(distance, 100)
-            self.rotate_left((90)+angle)
+            self.stop()
+            self.rotate_right(90-angle)
 
-        if newx < currentx and newy >= currenty:
-            distance = math.sqrt((abs(int(newx) - int(currentx))) ** 2 + (abs(int(newy) - int(currenty))) ** 2)/6
-            angle = math.atan((abs(int(newy) - int(currenty))) / (abs(int(newx) - int(currentx))))
-            self.rotate_left((90)+angle)
+        # Bottom RIGHT SEGMENT
+        if newintx > currentintx and newinty > currentinty:
+            distance = math.sqrt((abs(currentintx - newintx)) ** 2 + (abs(currentinty - newinty)) ** 2) / 6
+            angle = math.atan((abs(int(newy) - int(currenty))) / (abs(int(newx) - int(currentx)))) * 57.2958
+            print("Angle: ", angle)
+            print("Distance: ", distance)
+            self.rotate_right(90 + angle)
             self.go_straight_for_inches_using_encoder(distance, 100)
-            self.rotate_right((90)+angle)
+            self.stop()
+            self.rotate_left(90+angle)
+
+        # Bottom LEFT SEGMENT
+        if newintx < currentintx and newinty > currentinty:
+            distance = math.sqrt((abs(currentintx - newintx)) ** 2 + (abs(currentinty - newinty)) ** 2) / 6
+            angle = math.atan((abs(int(newy) - int(currenty))) / (abs(int(newx) - int(currentx)))) * 57.2958
+            print("Angle: ", angle)
+            print("Distance: ", distance)
+            self.rotate_left(90+angle)
+            self.go_straight_for_inches_using_encoder(distance, 100)
+            self.stop()
+            self.rotate_right(90+angle)
+
+
+
+
 
 
     def go_straight_for_seconds(self, seconds, speed):
@@ -857,7 +910,7 @@ class Blob(object):
         self.center = center
         self.width = width
         self.height = height
-        self.screen_limits = Point(320, 240)  # FIXME
+        self.screen_limits = Point(320, 240)  # Done
 
     def __repr__(self):
         return "center: ({:3d}, {:3d})  width, height: {:3d} {:3d}.".format(

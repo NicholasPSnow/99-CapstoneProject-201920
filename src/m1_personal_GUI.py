@@ -173,10 +173,10 @@ def handle_forward(left_entry_box, right_entry_box, mqtt_sender):
     mqtt_sender.send_message('movement', [left_entry_box.get(), right_entry_box.get()])
 
 def handle_rotate_left(mqtt_sender):
-    mqtt_sender.send_message('rotate_left')
+    mqtt_sender.send_message('rotate_left',[90])
     print("Rotate Left")
 def handle_rotate_right(mqtt_sender):
-    mqtt_sender.send_message('rotate_right')
+    mqtt_sender.send_message('rotate_right',[90])
     print("Rotate Right")
 def handle_backward(left_entry_box, right_entry_box, mqtt_sender):
     """

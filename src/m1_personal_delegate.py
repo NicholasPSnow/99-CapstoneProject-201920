@@ -69,13 +69,13 @@ class ROBOT_DelegateThatReceives(object):
         print("Command Recieved: Movement",left_speed,right_speed)
         self.robot.drive_system.go(int(left_speed), int(right_speed))
 
-    def rotate_left(self):
+    def rotate_left(self,angle):
         print("Command Recieved: Rotate Left")
-        self.robot.drive_system.rotate_left()
+        self.robot.drive_system.rotate_left(angle)
 
-    def rotate_right(self):
+    def rotate_right(self,angle):
         print("Command Recieved: Rotate Right")
-        self.robot.drive_system.rotate_right()
+        self.robot.drive_system.rotate_right(angle)
 
     ##ARM SYSTEM
     def up(self):
@@ -238,19 +238,18 @@ class ROBOT_DelegateThatReceives(object):
             print(self.path[k])
 
     def Follow_Path(self):
-        for k in range(0,len(self.path)-1,2):
+        for k in range(0, len(self.path)-1, 2):
+            print(self.x, self.y, self.path[k], self.path[k + 1])
             self.robot.drive_system.goto_point(self.x,self.y,self.path[k],self.path[k+1])
             self.x=self.path[k]
             self.y=self.path[k + 1]
         print("Pathing Complete!")
         self.Done=1
+        time.sleep(1)
+        self.Done=0
 
 
-    def victory_dance(self):
-        self.robot.arm_and_claw.calibrate_arm()
-        self.robot.led_system.left_led.turn_on()
-        self.robot.led_system.right_led.turn_on()
-        self.robot.sound_system.speech_maker.speak("I DID IT!")
+
 
 
 
