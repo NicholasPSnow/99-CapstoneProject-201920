@@ -87,49 +87,55 @@ class DriveSystem(object):
         self.left_motor.turn_off()
 
         self.right_motor.turn_off()
-
-    def rotate_right(self):
+#
+    #2.5*360
+    def rotate_right(self,angle):
         self.left_motor.reset_position()
         self.go(100, 0)
         while True:
             degrees = self.left_motor.get_position()
-            if abs(degrees) >= 2.5*360:
+            if abs(degrees) >= angle:
                 break
         self.stop()
 
 
-    def rotate_left(self):
+    def rotate_left(self,angle):
         self.right_motor.reset_position()
         self.go(0, 100)
         while True:
             degrees = self.right_motor.get_position()
-            if abs(degrees) >= 2.5*360:
+            if abs(degrees) >= angle:
                 break
         self.stop()
 
     def goto_point(self,currentx,currenty,newx,newy):
-        if newx >=currentx:
-            self.rotate_right()
-            distance=abs(int(newx)-int(currentx))/6
+        if newx >=currentx and newy < currenty:
+            distance = math.sqrt((abs(int(newx) - int(currentx))) ** 2 + (abs(int(newy) - int(currenty))) ** 2)/6
+            angle = math.atan((abs(int(newy) - int(currenty))) / (abs(int(newx) - int(currentx))))
+            self.rotate_right(90-angle)
             self.go_straight_for_inches_using_encoder(distance,100)
-            self.rotate_left()
+            self.rotate_left(angle)
 
-        if newx < currentx:
-            self.rotate_left()
-            distance = abs(int(newx) - int(currentx))/6
+        if newx < currentx and newy < currenty:
+            distance = math.sqrt((abs(int(newx) - int(currentx))) ** 2 + (abs(int(newy) - int(currenty))) ** 2)/6
+            angle = math.atan((abs(int(newy) - int(currenty))) / (abs(int(newx) - int(currentx))))
+            self.rotate_left(90 - angle)
             self.go_straight_for_inches_using_encoder(distance, 100)
-            self.rotate_right()
+            self.rotate_right(angle)
 
-        if newy >= currenty:
-            self.rotate_right()
-            self.rotate_right()
-            distance = abs(int(newy) - int(currenty))/6
+        if newx >= currentx and newy >= currenty:
+            distance = math.sqrt((abs(int(newx) - int(currentx))) ** 2 + (abs(int(newy) - int(currenty))) ** 2)/6
+            angle = math.atan((abs(int(newy) - int(currenty))) / (abs(int(newx) - int(currentx))))
+            self.rotate_right((2.5*360)+angle)
             self.go_straight_for_inches_using_encoder(distance, 100)
-            self.rotate_right()
-            self.rotate_right()
-        if newy < currenty:
-            distance = abs(int(newy) - int(currenty))/6
+            self.rotate_left((2.5*360)+angle)
+
+        if newx < currentx and newy >= currenty:
+            distance = math.sqrt((abs(int(newx) - int(currentx))) ** 2 + (abs(int(newy) - int(currenty))) ** 2)/6
+            angle = math.atan((abs(int(newy) - int(currenty))) / (abs(int(newx) - int(currentx))))
+            self.rotate_left((2.5*360)+angle)
             self.go_straight_for_inches_using_encoder(distance, 100)
+            self.rotate_right((2.5*360)+angle)
 
 
     def go_straight_for_seconds(self, seconds, speed):

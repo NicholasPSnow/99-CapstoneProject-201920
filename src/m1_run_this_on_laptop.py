@@ -102,7 +102,8 @@ def main():
         drawpad.delete("lines")
         mqtt_sender.send_message('Reset_All')
         print("RESET ALL")
-        previous_click = [250, 250]
+        previous_click.append(250)
+        previous_click.append(250)
 
 
 
