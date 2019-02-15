@@ -176,10 +176,6 @@ class DriveSystem(object):
             print(position)
             if abs(position) >= degree:
                 break;
-            if self.sensor_system.ir_proximity_sensor.get_distance_in_inches() <= 5:
-                print("Stopping Motion Due to Impending Crash")
-                self.stop()
-                break;
         self.stop()
 
     # -------------------------------------------------------------------------
