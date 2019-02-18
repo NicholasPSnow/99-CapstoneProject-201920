@@ -24,7 +24,12 @@ def main():
     #test_go_straight_for_inches_using_encoder()
     #real_thing()
     #test_distance()
-    gui()
+    #gui()
+
+
+
+
+
 
 def gui():
     robot = rosebot.RoseBot()
