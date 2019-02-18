@@ -68,8 +68,9 @@ def get_shared_frames(main_frame, mqtt_sender):
     control_frame=m2_Sprint3_GUI.main_frame(main_frame,mqtt_sender)
     return control_frame
 
-def grid_frames(control_frame):
-    control_frame.grid(row=1,column=0)
+def grid_frames(frame):
+    frame.grid(row=1,column=0)
+
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
