@@ -55,12 +55,14 @@ def main():
 
     feature_9 = feature_9_frame(main_frame, sender)
     feature_10 = feature_10_frame(main_frame, sender)
+    sprint_3_graph = sprint_3_graph_frame(main_frame)
 
     # -------------------------------------------------------------------------
     # Grid the frames.
     # -------------------------------------------------------------------------
 
-    grid_frames(teleop_frame, arm_frame, control_frame, sprint_1_drive_system, sprint_1_beeper, feature_9, feature_10)
+    grid_frames(teleop_frame, arm_frame, control_frame, sprint_1_drive_system, sprint_1_beeper)
+    grid_my_frames(feature_9, feature_10, sprint_3_graph)
 
     # -------------------------------------------------------------------------
     # The event loop:
@@ -79,14 +81,18 @@ def get_shared_frames(main_frame, mqtt_sender):
     return teleop_frame, arm_frame, control_frame, sprint_1_drive_system, sprint_1_beeper
 
 
-def grid_frames(teleop_frame, arm_frame, control_frame, sprint_1_drive_system, sprint_1_beeper, feature_9, feature_10):
+def grid_frames(teleop_frame, arm_frame, control_frame, sprint_1_drive_system, sprint_1_beeper):
     teleop_frame.grid(row=0, column=0)
     arm_frame.grid(row=1, column=0)
     sprint_1_drive_system.grid(row=2, column=0)
     sprint_1_beeper.grid(row=3, column=0)
     control_frame.grid(row=4, column=0)
+
+
+def grid_my_frames(feature_9, feature_10, sprint_3_graph):
     feature_9.grid(row=5, column=0)
     feature_10.grid(row=6, column=0)
+    sprint_3_graph.grid(row=0, column=1)
 
 # -------------------------------------------------------------------------
 # Feature 10
@@ -164,6 +170,17 @@ def feature_9_widgets(frame, sender):
 
     feature_9_button.grid(row=0, column=1)
 
+# -------------------------------------------------------------------------
+# Sprint 3
+# -------------------------------------------------------------------------
+
+
+def sprint_3_graph_frame(frame):
+    canvas_frame = ttk.Frame(frame, padding=10, borderwidth=5, relief="ridge")
+    canvas = tkinter.Canvas(canvas_frame, width=500, height=500)
+
+    canvas.grid()
+    return canvas_frame
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.

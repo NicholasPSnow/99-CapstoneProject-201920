@@ -27,12 +27,12 @@ def feature_9(robot, init_rate, acceleration):  # init_rate is cycles per second
         distance.append(robot.sensor_system.ir_proximity_sensor.get_distance_in_inches())
         distance.pop(0)
         average = average_list(distance)
-        # print(state, average)
         state, last_state = update_state(last_state, initial_dist, average, init_rate, acceleration, state)
         led_cycle(robot, state)
 
     robot.drive_system.stop()
     robot.arm_and_claw.raise_arm()
+
 
 def update_state(last_state, initial_dist, current_dist, init_rate, acceleration, state):
     cycle_time = (1.0 / float(init_rate)) - ((initial_dist - current_dist) / float(acceleration))
@@ -93,3 +93,38 @@ def feature_10(robot, speed, direction):
             break
 
     feature_9(robot, 0.1, 1)
+
+# -------------------------------------------------------------------------
+# Sprint 3
+# -------------------------------------------------------------------------
+
+
+class PID(object):
+    def __init__(self, kp, ki, kd, interval, set_point):
+        self.Kp = kp
+        self.Ki = ki
+        self.Kd = kd
+        self.last_time = time.time()
+        self.interval = interval
+        self.set_point = set_point
+        self.proportional = 0
+        self.integral = 0
+        self.derivative = 0
+        self.last_error = 0
+
+    def update_output(self, current_value):
+        if time.time() - self.last_time >= self.interval:
+            dt = time.time() - self.last_time
+            error = self.set_point - current_value
+
+            self.proportional = self.Kp * error
+            self.integral = self.integral + self.Ki * error * dt
+            self.derivative = (error - self.last_error) / dt
+
+            self.last_error = error
+            self.last_time = time.time()
+
+            return self.proportional, self.integral, self.derivative
+
+    def clear(self):
+        self.__init__(self.Kp, self.Ki, self.Kd, self.interval, self.set_point)
