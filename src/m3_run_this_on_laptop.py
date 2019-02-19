@@ -26,6 +26,8 @@ def main():
 
     sender = com.MqttClient()
     sender.connect_to_ev3()
+    mqtt_receiver = com.MqttClient(PcDelegate())
+    mqtt_receiver.connect_to_ev3()
     time.sleep(0.1)
 
     # -------------------------------------------------------------------------
@@ -34,14 +36,16 @@ def main():
 
     root = tkinter.Tk()
     root.title('M3 Run on Laptop')
+    root.grid_columnconfigure(0, weight=1)
+    root.attributes('-fullscreen', True)
 
     # -------------------------------------------------------------------------
     # The main frame, upon which the other frames are placed.
     # -------------------------------------------------------------------------
 
     main_frame = tkinter.Frame(root, borderwidth=5, relief='groove')
-    main_frame.grid()
-
+    main_frame.grid_columnconfigure(1, weight=1)
+    main_frame.grid(sticky="EWNS")
     # -------------------------------------------------------------------------
     # Sub-frames for the shared GUI that the team developed:
     # -------------------------------------------------------------------------
@@ -82,17 +86,17 @@ def get_shared_frames(main_frame, mqtt_sender):
 
 
 def grid_frames(teleop_frame, arm_frame, control_frame, sprint_1_drive_system, sprint_1_beeper):
-    teleop_frame.grid(row=0, column=0)
-    arm_frame.grid(row=1, column=0)
-    sprint_1_drive_system.grid(row=2, column=0)
-    sprint_1_beeper.grid(row=3, column=0)
-    control_frame.grid(row=4, column=0)
+    teleop_frame.grid(row=0, column=0, sticky="EW")
+    arm_frame.grid(row=1, column=0, sticky="EW")
+    sprint_1_drive_system.grid(row=2, column=0, sticky="EW")
+    sprint_1_beeper.grid(row=3, column=0, sticky="EW")
+    control_frame.grid(row=4, column=0, sticky="EW")
 
 
 def grid_my_frames(feature_9, feature_10, sprint_3_graph):
-    feature_9.grid(row=5, column=0)
-    feature_10.grid(row=6, column=0)
-    sprint_3_graph.grid(row=0, column=1)
+    feature_9.grid(row=5, column=0, sticky="EW")
+    feature_10.grid(row=6, column=0, sticky="EW")
+    sprint_3_graph.grid(row=0, column=1, rowspan=7, sticky="EWNS")
 
 # -------------------------------------------------------------------------
 # Feature 10
@@ -175,12 +179,18 @@ def feature_9_widgets(frame, sender):
 # -------------------------------------------------------------------------
 
 
+class PcDelegate(object):
+    def print_message(self, message):
+        print(message)
+
+
 def sprint_3_graph_frame(frame):
     canvas_frame = ttk.Frame(frame, padding=10, borderwidth=5, relief="ridge")
     canvas = tkinter.Canvas(canvas_frame, width=500, height=500)
 
     canvas.grid()
     return canvas_frame
+
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
