@@ -9,6 +9,7 @@ import rosebot
 import mqtt_remote_method_calls as com
 import time
 import shared_gui_delegate_on_robot
+import m2_Sprint3_delegate
 
 
 def main():
@@ -24,7 +25,7 @@ def main():
     #test_go_straight_for_inches_using_encoder()
     #real_thing()
     #test_distance()
-    #gui()
+    gui()
 
 
 
@@ -33,7 +34,7 @@ def main():
 
 def gui():
     robot = rosebot.RoseBot()
-    delegate=shared_gui_delegate_on_robot.DelegateThatReceives(robot)
+    delegate=m2_Sprint3_delegate.DelegateThatReceives(robot)
     mqtt_reciever=com.MqttClient(delegate)
     mqtt_reciever.connect_to_pc()
     while True:
