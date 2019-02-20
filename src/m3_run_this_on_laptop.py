@@ -81,11 +81,11 @@ def main():
     # The event loop:
     # -------------------------------------------------------------------------
 
-
     while True:
-        if delegate.end == 1:
+        if delegate.end == 1:  # this detects that the robot has finished following the line
             graph.setup()
             for i in delegate.point_list:
+                # this scales and draws the points sent by the robot for the graph
                 graph.draw_graph((50 + (i[0] - delegate.point_list[0][0]) * 10, 350 + 12 * i[1]))
             print(delegate.point_list)
             delegate.end = 0
@@ -123,6 +123,11 @@ def grid_my_frames(feature_9, feature_10, sprint_3_graph, sprint_3_frame):
 
 
 def feature_10_frame(frame, sender):
+    """
+    creates a frame with all of the gui parts for feature 10
+    :param frame: the master frame
+    :param sender: the mqtt client used by the buttons to send commands
+    """
     feature_frame = ttk.Frame(frame, padding=10, borderwidth=5, relief="ridge")
     feature_10_widgets(feature_frame, sender)
 
@@ -130,6 +135,11 @@ def feature_10_frame(frame, sender):
 
 
 def feature_10_widgets(frame, sender):
+    """
+    creates and places all of the widgets for feature 10
+    :param frame: the master frame
+    :param sender: the mqtt client used by the buttons to send commands
+    """
     # -----------------------------------------------------------------------------
     # Setup
     # -----------------------------------------------------------------------------
@@ -161,6 +171,11 @@ def feature_10_widgets(frame, sender):
 
 
 def feature_9_frame(frame, sender):
+    """
+    creates a frame with all of the gui parts for feature 9
+    :param frame: the master frame
+    :param sender: the mqtt client used by the buttons to send commands
+    """
     feature_frame = ttk.Frame(frame, padding=10, borderwidth=5, relief="ridge")
     feature_9_widgets(feature_frame, sender)
 
@@ -168,6 +183,11 @@ def feature_9_frame(frame, sender):
 
 
 def feature_9_widgets(frame, sender):
+    """
+    creates and places all of the widgets for feature 9
+    :param frame: the master frame
+    :param sender: the mqtt client used by the buttons to send commands
+    """
     # -----------------------------------------------------------------------------
     # Setup
     # -----------------------------------------------------------------------------
@@ -199,6 +219,9 @@ def feature_9_widgets(frame, sender):
 
 
 class PcDelegate(object):
+    """
+    handles commands sent to the pc by the robot
+    """
     def __init__(self):
         self.graph = None
         self.end = 0
@@ -213,16 +236,19 @@ class PcDelegate(object):
     def draw_graph(self):
         self.end = 1
 
-    def print_message(self, message):
-        print(message)
-
 
 class Graph(object):
+    """
+    used to manipulate the canvas
+    """
     def __init__(self, canvas):
         self.canvas = canvas
         self.last_point = (50, 350)
 
     def setup(self):
+        """
+        clears the canvas then draws the x-axis and y-axis
+        """
         self.canvas.delete('all')
         self.canvas.create_text(20, 770, text='Time')
         self.canvas.create_text(20, 20, text='Delta')
@@ -232,13 +258,21 @@ class Graph(object):
         self.canvas.create_line(50, 760, 50, 0)
         for y in range(50, 680, 30):
             self.canvas.create_text(30, y, text=str(float(25 - ((y - 50) / 12))))
-        #tkinter.Canvas.
 
     def update_graph_size(self, frame):
-        # final size is about 1000 x 750
+        """
+        maximizes the size of the graph to fill all remaining space
+        final size is about 1000 x 750 pixels
+        :param frame: the master frame
+        """
         self.canvas.config(width=frame.winfo_width(), height=frame.winfo_height())
 
     def draw_graph(self, point):
+        """
+        draws a line from the last point plotted to a new point
+        :param point: a point on the xy plane in the form of tuple
+        :return:
+        """
         print('point', point)
         print('last point', self.last_point)
         self.canvas.create_line(self.last_point[0], self.last_point[1], point[0], point[1])
@@ -246,6 +280,10 @@ class Graph(object):
 
 
 def sprint_3_graph_frame(frame):
+    """
+    creates and returns the canvas and its frame
+    :param frame: the master frame
+    """
     canvas_frame = ttk.Frame(frame)
     graph = Graph(tkinter.Canvas(canvas_frame, width=100, height=100))
 
@@ -255,6 +293,12 @@ def sprint_3_graph_frame(frame):
 
 
 def sprint_3_others(frame, sender):
+    """
+    creates the frame and widgets for all the sprint 3 gui parts except for the graph
+    :param frame: the master frame
+    :param sender: the mqtt client used by the buttons to send commands
+    :return:
+    """
     others_frame = ttk.Frame(frame)
     button = ttk.Button(others_frame, text='Sprint 3', width=100)
     button['command'] = lambda: sender.send_message('m3_sprint_3', [])
