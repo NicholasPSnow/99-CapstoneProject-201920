@@ -99,27 +99,57 @@ def feature_10(robot, speed, direction):
 # -------------------------------------------------------------------------
 
 
-
 def sprint_3(robot, pid, sender):
+    pid.last_time = time.time()
     delta = 0
     point_list = []
     start_time = time.time()
-    while (time.time() - start_time) < 15:
-        print(time.time() - start_time)
+    time_offset = 0
+    while (time.time() - start_time) < 60:
         new = pid.update_output(int(robot.sensor_system.color_sensor.get_reflected_light_intensity()))
         if new is not None:
             delta = new
             if len(point_list) < 700:
-                point_list.append((50 + round((pid.last_time - pid.start_time) * 20), 350 + 3 * delta))
-        # print('Check 1')
-        # sender.send_message('draw_graph', [(50 + round((pid.last_time - pid.start_time) * 20), 350 + 3 * delta)])
-        # sender.send_message('draw_graph', [(1000, 1000)])
-        # sender.send_message('print_message', ['printed'])
-        # print('POINT:', (50 + round((pid.last_time - pid.start_time) * 20), 350 + 3 * delta))
-        robot.drive_system.left_motor.turn_on(limit_speed(50 + delta))
-        robot.drive_system.right_motor.turn_on(limit_speed(50 - delta))
+                sender.send_message('graph_data', [(time.time() - pid.start_time - time_offset, delta)])
+        robot.drive_system.left_motor.turn_on(limit_speed(20 + delta))
+        robot.drive_system.right_motor.turn_on(limit_speed(20 - delta))
+        if get_distance(robot) < 10:
+            offset_start = time.time()
+            get_object(robot)
+            time_offset = time.time() - offset_start
     robot.drive_system.stop()
-    sender.send_message('draw_graph', [point_list])
+    sender.send_message('draw_graph', [])
+
+
+def get_object(robot):  # init_rate is cycles per second
+    robot.drive_system.go(20, 20)
+    time.sleep(2)
+
+    robot.drive_system.stop()
+    robot.arm_and_claw.raise_arm()
+    robot.drive_system.go(-30, 30)
+    time.sleep(3)
+    robot.drive_system.stop()
+
+    robot.drive_system.go(50, 50)
+    time.sleep(2)
+    robot.drive_system.stop()
+    robot.arm_and_claw.lower_arm()
+    robot.drive_system.go(-50, -50)
+    time.sleep(2)
+    robot.drive_system.stop()
+
+    robot.drive_system.go(30, -30)
+    time.sleep(3)
+    robot.drive_system.stop()
+
+
+def get_distance(robot):
+    distance = []  # acceleration is cycles per second per inch
+    for _ in range(10):
+        distance.append(robot.sensor_system.ir_proximity_sensor.get_distance_in_inches())
+    average = average_list(distance)
+    return average
 
 
 def limit_speed(n):
@@ -151,7 +181,7 @@ class PID(object):
 
             self.proportional = self.Kp * error
             self.integral = self.integral + self.Ki * error * dt
-            self.derivative = (error - self.last_error) / dt
+            self.derivative = self.Kd * (error - self.last_error) / dt
 
             self.last_error = error
             self.last_time = time.time()

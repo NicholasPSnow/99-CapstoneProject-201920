@@ -32,7 +32,7 @@ def real_thing():
     delegate.m3_sender = com.MqttClient()
     mqtt_receiver.connect_to_pc()
     delegate.m3_sender.connect_to_pc()
-    delegate.pid = extra.PID(0.25, 0, 0, 0.1, 0)
+    delegate.pid = extra.PID(1, 0, 0, 0.1, 0)
 
     while True:
         time.sleep(0.01)

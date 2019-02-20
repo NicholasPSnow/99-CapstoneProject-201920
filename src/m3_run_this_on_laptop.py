@@ -84,8 +84,9 @@ def main():
 
     while True:
         if delegate.end == 1:
+            graph.setup()
             for i in delegate.point_list:
-                graph.draw_graph(i)
+                graph.draw_graph((50 + (i[0] - delegate.point_list[0][0]) * 10, 350 + 12 * i[1]))
             print(delegate.point_list)
             delegate.end = 0
         root.update_idletasks()
@@ -206,9 +207,11 @@ class PcDelegate(object):
     def set_graph(self, graph):
         self.graph = graph
 
-    def draw_graph(self, point):
+    def graph_data(self, point):
+        self.point_list.append(point)
+
+    def draw_graph(self):
         self.end = 1
-        self.point_list = point
 
     def print_message(self, message):
         print(message)
@@ -220,14 +223,15 @@ class Graph(object):
         self.last_point = (50, 350)
 
     def setup(self):
+        self.canvas.delete('all')
         self.canvas.create_text(20, 770, text='Time')
-        self.canvas.create_text(20, 20, text='Output')
+        self.canvas.create_text(20, 20, text='Delta')
         for x in range(50, 1150, 100):
-            self.canvas.create_text(x, 770, text=str((x - 50) // 2))
+            self.canvas.create_text(x, 770, text=str((x - 50) / 20))
         self.canvas.create_line(50, 760, 1050, 760)
         self.canvas.create_line(50, 760, 50, 0)
         for y in range(50, 680, 30):
-            self.canvas.create_text(30, y, text=str(int(100 - ((y - 50) / 3))))
+            self.canvas.create_text(30, y, text=str(float(25 - ((y - 50) / 12))))
         #tkinter.Canvas.
 
     def update_graph_size(self, frame):
