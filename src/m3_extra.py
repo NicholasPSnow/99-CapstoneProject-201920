@@ -100,11 +100,34 @@ def feature_10(robot, speed, direction):
 
 
 def sprint_3(robot, pid, sender):
-    while True:
-        delta = pid.update_output(robot.sensor_system.color_sensor.get_reflected_light_intensity())
-        sender.send_message('draw_graph', [(round(pid.last_time - pid.start_time), delta)])
-        robot.drive_system.left_motor.turn_on(50 + delta)
-        robot.drive_system.right_motor.turn_on(50 - delta)
+    delta = 0
+    point_list = []
+    start_time = time.time()
+    while (time.time() - start_time) < 15:
+        print(time.time() - start_time)
+        new = pid.update_output(int(robot.sensor_system.color_sensor.get_reflected_light_intensity()))
+        if new is not None:
+            delta = new
+            if len(point_list) < 700:
+                point_list.append((50 + round((pid.last_time - pid.start_time) * 20), 350 + 3 * delta))
+        # print('Check 1')
+        # sender.send_message('draw_graph', [(50 + round((pid.last_time - pid.start_time) * 20), 350 + 3 * delta)])
+        # sender.send_message('draw_graph', [(1000, 1000)])
+        # sender.send_message('print_message', ['printed'])
+        # print('POINT:', (50 + round((pid.last_time - pid.start_time) * 20), 350 + 3 * delta))
+        robot.drive_system.left_motor.turn_on(limit_speed(50 + delta))
+        robot.drive_system.right_motor.turn_on(limit_speed(50 - delta))
+    robot.drive_system.stop()
+    sender.send_message('draw_graph', [point_list])
+
+
+def limit_speed(n):
+    if n > 100:
+        n = 100
+    elif n < -100:
+        n = -100
+    return n
+
 
 class PID(object):
     def __init__(self, kp, ki, kd, interval, set_point):

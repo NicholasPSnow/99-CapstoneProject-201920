@@ -17,7 +17,7 @@ import m3_extra as m3
 class DelegateThatReceives(object):
 
     def __init__(self, robot):
-        self.robot = bot.RoseBot()
+        self.robot = robot
         self.Quit=0
         self.Exit=0
 
@@ -266,7 +266,7 @@ class DelegateThatReceives(object):
         self.robot.drive_system.spin_clockwise_until_sees_object(int(speed),int(area))
 
     # -------------------------------------------------------------------------
-    # Zach's Sprint 2 Handlers
+    # Zach's Sprint 2 + 3 Handlers
     # -------------------------------------------------------------------------
 
     def m3_feature_9(self, init_rate, acceleration):
@@ -278,6 +278,6 @@ class DelegateThatReceives(object):
         print("Command Received: M3 Feature 10")
         m3.feature_10(self.robot, speed, direction)
 
-    def sprint_3(self, pid, sender):
+    def m3_sprint_3(self):
         print("Command Received: Sprint 3")
-        m3.sprint_3(self.robot, pid, sender)
+        m3.sprint_3(self.robot, self.pid, self.m3_sender)

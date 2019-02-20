@@ -24,11 +24,9 @@ def main():
     # Construct and connect the MQTT Client:
     # -------------------------------------------------------------------------
 
-    sender = com.MqttClient()
-    sender.connect_to_ev3()
     delegate = PcDelegate()
-    mqtt_receiver = com.MqttClient(delegate)
-    mqtt_receiver.connect_to_ev3()
+    sender = com.MqttClient(delegate)
+    sender.connect_to_ev3()
     time.sleep(0.1)
 
     # -------------------------------------------------------------------------
@@ -61,13 +59,14 @@ def main():
     feature_9 = feature_9_frame(main_frame, sender)
     feature_10 = feature_10_frame(main_frame, sender)
     sprint_3_graph, graph = sprint_3_graph_frame(main_frame)
+    sprint_3_frame = sprint_3_others(main_frame, sender)
 
     # -------------------------------------------------------------------------
     # Grid the frames.
     # -------------------------------------------------------------------------
 
     grid_frames(teleop_frame, arm_frame, control_frame, sprint_1_drive_system, sprint_1_beeper)
-    grid_my_frames(feature_9, feature_10, sprint_3_graph)
+    grid_my_frames(feature_9, feature_10, sprint_3_graph, sprint_3_frame)
 
     # -------------------------------------------------------------------------
     # Other Setup
@@ -82,7 +81,13 @@ def main():
     # The event loop:
     # -------------------------------------------------------------------------
 
+
     while True:
+        if delegate.end == 1:
+            for i in delegate.point_list:
+                graph.draw_graph(i)
+            print(delegate.point_list)
+            delegate.end = 0
         root.update_idletasks()
         root.update()
 
@@ -105,10 +110,11 @@ def grid_frames(teleop_frame, arm_frame, control_frame, sprint_1_drive_system, s
     control_frame.grid(row=4, column=0, sticky="EW")
 
 
-def grid_my_frames(feature_9, feature_10, sprint_3_graph):
+def grid_my_frames(feature_9, feature_10, sprint_3_graph, sprint_3_frame):
     feature_9.grid(row=5, column=0, sticky="EW")
     feature_10.grid(row=6, column=0, sticky="EW")
     sprint_3_graph.grid(row=0, column=1, rowspan=7, sticky="EWNS")
+    sprint_3_frame.grid(row=7, column=0, sticky="EW")
 
 # -------------------------------------------------------------------------
 # Feature 10
@@ -194,12 +200,15 @@ def feature_9_widgets(frame, sender):
 class PcDelegate(object):
     def __init__(self):
         self.graph = None
+        self.end = 0
+        self.point_list = []
 
     def set_graph(self, graph):
-        self.graph = graph.canvas
+        self.graph = graph
 
     def draw_graph(self, point):
-        self.graph.draw_graph(point)
+        self.end = 1
+        self.point_list = point
 
     def print_message(self, message):
         print(message)
@@ -226,6 +235,8 @@ class Graph(object):
         self.canvas.config(width=frame.winfo_width(), height=frame.winfo_height())
 
     def draw_graph(self, point):
+        print('point', point)
+        print('last point', self.last_point)
         self.canvas.create_line(self.last_point[0], self.last_point[1], point[0], point[1])
         self.last_point = point
 
@@ -237,6 +248,15 @@ def sprint_3_graph_frame(frame):
     graph.canvas.grid()
 
     return canvas_frame, graph
+
+
+def sprint_3_others(frame, sender):
+    others_frame = ttk.Frame(frame)
+    button = ttk.Button(others_frame, text='Sprint 3', width=100)
+    button['command'] = lambda: sender.send_message('m3_sprint_3', [])
+    button.grid(sticky='EWNS')
+
+    return others_frame
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.

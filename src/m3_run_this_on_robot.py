@@ -26,12 +26,14 @@ def main():
 
 def real_thing():
     robot = bot.RoseBot()
-    pid = extra.PID(1, 0, 0, 0.1, 0)
+    robot.end = 0
     delegate = gui_delegate.DelegateThatReceives(robot)
     mqtt_receiver = com.MqttClient(delegate)
+    delegate.m3_sender = com.MqttClient()
     mqtt_receiver.connect_to_pc()
-    mqtt_sender = com.MqttClient()
-    mqtt_sender.connect_to_pc()
+    delegate.m3_sender.connect_to_pc()
+    delegate.pid = extra.PID(0.25, 0, 0, 0.1, 0)
+
     while True:
         time.sleep(0.01)
 
