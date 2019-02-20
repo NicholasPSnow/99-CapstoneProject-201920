@@ -26,7 +26,8 @@ def main():
 
     sender = com.MqttClient()
     sender.connect_to_ev3()
-    mqtt_receiver = com.MqttClient(PcDelegate())
+    delegate = PcDelegate()
+    mqtt_receiver = com.MqttClient(delegate)
     mqtt_receiver.connect_to_ev3()
     time.sleep(0.1)
 
@@ -59,7 +60,7 @@ def main():
 
     feature_9 = feature_9_frame(main_frame, sender)
     feature_10 = feature_10_frame(main_frame, sender)
-    sprint_3_graph = sprint_3_graph_frame(main_frame)
+    sprint_3_graph, graph = sprint_3_graph_frame(main_frame)
 
     # -------------------------------------------------------------------------
     # Grid the frames.
@@ -69,10 +70,21 @@ def main():
     grid_my_frames(feature_9, feature_10, sprint_3_graph)
 
     # -------------------------------------------------------------------------
+    # Other Setup
+    # -------------------------------------------------------------------------
+    delegate.set_graph(graph)
+    root.update_idletasks()
+    root.update()
+    graph.update_graph_size(sprint_3_graph)
+    graph.setup()
+
+    # -------------------------------------------------------------------------
     # The event loop:
     # -------------------------------------------------------------------------
 
-    root.mainloop()
+    while True:
+        root.update_idletasks()
+        root.update()
 
 
 def get_shared_frames(main_frame, mqtt_sender):
@@ -180,17 +192,51 @@ def feature_9_widgets(frame, sender):
 
 
 class PcDelegate(object):
+    def __init__(self):
+        self.graph = None
+
+    def set_graph(self, graph):
+        self.graph = graph.canvas
+
+    def draw_graph(self, point):
+        self.graph.draw_graph(point)
+
     def print_message(self, message):
         print(message)
 
 
+class Graph(object):
+    def __init__(self, canvas):
+        self.canvas = canvas
+        self.last_point = (50, 350)
+
+    def setup(self):
+        self.canvas.create_text(20, 770, text='Time')
+        self.canvas.create_text(20, 20, text='Output')
+        for x in range(50, 1150, 100):
+            self.canvas.create_text(x, 770, text=str((x - 50) // 2))
+        self.canvas.create_line(50, 760, 1050, 760)
+        self.canvas.create_line(50, 760, 50, 0)
+        for y in range(50, 680, 30):
+            self.canvas.create_text(30, y, text=str(int(100 - ((y - 50) / 3))))
+        #tkinter.Canvas.
+
+    def update_graph_size(self, frame):
+        # final size is about 1000 x 750
+        self.canvas.config(width=frame.winfo_width(), height=frame.winfo_height())
+
+    def draw_graph(self, point):
+        self.canvas.create_line(self.last_point[0], self.last_point[1], point[0], point[1])
+        self.last_point = point
+
+
 def sprint_3_graph_frame(frame):
-    canvas_frame = ttk.Frame(frame, padding=10, borderwidth=5, relief="ridge")
-    canvas = tkinter.Canvas(canvas_frame, width=500, height=500)
+    canvas_frame = ttk.Frame(frame)
+    graph = Graph(tkinter.Canvas(canvas_frame, width=100, height=100))
 
-    canvas.grid()
-    return canvas_frame
+    graph.canvas.grid()
 
+    return canvas_frame, graph
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.

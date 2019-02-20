@@ -277,3 +277,7 @@ class DelegateThatReceives(object):
     def m3_feature_10(self, speed, direction):
         print("Command Received: M3 Feature 10")
         m3.feature_10(self.robot, speed, direction)
+
+    def sprint_3(self, pid, sender):
+        print("Command Received: Sprint 3")
+        m3.sprint_3(self.robot, pid, sender)

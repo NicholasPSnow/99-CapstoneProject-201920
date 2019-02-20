@@ -99,12 +99,20 @@ def feature_10(robot, speed, direction):
 # -------------------------------------------------------------------------
 
 
+def sprint_3(robot, pid, sender):
+    while True:
+        delta = pid.update_output(robot.sensor_system.color_sensor.get_reflected_light_intensity())
+        sender.send_message('draw_graph', [(round(pid.last_time - pid.start_time), delta)])
+        robot.drive_system.left_motor.turn_on(50 + delta)
+        robot.drive_system.right_motor.turn_on(50 - delta)
+
 class PID(object):
     def __init__(self, kp, ki, kd, interval, set_point):
         self.Kp = kp
         self.Ki = ki
         self.Kd = kd
         self.last_time = time.time()
+        self.start_time = self.last_time
         self.interval = interval
         self.set_point = set_point
         self.proportional = 0
@@ -124,7 +132,9 @@ class PID(object):
             self.last_error = error
             self.last_time = time.time()
 
-            return self.proportional, self.integral, self.derivative
+            output = self.proportional + self.integral + self.derivative
+
+            return output
 
     def clear(self):
         self.__init__(self.Kp, self.Ki, self.Kd, self.interval, self.set_point)
